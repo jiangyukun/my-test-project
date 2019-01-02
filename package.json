@@ -1,0 +1,11 @@
+{
+  "name": "my-test-project",
+  "version": "1.0.0",
+  "description": "test-project",
+  "main": "index.js",
+  "author": "jiangyukun",
+  "license": "MIT",
+  "dependencies": {
+    "recast": "^0.16.1"
+  }
+}
