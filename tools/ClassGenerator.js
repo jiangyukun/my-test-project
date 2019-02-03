@@ -5,7 +5,7 @@ const firstLetterLowerCase = util.firstLetterLowerCase
 class ClassGenerator {
   constructor(properties) {
     let propertyKeys = Object.getOwnPropertyNames(properties)
-    this.property = propertyKeys.map(key => {
+    this.typeList = propertyKeys.map(key => {
       let property = properties[key]
       let type = property.type
       if (property.$ref) {
@@ -27,7 +27,7 @@ class ClassGenerator {
   }
 
   generate(context) {
-    return this.property.map(property => {
+    return this.typeList.map(property => {
       return property.get(context) + '\n'
     }).join('')
   }
