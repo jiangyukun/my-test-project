@@ -1,0 +1,15 @@
+var express = require('express')
+var app = express()
+var path = require('path')
+app.all('*', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS')
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With')
+  res.header('Access-Control-Allow-Headers', 'Content-Type')
+  next()
+})
+var dpath = path.join(__dirname, '../dist')
+app.use(express.static(dpath))
+var port = 8188
+console.log('请打开 http://localhost:8188/index.html  进行访问')
+module.exports = app.listen(port)
