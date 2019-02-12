@@ -40,4 +40,4 @@ let server = http.createServer((req, res) => {
 
 server.listen(8081);
 
-console.log('服务运行在：http://localhost:8081，请访问：http://localhost:8081/index.html');
+console.log('服务运行在：http://47.105.100.57:8081，请访问：http://47.105.100.57:8081/index.html');
