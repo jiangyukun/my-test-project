@@ -15,7 +15,7 @@ let server = http.createServer((req, res) => {
     });
 
     // 响应文件内容
-    res.write("xxx");
+    res.write("xixixi");
     res.end();
     // 读取文件内容
     /*fs.readFile(pathname.substr(1), (err, data) => {
