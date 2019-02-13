@@ -15,15 +15,15 @@ try {
     // ignore
 }
 
-let json = require('./xbx.json')
+let swaggerJson = require('./xbx.json')
 
-const apiPaths = json.paths
-const definitions = json.definitions
+const paths = swaggerJson.paths
+const definitions = swaggerJson.definitions
 
-let keys = Object.getOwnPropertyNames(apiPaths)
+let apiPaths = Object.getOwnPropertyNames(paths)
 
 let serviceSet = new Set()
-for (let key of keys) {
+for (let key of apiPaths) {
     let category = key.split('/')
     serviceSet.add(category[1])
 }
@@ -38,19 +38,19 @@ for (let service of serviceSet) {
 }
 
 function autoGenerator(options) {
-    let filterKeys = keys.filter(options.filter)
+    let filterApiPaths = apiPaths.filter(options.filter)
     let director = new FileDirector()
 
-    let modalPath = path.resolve(process.cwd() + '/dist/modal/', options.filename + '.js')
-    director.build(new ES6ModelFileBuilder(filterKeys, apiPaths, definitions))
-    director.write(modalPath)
+    let modalFilePath = path.resolve(process.cwd() + '/dist/modal/', options.filename + '.js')
+    director.build(new ES6ModelFileBuilder(filterApiPaths, paths, definitions))
+    director.write(modalFilePath)
 
     let serviceFilePath = path.resolve(process.cwd() + '/dist/services/', options.filename + '.js')
-    director.build(new NodeServiceFileBuilder(filterKeys, apiPaths, definitions))
+    director.build(new NodeServiceFileBuilder(filterApiPaths, paths, definitions))
     director.write(serviceFilePath)
 
     let tsFilePath = path.resolve(process.cwd() + '/dist/ts/', options.filename + '.ts')
-    director.build(new TypescriptInterfaceFileBuilder(filterKeys, apiPaths, definitions))
+    director.build(new TypescriptInterfaceFileBuilder(filterApiPaths, paths, definitions))
     director.write(tsFilePath)
 
 }
