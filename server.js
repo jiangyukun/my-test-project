@@ -38,6 +38,9 @@ let server = http.createServer((req, res) => {
     // test3333
 });
 
-server.listen(8081);
+let x = server.listen(8081);
+x.on('error', err => {
+    console.error(err);
+})
 
 console.log('服务运行在：http://47.105.100.57:8081，请访问：http://47.105.100.57:8081/index.html');

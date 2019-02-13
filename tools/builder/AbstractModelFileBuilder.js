@@ -1,37 +1,22 @@
-let generateModal = require('./common/generateModal')
-let util = require('./util')
+let util = require('../util')
 
-class ModelDirector {
-    buildModelFile(modelBuild) {
-        this.modelBuild = modelBuild
-        modelBuild.buildHeader()
-        modelBuild.buildBody()
-        modelBuild.buildFooter()
-    }
-
-    getResult() {
-        return this.modelBuild.getResult()
-    }
-}
-
-class ES6ModelBuild {
+class AbstractModelFileBuilder {
     constructor(apiUrls, paths, definitions) {
         this.apiUrls = apiUrls
         this.paths = paths
         this.definitions = definitions
         this.registerModalClassList = []
         this.modalClassList = []
-        this.header = ''
-        this.body = ''
-        this.footer = ''
+
         this.registerClass = this.registerClass.bind(this)
     }
 
     buildHeader() {
-
+        return ''
     }
 
     buildBody() {
+        let body = ''
         for (let url of this.apiUrls) {
             let apiItem = this.paths[url]
             let httpType = Object.getOwnPropertyNames(apiItem)[0]
@@ -40,22 +25,24 @@ class ES6ModelBuild {
             let responseClassName = util.getResponseClassName(apiInfo.responses['200'].schema, this.definitions)
             if (responseClassName && this.modalClassList.indexOf(responseClassName) === -1) {
                 this.modalClassList.push(responseClassName)
-                this.body += generateModal(responseClassName, this.definitions[responseClassName], this.registerClass)
+                body += this.generateModal(responseClassName, this.definitions[responseClassName], this.registerClass)
             }
         }
         this.registerModalClassList.forEach(modalClass => {
-            this.body += generateModal(modalClass, this.definitions[modalClass], this.registerClass)
+            body += this.generateModal(modalClass, this.definitions[modalClass], this.registerClass)
         })
+        return body
+    }
+
+    generateModal(modalClass, definition, registerClass) {
+        throw new Error('override in subclass')
     }
 
     buildFooter() {
-        this.footer = `module.exports = {\n    ${this.modalClassList.concat(this.registerModalClassList).join(',\n    ')}\n}`
+        return ''
     }
 
-    getResult() {
-        return this.header + this.body + this.footer
-    }
-
+    //处理model依赖
     registerClass(modalName) {
         if (this.registerModalClassList.indexOf(modalName) === -1) {
             this.registerModalClassList.push(modalName)
@@ -63,20 +50,4 @@ class ES6ModelBuild {
     }
 }
 
-class TypescriptInterfaceBuild {
-    buildHeader() {
-
-    }
-
-    buildBody() {
-
-    }
-
-    buildFooter() {
-
-    }
-}
-
-module.exports = {
-    ModelDirector, ES6ModelBuild, TypescriptInterfaceBuild
-}
+module.exports = AbstractModelFileBuilder
