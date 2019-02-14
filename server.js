@@ -15,7 +15,7 @@ let server = http.createServer((req, res) => {
     });
 
     // 响应文件内容
-    res.write("2019-02-13 002");
+    res.write("2019-02-13 003");
     res.end();
     // 读取文件内容
     /*fs.readFile(pathname.substr(1), (err, data) => {
