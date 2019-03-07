@@ -23,18 +23,39 @@ class AbstractModelFileBuilder {
             let apiInfo = apiItem[httpType]
 
             let responseClassName = util.getResponseClassName(apiInfo.responses['200'].schema, this.definitions)
+            let shortNameList = responseClassName.split('.')
+            let shortName = shortNameList[shortNameList.length - 1]
             if (responseClassName && this.modalClassList.indexOf(responseClassName) === -1) {
                 this.modalClassList.push(responseClassName)
-                body += this.generateModal(responseClassName, this.definitions[responseClassName], this.registerClass)
+                body += this.generateModal(shortName, responseClassName, this.definitions[responseClassName], (modalName) => this.registerClass(modalName, this.registerModalClassList))
             }
+
+            let parameters = apiInfo.parameters
+            if (parameters && parameters.length === 1 && parameters[0].in === 'body') {
+                let param = parameters[0]
+
+                let requestClassName = util.getResponseClassName(param.schema, this.definitions)
+                let shortNameList = requestClassName.split('.')
+                let shortName = shortNameList[shortNameList.length - 1]
+                this.modalClassList.push(responseClassName)
+                body += this.generateModal(shortName, requestClassName, this.definitions[requestClassName], (modalName) => this.registerClass(modalName, this.registerModalClassList))
+            }
+
         }
-        this.registerModalClassList.forEach(modalClass => {
-            body += this.generateModal(modalClass, this.definitions[modalClass], this.registerClass)
-        })
+        while (this.registerModalClassList.length > 0) {
+            let depList = []
+            this.registerModalClassList.forEach(modalClass => {
+                let shortNameList = modalClass.split('.')
+                let shortName = shortNameList[shortNameList.length - 1]
+
+                body += this.generateModal(shortName, modalClass, this.definitions[modalClass], (modalName) => this.registerClass(modalName, depList))
+            })
+            this.registerModalClassList = depList
+        }
         return body
     }
 
-    generateModal(modalClass, definition, registerClass) {
+    generateModal(shortName, modalClass, definition, registerClass) {
         throw new Error('override in subclass')
     }
 
@@ -43,9 +64,9 @@ class AbstractModelFileBuilder {
     }
 
     //处理model依赖
-    registerClass(modalName) {
-        if (this.registerModalClassList.indexOf(modalName) === -1) {
-            this.registerModalClassList.push(modalName)
+    registerClass(modalName, list) {
+        if (list.indexOf(modalName) === -1) {
+            list.push(modalName)
         }
     }
 }

@@ -52,7 +52,7 @@ class PrimitiveProperty {
         if (type === 'integer') {
             type = 'number'
         }
-        return `${this.key}: ${type} // ${this.property.description || ''}`
+        return `${this.key}?: ${type} // ${this.property.description || ''}`
     }
 }
 
@@ -65,7 +65,9 @@ class ClassProperty {
 
     get(context) {
         context.registerClass(this.targeClass, this.property.$ref)
-        return `${this.key}: ${this.targeClass} // ${this.property.description || ''}`
+        let shortNameList = this.targeClass.split('.')
+        let shortName = shortNameList[shortNameList.length - 1]
+        return `${this.key}?: ${shortName} // ${this.property.description || ''}`
     }
 }
 
@@ -78,7 +80,9 @@ class ArrayProperty {
 
     get(context) {
         context.registerClass(this.targeClass, this.property.$ref)
-        return `${this.key}: ${this.targeClass}[] // ${this.property.description || ''}`
+        let shortNameList = this.targeClass.split('.')
+        let shortName = shortNameList[shortNameList.length - 1]
+        return `${this.key}?: ${shortName}[] // ${this.property.description || ''}`
     }
 }
 

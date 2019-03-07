@@ -1,0 +1,2459 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1",
+    "title": "SchoolPal.Web"
+  },
+  "host": "192.168.30.30:8081",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/api/Customer/GetHomeProductList": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "获取拼课首页商品",
+        "operationId": "Customer_GetHomeProductList",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Request.GetHomeProductListReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.HomeProductDto]]"
+            }
+          }
+        }
+      }
+    },
+    "/api/Customer/GetGroupBookingTaskListByProductId": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "根据商品id获取拼团列表",
+        "operationId": "Customer_GetGroupBookingTaskListByProductId",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Request.GetGroupBookingTaskListByProductIdReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingTaskDto]]"
+            }
+          }
+        }
+      }
+    },
+    "/api/Customer/GetGroupBookingProductDetailByMicroShopUser": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "根据C端用户Id获取拼团商品详情",
+        "operationId": "Customer_GetGroupBookingProductDetailByMicroShopUser",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Request.GetGroupBookingProductDetailByMicroShopUserReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingProductDetailDto]"
+            }
+          }
+        }
+      }
+    },
+    "/api/Customer/GetGroupBookingTaskWithOrderInfo": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "获取拼团详情及订单列表",
+        "operationId": "Customer_GetGroupBookingTaskWithOrderInfo",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Request.GetGroupBookingTaskWithOrderInfoReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingTaskWithOrderInfoDto]"
+            }
+          }
+        }
+      }
+    },
+    "/api/Customer/GetGroupBookingOrder": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "获取拼团订单",
+        "operationId": "Customer_GetGroupBookingOrder",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Request.GetGroupBookingOrderReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingOrderDto]]"
+            }
+          }
+        }
+      }
+    },
+    "/api/Customer/GetGroupBookingActivity": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "获取拼团活动",
+        "operationId": "Customer_GetGroupBookingActivity",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Request.GetGroupBookingActivityReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingActivityDto]]"
+            }
+          }
+        }
+      }
+    },
+    "/api/Customer/GetCurrentUser": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "获取当前用户",
+        "operationId": "Customer_GetCurrentUser",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.CurrentUser]"
+            }
+          }
+        }
+      }
+    },
+    "/api/Customer/GetStepwiseGroupBookingProductDetailByMicroShopUser": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "根据C端用户获取阶梯拼团商品详情",
+        "operationId": "Customer_GetStepwiseGroupBookingProductDetailByMicroShopUser",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Request.GetStepwiseGroupBookingProductDetailByMicroShopUserReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingProductDetailDto]"
+            }
+          }
+        }
+      }
+    },
+    "/api/Customer/GetStepwiseGroupBookingTaskListByProductId": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "根据商品id获取阶梯拼团列表",
+        "operationId": "Customer_GetStepwiseGroupBookingTaskListByProductId",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Request.GetStepwiseGroupBookingTaskListByProductIdReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingTaskDto]]"
+            }
+          }
+        }
+      }
+    },
+    "/api/Customer/GetStepwiseGroupBookingOrdersByProductId": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "根据商品id获取阶梯拼团订单列表",
+        "operationId": "Customer_GetStepwiseGroupBookingOrdersByProductId",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Request.GetStepwiseGroupBookingOrdersByProductIdReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingOrderDto]]"
+            }
+          }
+        }
+      }
+    },
+    "/api/Customer/GetStepwiseGroupBookingTaskWithOrderInfo": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "summary": "获取阶梯拼团详情及订单信息",
+        "operationId": "Customer_GetStepwiseGroupBookingTaskWithOrderInfo",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Request.GetStepwiseGroupBookingTaskWithOrderInfoReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingTaskWithOrderInfoDto]"
+            }
+          }
+        }
+      }
+    },
+    "/api/Values/Get": {
+      "get": {
+        "tags": [
+          "Values"
+        ],
+        "operationId": "Values_Get",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Values/Get/{id}": {
+      "get": {
+        "tags": [
+          "Values"
+        ],
+        "operationId": "Values_Get",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/api/Values/Post": {
+      "post": {
+        "tags": [
+          "Values"
+        ],
+        "operationId": "Values_Post",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [],
+        "parameters": [
+          {
+            "name": "value",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/Values/Put/{id}": {
+      "put": {
+        "tags": [
+          "Values"
+        ],
+        "operationId": "Values_Put",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "value",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/Values/Delete/{id}": {
+      "delete": {
+        "tags": [
+          "Values"
+        ],
+        "operationId": "Values_Delete",
+        "consumes": [],
+        "produces": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Request.GetHomeProductListReq": {
+      "description": "获取首页商品列表的请求数据",
+      "type": "object",
+      "properties": {
+        "cityCode": {
+          "format": "int32",
+          "description": "市的行政区划",
+          "type": "integer"
+        },
+        "productClass": {
+          "format": "int32",
+          "description": "商品分类",
+          "type": "integer"
+        },
+        "pageArgument": {
+          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.PageArgument",
+          "description": "分页数据"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.PageArgument": {
+      "description": "分页请求数据",
+      "type": "object",
+      "properties": {
+        "pageIndex": {
+          "format": "int32",
+          "description": "当前页",
+          "type": "integer"
+        },
+        "pageSize": {
+          "format": "int32",
+          "description": "分页大小",
+          "type": "integer"
+        }
+      }
+    },
+    "SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.HomeProductDto]]": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "errorCode": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.HomeProductDto]"
+        }
+      }
+    },
+    "SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.HomeProductDto]": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.HomeProductDto"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/SchoolPal.Toolkit.Response.Interface.IResposePage"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.HomeProductDto": {
+      "description": "首页列表数据模型",
+      "type": "object",
+      "properties": {
+        "cityCode": {
+          "description": "城市的行政区划",
+          "type": "string"
+        },
+        "config": {
+          "description": "商品配置信息",
+          "type": "string"
+        },
+        "discountPrice": {
+          "format": "double",
+          "description": "折扣价",
+          "type": "number"
+        },
+        "finishCount": {
+          "format": "int32",
+          "description": "已成团数量",
+          "type": "integer"
+        },
+        "id": {
+          "format": "int64",
+          "description": "商品Id",
+          "type": "integer"
+        },
+        "images": {
+          "description": "商品图片",
+          "type": "string"
+        },
+        "introduce": {
+          "description": "商品介绍",
+          "type": "string"
+        },
+        "introduceImg": {
+          "description": "介绍图片",
+          "type": "string"
+        },
+        "latitude": {
+          "format": "double",
+          "description": "纬度",
+          "type": "number"
+        },
+        "longitude": {
+          "format": "double",
+          "description": "经度",
+          "type": "number"
+        },
+        "marketDate": {
+          "format": "date-time",
+          "description": "截止时间",
+          "type": "string"
+        },
+        "marketMode": {
+          "format": "int32",
+          "description": "营销方式",
+          "type": "integer"
+        },
+        "marketNumber": {
+          "format": "int32",
+          "description": "成团人数",
+          "type": "integer"
+        },
+        "name": {
+          "description": "商品名称",
+          "type": "string"
+        },
+        "onCount": {
+          "format": "int32",
+          "description": "拼团中的团数量",
+          "type": "integer"
+        },
+        "orgId": {
+          "format": "int64",
+          "description": "机构Id",
+          "type": "integer"
+        },
+        "orgName": {
+          "description": "机构名称",
+          "type": "string"
+        },
+        "originPrice": {
+          "format": "double",
+          "description": "原价",
+          "type": "number"
+        },
+        "productState": {
+          "format": "int32",
+          "description": "商品状态（已冻结、已删除、已下架）",
+          "type": "integer"
+        },
+        "productStatus": {
+          "format": "int32",
+          "description": "商品状态（已开售、已售罄、已结束）",
+          "type": "integer"
+        },
+        "qrCode": {
+          "description": "商品二维码",
+          "type": "string"
+        },
+        "remainedCount": {
+          "format": "int32",
+          "description": "剩余可拼团数量",
+          "type": "integer"
+        },
+        "stock": {
+          "format": "int32",
+          "description": "商品库存",
+          "type": "integer"
+        }
+      }
+    },
+    "SchoolPal.Toolkit.Response.Interface.IResposePage": {
+      "type": "object",
+      "properties": {
+        "totalCount": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "currentIndex": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "itemCount": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Request.GetGroupBookingTaskListByProductIdReq": {
+      "description": "根据商品Id获取拼团列表请求数据",
+      "type": "object",
+      "properties": {
+        "productId": {
+          "format": "int64",
+          "description": "商品Id",
+          "type": "integer"
+        },
+        "pageArgument": {
+          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.PageArgument",
+          "description": "分页数据"
+        }
+      }
+    },
+    "SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingTaskDto]]": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "errorCode": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingTaskDto]"
+        }
+      }
+    },
+    "SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingTaskDto]": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingTaskDto"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/SchoolPal.Toolkit.Response.Interface.IResposePage"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingTaskDto": {
+      "description": "拼团数据模型",
+      "type": "object",
+      "properties": {
+        "headImageUrl": {
+          "description": "头像",
+          "type": "string"
+        },
+        "id": {
+          "format": "int64",
+          "description": "Id",
+          "type": "integer"
+        },
+        "microShopProductId": {
+          "format": "int64",
+          "description": "商品Id",
+          "type": "integer"
+        },
+        "name": {
+          "description": "名称",
+          "type": "string"
+        },
+        "orgId": {
+          "format": "int64",
+          "description": "机构Id",
+          "type": "integer"
+        },
+        "payedOrderCount": {
+          "format": "int32",
+          "description": "已支付订单数",
+          "type": "integer"
+        },
+        "quantity": {
+          "format": "int32",
+          "description": "成团人数",
+          "type": "integer"
+        },
+        "unpayedOrderCount": {
+          "format": "int32",
+          "description": "未支付订单数",
+          "type": "integer"
+        },
+        "usedStock": {
+          "format": "int32",
+          "description": "已使用库存",
+          "type": "integer"
+        },
+        "userName": {
+          "description": "用户姓名",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Request.GetGroupBookingProductDetailByMicroShopUserReq": {
+      "description": "根据C端用户Id获取拼团商品详情的请求数据",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "format": "int64",
+          "description": "C端用户Id",
+          "type": "integer"
+        }
+      }
+    },
+    "SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingProductDetailDto]": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "errorCode": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingProductDetailDto"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingProductDetailDto": {
+      "description": "拼团商品详情数据模型",
+      "type": "object",
+      "properties": {
+        "address": {
+          "description": "地址",
+          "type": "string"
+        },
+        "cityCode": {
+          "format": "int32",
+          "description": "市的行政区划",
+          "type": "integer"
+        },
+        "config": {
+          "description": "配置信息",
+          "type": "string"
+        },
+        "contact": {
+          "description": "联系方式",
+          "type": "string"
+        },
+        "discountPrice": {
+          "format": "double",
+          "description": "折扣价",
+          "type": "number"
+        },
+        "finishCount": {
+          "format": "int32",
+          "description": "已成团的数量",
+          "type": "integer"
+        },
+        "hideEnrollbtn": {
+          "description": "是否隐藏我要报名按钮",
+          "type": "boolean"
+        },
+        "hideHomebtn": {
+          "description": "是否隐藏返回首页按钮",
+          "type": "boolean"
+        },
+        "id": {
+          "format": "int64",
+          "description": "Id",
+          "type": "integer"
+        },
+        "images": {
+          "description": "商品图片",
+          "type": "string"
+        },
+        "introduce": {
+          "description": "商品介绍",
+          "type": "string"
+        },
+        "introduceImg": {
+          "description": "商品介绍图片",
+          "type": "string"
+        },
+        "latitude": {
+          "format": "double",
+          "description": "纬度",
+          "type": "number"
+        },
+        "longitude": {
+          "format": "double",
+          "description": "经度",
+          "type": "number"
+        },
+        "marketDate": {
+          "format": "date-time",
+          "description": "截止时间",
+          "type": "string"
+        },
+        "marketMode": {
+          "format": "int32",
+          "description": "营销方式",
+          "type": "integer"
+        },
+        "marketNumber": {
+          "format": "int32",
+          "description": "成团人数",
+          "type": "integer"
+        },
+        "name": {
+          "description": "商品名称",
+          "type": "string"
+        },
+        "onCount": {
+          "format": "int32",
+          "description": "拼团中的团数",
+          "type": "integer"
+        },
+        "orgId": {
+          "format": "int64",
+          "description": "机构Id",
+          "type": "integer"
+        },
+        "orgImages": {
+          "description": "机构图片",
+          "type": "string"
+        },
+        "orgIntroduce": {
+          "description": "机构介绍",
+          "type": "string"
+        },
+        "orgName": {
+          "description": "机构名称",
+          "type": "string"
+        },
+        "originPrice": {
+          "format": "double",
+          "description": "原价",
+          "type": "number"
+        },
+        "participateCount": {
+          "format": "int32",
+          "description": "参与人数",
+          "type": "integer"
+        },
+        "productState": {
+          "format": "int32",
+          "description": "商品状态（已冻结、已删除、已下架）",
+          "type": "integer"
+        },
+        "productStatus": {
+          "format": "int32",
+          "description": "商品状态（已开售、已售罄、已结束）",
+          "type": "integer"
+        },
+        "qrCode": {
+          "description": "二维码",
+          "type": "string"
+        },
+        "remainedCount": {
+          "format": "int32",
+          "description": "剩余可拼团数量",
+          "type": "integer"
+        },
+        "shopId": {
+          "format": "int64",
+          "description": "店铺Id",
+          "type": "integer"
+        },
+        "stock": {
+          "format": "int32",
+          "description": "库存",
+          "type": "integer"
+        },
+        "taskId": {
+          "format": "int64",
+          "description": "团id",
+          "type": "integer"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Request.GetGroupBookingTaskWithOrderInfoReq": {
+      "description": "获取拼团的请求数据",
+      "type": "object",
+      "properties": {
+        "taskId": {
+          "format": "int64",
+          "description": "团Id",
+          "type": "integer"
+        }
+      }
+    },
+    "SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingTaskWithOrderInfoDto]": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "errorCode": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingTaskWithOrderInfoDto"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingTaskWithOrderInfoDto": {
+      "description": "拼团和订单数据模型",
+      "type": "object",
+      "properties": {
+        "product": {
+          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.ProductDto",
+          "description": "商品数据"
+        },
+        "task": {
+          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.TaskDto",
+          "description": "团数据"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.ProductDto": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "description": "地址",
+          "type": "string"
+        },
+        "cityCode": {
+          "format": "int32",
+          "description": "市的行政区划",
+          "type": "integer"
+        },
+        "config": {
+          "description": "配置信息",
+          "type": "string"
+        },
+        "contact": {
+          "description": "联系方式",
+          "type": "string"
+        },
+        "discountPrice": {
+          "format": "double",
+          "description": "折扣价",
+          "type": "number"
+        },
+        "finishCount": {
+          "format": "int32",
+          "description": "已成团的数量",
+          "type": "integer"
+        },
+        "hideEnrollbtn": {
+          "description": "是否隐藏我要报名按钮",
+          "type": "boolean"
+        },
+        "hideHomebtn": {
+          "description": "是否隐藏返回首页按钮",
+          "type": "boolean"
+        },
+        "id": {
+          "format": "int64",
+          "description": "Id",
+          "type": "integer"
+        },
+        "images": {
+          "description": "商品图片",
+          "type": "string"
+        },
+        "introduce": {
+          "description": "商品介绍",
+          "type": "string"
+        },
+        "introduceImg": {
+          "description": "商品介绍图片",
+          "type": "string"
+        },
+        "latitude": {
+          "format": "double",
+          "description": "纬度",
+          "type": "number"
+        },
+        "longitude": {
+          "format": "double",
+          "description": "经度",
+          "type": "number"
+        },
+        "marketDate": {
+          "format": "date-time",
+          "description": "截止时间",
+          "type": "string"
+        },
+        "marketMode": {
+          "format": "int32",
+          "description": "营销方式",
+          "type": "integer"
+        },
+        "marketNumber": {
+          "format": "int32",
+          "description": "成团人数",
+          "type": "integer"
+        },
+        "name": {
+          "description": "商品名称",
+          "type": "string"
+        },
+        "onCount": {
+          "format": "int32",
+          "description": "拼团中的团数",
+          "type": "integer"
+        },
+        "orgId": {
+          "format": "int64",
+          "description": "机构Id",
+          "type": "integer"
+        },
+        "orgImages": {
+          "description": "机构图片",
+          "type": "string"
+        },
+        "orgIntroduce": {
+          "description": "机构介绍",
+          "type": "string"
+        },
+        "orgName": {
+          "description": "机构名称",
+          "type": "string"
+        },
+        "originPrice": {
+          "format": "double",
+          "description": "原价",
+          "type": "number"
+        },
+        "participateCount": {
+          "format": "int32",
+          "description": "参与人数",
+          "type": "integer"
+        },
+        "productState": {
+          "format": "int32",
+          "description": "商品状态（已冻结、已删除、已下架）",
+          "type": "integer"
+        },
+        "productStatus": {
+          "format": "int32",
+          "description": "商品状态（已开售、已售罄、已结束）",
+          "type": "integer"
+        },
+        "qrCode": {
+          "description": "二维码",
+          "type": "string"
+        },
+        "remainedCount": {
+          "format": "int32",
+          "description": "剩余可拼团数量",
+          "type": "integer"
+        },
+        "shopId": {
+          "format": "int64",
+          "description": "店铺Id",
+          "type": "integer"
+        },
+        "stock": {
+          "format": "int32",
+          "description": "库存",
+          "type": "integer"
+        },
+        "taskId": {
+          "format": "int64",
+          "description": "团id",
+          "type": "integer"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.TaskDto": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int64",
+          "description": "Id",
+          "type": "integer"
+        },
+        "isJoin": {
+          "description": "是否参加",
+          "type": "boolean"
+        },
+        "isSuccess": {
+          "description": "是否成团",
+          "type": "boolean"
+        },
+        "list": {
+          "description": "团里的订单",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.OrderInfo"
+          }
+        },
+        "needNumber": {
+          "format": "int32",
+          "description": "还缺多少人成团",
+          "type": "integer"
+        },
+        "orderId": {
+          "format": "int64",
+          "description": "订单Id",
+          "type": "integer"
+        },
+        "productId": {
+          "format": "int64",
+          "description": "商品Id",
+          "type": "integer"
+        },
+        "qrCode": {
+          "description": "二维码",
+          "type": "string"
+        },
+        "taskStatus": {
+          "format": "int32",
+          "description": "拼团状态",
+          "type": "integer"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.OrderInfo": {
+      "description": "订单信息",
+      "type": "object",
+      "properties": {
+        "headImageUrl": {
+          "description": "头像",
+          "type": "string"
+        },
+        "userName": {
+          "description": "姓名",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Request.GetGroupBookingOrderReq": {
+      "description": "根据C端用户Id获取订单列表请求数据",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "format": "int64",
+          "description": "C端用户Id",
+          "type": "integer"
+        },
+        "state": {
+          "format": "int32",
+          "description": "订单状态",
+          "type": "integer"
+        },
+        "pageArgument": {
+          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.PageArgument",
+          "description": "分页数据"
+        }
+      }
+    },
+    "SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingOrderDto]]": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "errorCode": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingOrderDto]"
+        }
+      }
+    },
+    "SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingOrderDto]": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingOrderDto"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/SchoolPal.Toolkit.Response.Interface.IResposePage"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingOrderDto": {
+      "description": "拼团订单数据模型",
+      "type": "object",
+      "properties": {
+        "createAt": {
+          "format": "date-time",
+          "description": "创建时间",
+          "type": "string"
+        },
+        "expireAt": {
+          "format": "date-time",
+          "description": "过期时间",
+          "type": "string"
+        },
+        "id": {
+          "format": "int64",
+          "description": "Id",
+          "type": "integer"
+        },
+        "isPayStatus": {
+          "description": "订单状态字符串",
+          "type": "string"
+        },
+        "marketMode": {
+          "format": "int32",
+          "description": "营销方式",
+          "type": "integer"
+        },
+        "merchantId": {
+          "format": "int64",
+          "description": "收银宝钱包Id",
+          "type": "integer"
+        },
+        "orderNumber": {
+          "description": "订单号",
+          "type": "string"
+        },
+        "orderState": {
+          "format": "int32",
+          "description": "订单状态",
+          "type": "integer"
+        },
+        "orderType": {
+          "format": "int32",
+          "description": "订单类型",
+          "type": "integer"
+        },
+        "orgId": {
+          "format": "int64",
+          "description": "机构Id",
+          "type": "integer"
+        },
+        "originPrice": {
+          "format": "double",
+          "description": "原价",
+          "type": "number"
+        },
+        "payment": {
+          "format": "int32",
+          "description": "支付方式",
+          "type": "integer"
+        },
+        "price": {
+          "format": "double",
+          "description": "支付价格",
+          "type": "number"
+        },
+        "productId": {
+          "format": "int64",
+          "description": "商品Id",
+          "type": "integer"
+        },
+        "productImgUrl": {
+          "description": "商品图片",
+          "type": "string"
+        },
+        "productName": {
+          "description": "商品名称",
+          "type": "string"
+        },
+        "taskStatus": {
+          "format": "int32",
+          "description": "团状态",
+          "type": "integer"
+        },
+        "userName": {
+          "description": "姓名",
+          "type": "string"
+        },
+        "userPhone": {
+          "description": "电话",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Request.GetGroupBookingActivityReq": {
+      "description": "获取拼团活动请求数据",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "format": "int64",
+          "description": "C端用户Id",
+          "type": "integer"
+        },
+        "pageArgument": {
+          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.PageArgument",
+          "description": "分页数据"
+        }
+      }
+    },
+    "SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingActivityDto]]": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "errorCode": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingActivityDto]"
+        }
+      }
+    },
+    "SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingActivityDto]": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingActivityDto"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/SchoolPal.Toolkit.Response.Interface.IResposePage"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.GroupBookingActivityDto": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "createAt": {
+          "format": "date-time",
+          "description": "创建时间",
+          "type": "string"
+        },
+        "expireAt": {
+          "format": "date-time",
+          "description": "失效时间",
+          "type": "string"
+        },
+        "groupState": {
+          "description": "团状态",
+          "type": "string"
+        },
+        "id": {
+          "format": "int64",
+          "description": "Id",
+          "type": "integer"
+        },
+        "isPayStatus": {
+          "description": "订单状态字符串",
+          "type": "string"
+        },
+        "marketDate": {
+          "format": "date-time",
+          "description": "截止时间",
+          "type": "string"
+        },
+        "marketMode": {
+          "format": "int32",
+          "description": "营销方式",
+          "type": "integer"
+        },
+        "merchantId": {
+          "format": "int64",
+          "description": "收银宝钱包Id",
+          "type": "integer"
+        },
+        "orderNumber": {
+          "description": "订单号",
+          "type": "string"
+        },
+        "orderState": {
+          "format": "int32",
+          "description": "订单状态",
+          "type": "integer"
+        },
+        "orderType": {
+          "format": "int32",
+          "description": "订单类型",
+          "type": "integer"
+        },
+        "orgId": {
+          "format": "int64",
+          "description": "机构Id",
+          "type": "integer"
+        },
+        "originPrice": {
+          "format": "double",
+          "description": "原价",
+          "type": "number"
+        },
+        "payment": {
+          "format": "int32",
+          "description": "支付方式",
+          "type": "integer"
+        },
+        "price": {
+          "format": "double",
+          "description": "价格",
+          "type": "number"
+        },
+        "productId": {
+          "format": "int64",
+          "description": "商品Id",
+          "type": "integer"
+        },
+        "productImgUrl": {
+          "description": "商品图片",
+          "type": "string"
+        },
+        "productName": {
+          "description": "商品名称",
+          "type": "string"
+        },
+        "taskId": {
+          "format": "int64",
+          "description": "团Id",
+          "type": "integer"
+        },
+        "taskStatus": {
+          "format": "int32",
+          "description": "团状态",
+          "type": "integer"
+        },
+        "userName": {
+          "description": "姓名",
+          "type": "string"
+        },
+        "userPhone": {
+          "description": "手机号",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.CurrentUser]": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "errorCode": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.CurrentUser"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.CurrentUser": {
+      "description": "当前用户",
+      "type": "object",
+      "properties": {
+        "headImageUrl": {
+          "description": "头像",
+          "type": "string"
+        },
+        "nickName": {
+          "description": "昵称",
+          "type": "string"
+        },
+        "phone": {
+          "description": "手机号",
+          "type": "string"
+        },
+        "userId": {
+          "format": "int64",
+          "description": "用户Id",
+          "type": "integer"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Request.GetStepwiseGroupBookingProductDetailByMicroShopUserReq": {
+      "description": "根据C端用户获取阶梯拼团商品详情请求数据",
+      "type": "object",
+      "properties": {
+        "productId": {
+          "format": "int64",
+          "description": "商品Id",
+          "type": "integer"
+        },
+        "userId": {
+          "format": "int64",
+          "description": "C端用户Id",
+          "type": "integer"
+        }
+      }
+    },
+    "SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingProductDetailDto]": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "errorCode": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingProductDetailDto"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingProductDetailDto": {
+      "description": "阶梯拼团数据详情",
+      "type": "object",
+      "properties": {
+        "isJoin": {
+          "description": "是否参加",
+          "type": "boolean"
+        },
+        "maxCount": {
+          "format": "int32",
+          "description": "最大阶梯数",
+          "type": "integer"
+        },
+        "orgInfo": {
+          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.OrgInfoDto",
+          "description": "机构信息"
+        },
+        "priceList": {
+          "description": "阶梯价格序列",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.PriceDto"
+          }
+        },
+        "product": {
+          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingProductDto",
+          "description": "商品信息"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.OrgInfoDto": {
+      "description": "机构信息",
+      "type": "object",
+      "properties": {
+        "address": {
+          "description": "地址",
+          "type": "string"
+        },
+        "cityCode": {
+          "format": "int32",
+          "description": "市的行政区划",
+          "type": "integer"
+        },
+        "concact": {
+          "description": "联系方式",
+          "type": "string"
+        },
+        "cover": {
+          "description": "机构封面图",
+          "type": "string"
+        },
+        "createdAt": {
+          "format": "date-time",
+          "description": "创建时间",
+          "type": "string"
+        },
+        "districtCode": {
+          "format": "int32",
+          "description": "区的行政区划",
+          "type": "integer"
+        },
+        "extConfig": {
+          "description": "额外配置",
+          "type": "string"
+        },
+        "id": {
+          "format": "int64",
+          "description": "Id",
+          "type": "integer"
+        },
+        "introduce": {
+          "description": "介绍",
+          "type": "string"
+        },
+        "latitude": {
+          "format": "double",
+          "description": "纬度",
+          "type": "number"
+        },
+        "logo": {
+          "description": "logo",
+          "type": "string"
+        },
+        "longitude": {
+          "format": "double",
+          "description": "经度",
+          "type": "number"
+        },
+        "orgId": {
+          "format": "int64",
+          "description": "机构Id",
+          "type": "integer"
+        },
+        "orgImages": {
+          "description": "机构图片",
+          "type": "string"
+        },
+        "orgName": {
+          "description": "机构名称",
+          "type": "string"
+        },
+        "provinceCode": {
+          "format": "int32",
+          "description": "省的行政区划",
+          "type": "integer"
+        },
+        "shopImages": {
+          "description": "店铺图片",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.PriceDto": {
+      "description": "阶梯价格数据",
+      "type": "object",
+      "properties": {
+        "addtion": {
+          "description": "备注",
+          "type": "string"
+        },
+        "memberCount": {
+          "format": "int32",
+          "description": "阶梯人数",
+          "type": "integer"
+        },
+        "price": {
+          "format": "double",
+          "description": "阶梯价格",
+          "type": "number"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingProductDto": {
+      "description": "阶梯商品信息",
+      "type": "object",
+      "properties": {
+        "config": {
+          "description": "配置信息",
+          "type": "string"
+        },
+        "discountPrice": {
+          "format": "double",
+          "description": "折扣价",
+          "type": "number"
+        },
+        "finishCount": {
+          "format": "int32",
+          "description": "已成团数量",
+          "type": "integer"
+        },
+        "hideEnrollbtn": {
+          "description": "是否隐藏我要报名按钮",
+          "type": "boolean"
+        },
+        "hideHomebtn": {
+          "description": "是否显示返回首页按钮",
+          "type": "boolean"
+        },
+        "id": {
+          "format": "int64",
+          "description": "Id",
+          "type": "integer"
+        },
+        "images": {
+          "description": "图片",
+          "type": "string"
+        },
+        "introduce": {
+          "description": "介绍",
+          "type": "string"
+        },
+        "introduceImg": {
+          "description": "介绍图片",
+          "type": "string"
+        },
+        "marketDate": {
+          "format": "date-time",
+          "description": "截止时间",
+          "type": "string"
+        },
+        "marketMode": {
+          "format": "int32",
+          "description": "营销方式",
+          "type": "integer"
+        },
+        "marketNumber": {
+          "format": "int32",
+          "description": "成团人数",
+          "type": "integer"
+        },
+        "name": {
+          "description": "名称",
+          "type": "string"
+        },
+        "onCount": {
+          "format": "int32",
+          "description": "拼团中的团数",
+          "type": "integer"
+        },
+        "orgId": {
+          "format": "int64",
+          "description": "机构Id",
+          "type": "integer"
+        },
+        "originPrice": {
+          "format": "double",
+          "description": "原价",
+          "type": "number"
+        },
+        "participateCount": {
+          "format": "int32",
+          "description": "参与人数",
+          "type": "integer"
+        },
+        "price": {
+          "format": "double",
+          "description": "价格",
+          "type": "number"
+        },
+        "productHeadImg": {
+          "description": "商品头图片",
+          "type": "string"
+        },
+        "productState": {
+          "format": "int32",
+          "description": "商品状态（已删除、已冻结、已下架）",
+          "type": "integer"
+        },
+        "productStatus": {
+          "description": "商品状态（已开售、已售罄）",
+          "type": "string"
+        },
+        "qrCode": {
+          "description": "二维码",
+          "type": "string"
+        },
+        "remainedCount": {
+          "format": "int32",
+          "description": "剩余可参与订单数",
+          "type": "integer"
+        },
+        "stock": {
+          "format": "int32",
+          "description": "库存",
+          "type": "integer"
+        },
+        "taskId": {
+          "format": "int64",
+          "description": "团的id",
+          "type": "integer"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Request.GetStepwiseGroupBookingTaskListByProductIdReq": {
+      "description": "获取阶梯拼团列表的请求数据",
+      "type": "object",
+      "properties": {
+        "productId": {
+          "format": "int64",
+          "description": "商品Id",
+          "type": "integer"
+        },
+        "taskStatus": {
+          "format": "int32",
+          "description": "拼团状态",
+          "type": "integer"
+        },
+        "pageArgument": {
+          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.PageArgument",
+          "description": "分页数据"
+        }
+      }
+    },
+    "SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingTaskDto]]": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "errorCode": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingTaskDto]"
+        }
+      }
+    },
+    "SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingTaskDto]": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingTaskDto"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/SchoolPal.Toolkit.Response.Interface.IResposePage"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingTaskDto": {
+      "description": "阶梯拼团团数据",
+      "type": "object",
+      "properties": {
+        "headImageUrl": {
+          "description": "头像",
+          "type": "string"
+        },
+        "id": {
+          "format": "int64",
+          "description": "Id",
+          "type": "integer"
+        },
+        "microshopProductId": {
+          "format": "int64",
+          "description": "商品Id",
+          "type": "integer"
+        },
+        "name": {
+          "description": "名称",
+          "type": "string"
+        },
+        "orgId": {
+          "format": "int64",
+          "description": "机构Id",
+          "type": "integer"
+        },
+        "payedOrderCount": {
+          "format": "int32",
+          "description": "已支付订单数",
+          "type": "integer"
+        },
+        "qrCode": {
+          "description": "二维码",
+          "type": "string"
+        },
+        "quantity": {
+          "format": "int32",
+          "description": "成团人数",
+          "type": "integer"
+        },
+        "taskStatus": {
+          "format": "int32",
+          "description": "团状态",
+          "type": "integer"
+        },
+        "type": {
+          "format": "int32",
+          "description": "团类型",
+          "type": "integer"
+        },
+        "unpayedOrderCount": {
+          "format": "int32",
+          "description": "未支付订单数",
+          "type": "integer"
+        },
+        "usedStock": {
+          "format": "int32",
+          "description": "已使用库存",
+          "type": "integer"
+        },
+        "userName": {
+          "description": "姓名",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Request.GetStepwiseGroupBookingOrdersByProductIdReq": {
+      "description": "根据商品Id获取阶梯拼团订单请求",
+      "type": "object",
+      "properties": {
+        "productId": {
+          "format": "int64",
+          "description": "商品Id",
+          "type": "integer"
+        },
+        "pageArgument": {
+          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.PageArgument",
+          "description": "分页数据"
+        }
+      }
+    },
+    "SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingOrderDto]]": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "errorCode": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingOrderDto]"
+        }
+      }
+    },
+    "SchoolPal.Toolkit.Response.Model.ResponseListData[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingOrderDto]": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingOrderDto"
+          }
+        },
+        "page": {
+          "$ref": "#/definitions/SchoolPal.Toolkit.Response.Interface.IResposePage"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingOrderDto": {
+      "description": "阶梯拼团订单数据模型",
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int64",
+          "description": "Id",
+          "type": "integer"
+        },
+        "productId": {
+          "format": "int64",
+          "description": "商品Id",
+          "type": "integer"
+        },
+        "productName": {
+          "description": "商品名称",
+          "type": "string"
+        },
+        "productOriginPrice": {
+          "format": "double",
+          "description": "商品原价",
+          "type": "number"
+        },
+        "productPrice": {
+          "format": "double",
+          "description": "商品现价",
+          "type": "number"
+        },
+        "orderState": {
+          "format": "int32",
+          "description": "订单状态",
+          "type": "integer"
+        },
+        "microShopUserId": {
+          "format": "int64",
+          "description": "订单用户Id",
+          "type": "integer"
+        },
+        "userName": {
+          "description": "订单用户名称",
+          "type": "string"
+        },
+        "userPhone": {
+          "description": "订单用户手机",
+          "type": "string"
+        },
+        "createAt": {
+          "format": "date-time",
+          "description": "创建时间",
+          "type": "string"
+        },
+        "orderNumber": {
+          "description": "订单编号",
+          "type": "string"
+        },
+        "activityUserId": {
+          "format": "int64",
+          "description": "活动编号",
+          "type": "integer"
+        },
+        "schoolPalCloudSignId": {
+          "format": "int64",
+          "description": "三通用户Id",
+          "type": "integer"
+        },
+        "schoolPalOrgId": {
+          "format": "int64",
+          "description": "机构Id",
+          "type": "integer"
+        },
+        "expireAt": {
+          "format": "date-time",
+          "description": "过期时间",
+          "type": "string"
+        },
+        "finishAt": {
+          "format": "date-time",
+          "description": "订单完成时间",
+          "type": "string"
+        },
+        "source": {
+          "format": "int32",
+          "description": "来源：0微店，1口碑  ,2ERP",
+          "type": "integer"
+        },
+        "alipayTranNumber": {
+          "description": "支付宝交易号(仅口碑使用)",
+          "type": "string"
+        },
+        "memo": {
+          "description": "备注(仅口碑使用)",
+          "type": "string"
+        },
+        "orderType": {
+          "format": "int32",
+          "description": "订单类型",
+          "type": "integer"
+        },
+        "payAt": {
+          "format": "date-time",
+          "description": "支付时间",
+          "type": "string"
+        },
+        "payment": {
+          "format": "int32",
+          "description": "支付方式：0微信，1收银宝",
+          "type": "integer"
+        },
+        "userSource": {
+          "format": "int32",
+          "description": "用户登录来源",
+          "type": "integer"
+        },
+        "merchantId": {
+          "format": "int64",
+          "description": "收银宝钱包Id",
+          "type": "integer"
+        },
+        "schoolpalCloudPayTradeNo": {
+          "description": "收银宝交易号",
+          "type": "string"
+        },
+        "leaveWord": {
+          "description": "买家留言",
+          "type": "string"
+        },
+        "headImageUrl": {
+          "description": "用户头像",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Request.GetStepwiseGroupBookingTaskWithOrderInfoReq": {
+      "description": "获取阶梯拼团和订单信息请求数据",
+      "type": "object",
+      "properties": {
+        "taskId": {
+          "format": "int64",
+          "description": "团Id",
+          "type": "integer"
+        }
+      }
+    },
+    "SchoolPal.Toolkit.Response.ResponseResult[SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingTaskWithOrderInfoDto]": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "errorCode": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingTaskWithOrderInfoDto"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingTaskWithOrderInfoDto": {
+      "type": "object",
+      "properties": {
+        "isJoin": {
+          "description": "是否参加",
+          "type": "boolean"
+        },
+        "maxCount": {
+          "format": "int32",
+          "description": "最大阶梯数",
+          "type": "integer"
+        },
+        "orgInfo": {
+          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.OrgInfoDto",
+          "description": "机构信息"
+        },
+        "priceList": {
+          "description": "阶梯价格序列",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.PriceDto"
+          }
+        },
+        "product": {
+          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.StepwiseGroupBookingProductDto",
+          "description": "商品信息"
+        },
+        "taskList": {
+          "description": "团列表",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.MicroShopOrderDto"
+          }
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Customer.Response.MicroShopOrderDto": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int64",
+          "description": "Id",
+          "type": "integer"
+        },
+        "productId": {
+          "format": "int64",
+          "description": "商品Id",
+          "type": "integer"
+        },
+        "productName": {
+          "description": "商品名称",
+          "type": "string"
+        },
+        "productOriginPrice": {
+          "format": "double",
+          "description": "商品原价",
+          "type": "number"
+        },
+        "productPrice": {
+          "format": "double",
+          "description": "商品现价",
+          "type": "number"
+        },
+        "orderState": {
+          "format": "int32",
+          "description": "订单状态",
+          "type": "integer"
+        },
+        "microShopUserId": {
+          "format": "int64",
+          "description": "订单用户Id",
+          "type": "integer"
+        },
+        "userName": {
+          "description": "订单用户名称",
+          "type": "string"
+        },
+        "userPhone": {
+          "description": "订单用户手机",
+          "type": "string"
+        },
+        "createAt": {
+          "format": "date-time",
+          "description": "创建时间",
+          "type": "string"
+        },
+        "orderNumber": {
+          "description": "订单编号",
+          "type": "string"
+        },
+        "activityUserId": {
+          "format": "int64",
+          "description": "活动编号",
+          "type": "integer"
+        },
+        "schoolPalCloudSignId": {
+          "format": "int64",
+          "description": "三通用户Id",
+          "type": "integer"
+        },
+        "schoolPalOrgId": {
+          "format": "int64",
+          "description": "机构Id",
+          "type": "integer"
+        },
+        "expireAt": {
+          "format": "date-time",
+          "description": "过期时间",
+          "type": "string"
+        },
+        "finishAt": {
+          "format": "date-time",
+          "description": "订单完成时间",
+          "type": "string"
+        },
+        "source": {
+          "format": "int32",
+          "description": "来源：0微店，1口碑  ,2ERP",
+          "type": "integer"
+        },
+        "alipayTranNumber": {
+          "description": "支付宝交易号(仅口碑使用)",
+          "type": "string"
+        },
+        "memo": {
+          "description": "备注(仅口碑使用)",
+          "type": "string"
+        },
+        "orderType": {
+          "format": "int32",
+          "description": "订单类型",
+          "type": "integer"
+        },
+        "payAt": {
+          "format": "date-time",
+          "description": "支付时间",
+          "type": "string"
+        },
+        "payment": {
+          "format": "int32",
+          "description": "支付方式：0微信，1收银宝",
+          "type": "integer"
+        },
+        "userSource": {
+          "format": "int32",
+          "description": "用户登录来源",
+          "type": "integer"
+        },
+        "merchantId": {
+          "format": "int64",
+          "description": "收银宝钱包Id",
+          "type": "integer"
+        },
+        "schoolpalCloudPayTradeNo": {
+          "description": "收银宝交易号",
+          "type": "string"
+        },
+        "leaveWord": {
+          "description": "买家留言",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

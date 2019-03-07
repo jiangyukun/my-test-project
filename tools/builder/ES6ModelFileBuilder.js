@@ -3,10 +3,10 @@ let ClassGenerator = require('../generator/ClassGenerator')
 let AbstractModelFileBuilder = require('./AbstractModelFileBuilder')
 
 class ES6ModelFileBuilder extends AbstractModelFileBuilder {
-    generateModal(modalClass, definition, registerClass) {
+    generateModal(shortName, modalClass, definition, registerClass) {
         let constructorParamName = 'item'
         return new ClassGenerator(definition).generate({
-            className: modalClass,
+            className: shortName,
             constructorParamName,
             registerClass
         })

@@ -7,5 +7,9 @@
   "license": "MIT",
   "dependencies": {
     "recast": "^0.16.1"
+  },
+  "devDependencies": {
+    "acorn": "^6.1.0",
+    "acorn-object-spread": "^1.0.0"
   }
 }
