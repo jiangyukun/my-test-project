@@ -2,10 +2,11 @@ let generateService = require('../common/generateService')
 let util = require('../util')
 
 class NodeServiceFileBuilder {
-    constructor(apiUrls, paths, definitions) {
+    constructor(apiUrls, paths, definitions, interfacePath) {
         this.apiUrls = apiUrls
         this.paths = paths
         this.definitions = definitions
+        this.interfacePath = interfacePath
         this.exportFunctionList = []
     }
 
@@ -22,16 +23,32 @@ class NodeServiceFileBuilder {
             if (parameters && parameters.length === 1 && parameters[0].in === 'body') {
                 let param = parameters[0]
 
-                let responseClassName = util.getResponseClassName(param.schema, this.definitions)
+                let requestClassName = util.getResponseClassName(param.schema, this.definitions)
+                let shortNameList = requestClassName.split('.')
+                let shortName = shortNameList[shortNameList.length - 1]
+                if (typeNameList.indexOf(shortName) === -1) {
+                    typeNameList.push(shortName)
+                }
+            }
+            let responses = apiInfo.responses
+            let responseClassName = ''
+            if (responses['200']) {
+                responseClassName = util.getResponseClassName(responses['200'].schema, this.definitions)
+                if (responseClassName === '') {
+                    console.log(1);
+                }
                 let shortNameList = responseClassName.split('.')
                 let shortName = shortNameList[shortNameList.length - 1]
-                typeNameList.push(shortName)
+                if (typeNameList.indexOf(shortName) === -1) {
+                    typeNameList.push(shortName)
+                }
             }
         }
         return `
 import request from '../utils/request'
+import {Data, PageList} from './CommonInterface'
 import {${typeNameList.join(',\n')}
-} from './CustomerType'
+} from '${this.interfacePath}'
         `
     }
 

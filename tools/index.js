@@ -52,10 +52,10 @@ function autoGenerator(options) {
     // director.write(modalFilePath)
 
     let serviceFilePath = path.resolve(process.cwd() + '/dist/ts/', util.firstLetterLowerCase(options.filename) + '-api.ts')
-    director.build(new TsServiceFileBuilder(filterApiPaths, paths, definitions))
+    director.build(new TsServiceFileBuilder(filterApiPaths, paths, definitions, `./types/${options.filename}Type`))
     director.write(serviceFilePath)
 
-    let tsFilePath = path.resolve(process.cwd() + '/dist/ts/', options.filename + 'Type.ts')
+    let tsFilePath = path.resolve(process.cwd() + '/dist/ts/types/',options.filename + 'Type.ts')
     director.build(new TypescriptInterfaceFileBuilder(filterApiPaths, paths, definitions))
     director.write(tsFilePath)
 

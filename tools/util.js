@@ -1,12 +1,3 @@
-let count = 0
-
-function logFirst() {
-    if (count === 1) {
-        return
-    }
-    count++
-    console.log(...arguments)
-}
 
 function firstLetterLowerCase(str) {
     if (!str) return str
@@ -36,6 +27,9 @@ function getResponseClassName(schema, definitions) {
     } else {
         ref = schema.$ref
     }
+    if (ref === '#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result[SchoolPal.Marketing.Pinke.Web.Helper.Amap.Model.District1[]]') {
+        return 'SchoolPal.Marketing.Pinke.Web.Helper.Amap.Model.District1'
+    }
     let responseClassName = getClassName(ref)
 
     if (!responseClassName || responseClassIgnoreList.indexOf(responseClassName) !== -1) {
@@ -56,7 +50,7 @@ function getClassName(str) {
     if (!responseClassName) {
         return ''
     }
-    if (responseClassName.indexOf('[') !== -1) {
+    while (responseClassName.indexOf('[') !== -1) {
         responseClassName = getContent(responseClassName)
     }
     return responseClassName
@@ -74,5 +68,5 @@ function getContent(str) {
 }
 
 module.exports = {
-    logFirst, firstLetterLowerCase, getResponseClassName
+    getClassName, firstLetterLowerCase, getResponseClassName
 }
