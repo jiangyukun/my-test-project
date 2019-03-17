@@ -1,5 +1,7 @@
 let util = require('../util')
 
+const responseClassIgnoreList = ['ResponseStateEnum', 'Int64', 'Int32', 'Boolean', 'String', 'Decimal', 'Object', 'System.String', 'System.Int64']
+
 class AbstractModelFileBuilder {
     constructor(apiUrls, paths, definitions) {
         this.apiUrls = apiUrls
@@ -25,7 +27,7 @@ class AbstractModelFileBuilder {
             let responseClassName = util.getResponseClassName(apiInfo.responses['200'].schema, this.definitions)
             let shortNameList = responseClassName.split('.')
             let shortName = shortNameList[shortNameList.length - 1]
-            if (responseClassName && this.modalClassList.indexOf(responseClassName) === -1) {
+            if (responseClassName && responseClassIgnoreList.indexOf(responseClassName) === -1 &&  this.modalClassList.indexOf(responseClassName) === -1) {
                 this.modalClassList.push(responseClassName)
                 body += this.generateModal(shortName, responseClassName, this.definitions[responseClassName], (modalName) => this.registerClass(modalName, this.registerModalClassList))
             }

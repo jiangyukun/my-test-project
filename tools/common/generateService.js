@@ -9,15 +9,27 @@ module.exports = function (url, httpType, apiInfo, definitions) {
     let responseType = ''
     if (responses['200']) {
         responseClassName = util.getResponseClassName(responses['200'].schema, definitions)
-
+        if (responses['200'].schema.$ref.indexOf('GetOrgList') != -1) {
+            console.log(1);
+        }
         let shortNameList = responseClassName.split('.')
         responseShortClassName = shortNameList[shortNameList.length - 1]
         if (responses['200'].schema.$ref.indexOf('PageResult') !== -1) {
-            responseType = `Promise<Data<PageList<${responseShortClassName}>>>`
-        }else if (responseClassName === 'SchoolPal.Marketing.Pinke.Web.Helper.Amap.Model.District1') {
-            responseType = `Promise<Data<District1[]>>`
+            responseType = `Promise<PageList<${responseShortClassName}>>`
+        } else if (responses['200'].schema.$ref.indexOf('[]') !== -1) {
+            responseType = `Promise<${responseShortClassName}[]>`
+        } else if (responses['200'].schema.$ref.indexOf('System.Collections.Generic.List') !== -1) {
+            responseType = `Promise<${responseShortClassName}[]>`
+        } else if (responseClassName === 'SchoolPal.Marketing.Pinke.Component.Commons.Result') {
+            responseType = `Promise<null>`
         } else {
-            responseType = `Promise<Data<${responseShortClassName}>>`
+            if (responseClassName === 'System.String') {
+                responseShortClassName = 'string'
+            }
+            if (responseClassName === 'System.Int64') {
+                responseShortClassName = 'number'
+            }
+            responseType = `Promise<${responseShortClassName}>`
         }
     }
 
@@ -36,7 +48,7 @@ module.exports = function (url, httpType, apiInfo, definitions) {
         requestParam.push(param.name)
     }
 
-    if (functionName === 'getDistrict') {
+    if (responseClassName.indexOf('UploadImageByBlob') != -1) {
         console.log(1);
     }
 
@@ -45,7 +57,7 @@ module.exports = function (url, httpType, apiInfo, definitions) {
  * ${apiInfo.summary}
  */
 export function ${functionName}(${functionParam.map(p => `${p.name}: ${p.type}`).join(', ')}): ${responseType} {
-  return request.${httpType}('${url.substring(4)}'${requestParam.length > 0 ? ', ' : ''}${requestParam.join(', ')})
+  return request1.${httpType}('${url.substring(4)}'${requestParam.length > 0 ? ', ' : ''}${requestParam.join(', ')})
 }
 `
     return apiStr

@@ -6,6 +6,9 @@ let InterfaceGenerator = require('../generator/InterfaceGenerator')
 
 class TypescriptInterfaceFileBuilder extends AbstractModelFileBuilder {
     generateModal(shortName, modalClass, definition, registerClass) {
+        if (modalClass === 'SchoolPal.Marketing.Pinke.Component.Commons.Result') {
+            return ''
+        }
         return new InterfaceGenerator(definition).generate({
             interfaceName: shortName, registerClass
         })

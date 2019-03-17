@@ -6,8 +6,6 @@ function firstLetterLowerCase(str) {
     return firstLetter.toLowerCase() + str.substring(1)
 }
 
-const responseClassIgnoreList = ['ResponseStateEnum', 'Int64', 'Int32', 'Boolean', 'String', 'Decimal', 'Object']
-
 function getResponseClassName(schema, definitions) {
     let ref = ''
     let type = schema.type
@@ -32,13 +30,13 @@ function getResponseClassName(schema, definitions) {
     }
     let responseClassName = getClassName(ref)
 
-    if (!responseClassName || responseClassIgnoreList.indexOf(responseClassName) !== -1) {
+    if (!responseClassName) {
         return ''
     }
-    if (!definitions[responseClassName]) {
+    /*if (!definitions[responseClassName]) {
         console.error(responseClassName)
         return ''
-    }
+    }*/
     return responseClassName
 }
 

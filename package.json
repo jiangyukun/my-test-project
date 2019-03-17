@@ -6,6 +6,7 @@
   "author": "jiangyukun",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.18.0",
     "recast": "^0.16.1"
   },
   "devDependencies": {
