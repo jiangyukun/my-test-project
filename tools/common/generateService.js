@@ -9,9 +9,6 @@ module.exports = function (url, httpType, apiInfo, definitions) {
     let responseType = ''
     if (responses['200']) {
         responseClassName = util.getResponseClassName(responses['200'].schema, definitions)
-        if (responses['200'].schema.$ref.indexOf('GetOrgList') != -1) {
-            console.log(1);
-        }
         let shortNameList = responseClassName.split('.')
         responseShortClassName = shortNameList[shortNameList.length - 1]
         if (responses['200'].schema.$ref.indexOf('PageResult') !== -1) {
@@ -25,8 +22,10 @@ module.exports = function (url, httpType, apiInfo, definitions) {
         } else {
             if (responseClassName === 'System.String') {
                 responseShortClassName = 'string'
-            }
-            if (responseClassName === 'System.Int64') {
+            } else if (responseClassName === 'System.Int64') {
+                responseShortClassName = 'number'
+            } else if (!definitions[responseClassName]) {
+                console.warn(`not found class from definitions : ${responseClassName}`)
                 responseShortClassName = 'number'
             }
             responseType = `Promise<${responseShortClassName}>`
@@ -46,10 +45,6 @@ module.exports = function (url, httpType, apiInfo, definitions) {
             type: shortName
         })
         requestParam.push(param.name)
-    }
-
-    if (responseClassName.indexOf('UploadImageByBlob') != -1) {
-        console.log(1);
     }
 
     let apiStr = `

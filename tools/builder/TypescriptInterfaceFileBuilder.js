@@ -9,6 +9,10 @@ class TypescriptInterfaceFileBuilder extends AbstractModelFileBuilder {
         if (modalClass === 'SchoolPal.Marketing.Pinke.Component.Commons.Result') {
             return ''
         }
+        if (!definition) {
+            console.warn(`definition not have ${modalClass}`)
+            return ''
+        }
         return new InterfaceGenerator(definition).generate({
             interfaceName: shortName, registerClass
         })

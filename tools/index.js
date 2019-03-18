@@ -8,6 +8,7 @@ let TypescriptInterfaceFileBuilder = require('./builder/TypescriptInterfaceFileB
 
 let util = require('./util')
 
+let distPath = 'D:/web-project/pinke-xcx-new/src/api-ts'
 try {
     fs.mkdirSync(path.resolve(process.cwd() + '/dist/'))
     fs.mkdirSync(path.resolve(process.cwd() + '/dist/', 'services'))
@@ -48,11 +49,11 @@ function generateCode() {
 
             let director = new FileDirector()
 
-            let serviceFilePath = path.resolve(process.cwd() + '/dist/ts/', util.firstLetterLowerCase(options.filename) + '-api.ts')
+            let serviceFilePath = path.resolve(`${distPath}`, util.firstLetterLowerCase(options.filename) + '-api.ts')
             director.build(new TsServiceFileBuilder(filterApiPaths, paths, definitions, `./types/${options.filename}Type`))
             director.write(serviceFilePath)
 
-            let tsFilePath = path.resolve(process.cwd() + '/dist/ts/types/', options.filename + 'Type.ts')
+            let tsFilePath = path.resolve(`${distPath}/types/`, options.filename + 'Type.ts')
             director.build(new TypescriptInterfaceFileBuilder(filterApiPaths, paths, definitions))
             director.write(tsFilePath)
 

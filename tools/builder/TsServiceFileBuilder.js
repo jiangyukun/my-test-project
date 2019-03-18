@@ -40,6 +40,10 @@ class NodeServiceFileBuilder {
                 if (responseClassName === 'System.String' || responseClassName === 'System.Int64') {
                     continue
                 }
+                if (!this.definitions[responseClassName]) {
+                    console.log(`${responseClassName}`);
+                    continue
+                }
                 let shortNameList = responseClassName.split('.')
                 let shortName = shortNameList[shortNameList.length - 1]
                 if (typeNameList.indexOf(shortName) === -1) {

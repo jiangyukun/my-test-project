@@ -51,7 +51,570 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result[SchoolPal.Marketing.Pinke.Web.Security.Model.CurrentUser]"
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result[SchoolPal.Marketing.Pinke.Web.Models.Common.Response.CurrentUserDto]"
+            }
+          }
+        }
+      }
+    },
+    "/api/Common/Login": {
+      "post": {
+        "tags": [
+          "Common"
+        ],
+        "summary": "登录（state=-98）",
+        "operationId": "Common_Login",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Common.Request.GetOpenIdByCodeReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result"
+            }
+          }
+        }
+      }
+    },
+    "/api/Common/SignByPhone": {
+      "post": {
+        "tags": [
+          "Common"
+        ],
+        "summary": "根据手机号注册/获取云账号（state=-97）",
+        "operationId": "Common_SignByPhone",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Common.Request.SignByPhoneReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result"
+            }
+          }
+        }
+      }
+    },
+    "/api/Common/SignByWeixinPhone": {
+      "post": {
+        "tags": [
+          "Common"
+        ],
+        "summary": "根据微信手机号注册/获取云账号（state=-97）",
+        "operationId": "Common_SignByWeixinPhone",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Common.Request.SignByWeixinPhoneReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result"
+            }
+          }
+        }
+      }
+    },
+    "/api/Common/CreateOrg": {
+      "post": {
+        "tags": [
+          "Common"
+        ],
+        "summary": "创建个人版机构（包括收银宝钱包和店铺）（state=-96）",
+        "operationId": "Common_CreateOrg",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Common.Request.CreateOrgReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result"
+            }
+          }
+        }
+      }
+    },
+    "/api/Common/SaveShopInfo": {
+      "post": {
+        "tags": [
+          "Common"
+        ],
+        "summary": "保存店铺信息",
+        "operationId": "Common_SaveShopInfo",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Common.Request.SaveShopInfoReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result"
+            }
+          }
+        }
+      }
+    },
+    "/api/Common/GetOrgList": {
+      "post": {
+        "tags": [
+          "Common"
+        ],
+        "summary": "获取当前用户可选机构列表（state=-94）",
+        "operationId": "Common_GetOrgList",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result[System.Collections.Generic.List[SchoolPal.Marketing.Pinke.Web.Models.Common.Response.OrgInfoDto]]"
+            }
+          }
+        }
+      }
+    },
+    "/api/Common/SaveChosenOrg": {
+      "post": {
+        "tags": [
+          "Common"
+        ],
+        "summary": "保存选择的机构",
+        "operationId": "Common_SaveChosenOrg",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Common.Request.SaveChosenOrgReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result[SchoolPal.Marketing.Pinke.Web.Models.Common.Response.SaveChosenOrgResultEnum]"
+            }
+          }
+        }
+      }
+    },
+    "/api/Common/UploadImage": {
+      "post": {
+        "tags": [
+          "Common"
+        ],
+        "summary": "上传图片",
+        "operationId": "Common_UploadImage",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result[System.String]"
+            }
+          }
+        }
+      }
+    },
+    "/api/Common/UpdateHeadImageAndNickName": {
+      "post": {
+        "tags": [
+          "Common"
+        ],
+        "summary": "更新用户头像昵称",
+        "operationId": "Common_UpdateHeadImageAndNickName",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Common.Request.UpdateHeadImageAndNickNameReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result"
+            }
+          }
+        }
+      }
+    },
+    "/api/Common/UpdateShopLocationInfo": {
+      "post": {
+        "tags": [
+          "Common"
+        ],
+        "summary": "更新店铺地理位置信息",
+        "operationId": "Common_UpdateShopLocationInfo",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Common.Request.UpdateShopLocationInfoReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result"
+            }
+          }
+        }
+      }
+    },
+    "/api/Common/CreateUserVisitLog": {
+      "post": {
+        "tags": [
+          "Common"
+        ],
+        "summary": "创建访问日志",
+        "operationId": "Common_CreateUserVisitLog",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Common.Request.CreateUserVisitLogReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result"
+            }
+          }
+        }
+      }
+    },
+    "/api/Common/SendValidateCode": {
+      "post": {
+        "tags": [
+          "Common"
+        ],
+        "summary": "发送手机验证码",
+        "operationId": "Common_SendValidateCode",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Common.Request.SendValidateCodeReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result"
+            }
+          }
+        }
+      }
+    },
+    "/api/Common/CheckValidateCode": {
+      "post": {
+        "tags": [
+          "Common"
+        ],
+        "summary": "验证码校验",
+        "operationId": "Common_CheckValidateCode",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Common.Request.CheckValidateCodeReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result"
+            }
+          }
+        }
+      }
+    },
+    "/api/Common/GetShopIntroduceInfoDto": {
+      "post": {
+        "tags": [
+          "Common"
+        ],
+        "summary": "获取店铺信息",
+        "operationId": "Common_GetShopIntroduceInfoDto",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result[SchoolPal.Marketing.Pinke.Web.Models.Common.Response.ShopIntroduceInfoDto]"
+            }
+          }
+        }
+      }
+    },
+    "/api/Common/CreateProductShareLog": {
+      "post": {
+        "tags": [
+          "Common"
+        ],
+        "summary": "创建商品分享日志",
+        "operationId": "Common_CreateProductShareLog",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Common.Request.CreateProductShareLogReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result"
             }
           }
         }
@@ -93,6 +656,208 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result[SchoolPal.Marketing.Pinke.Component.Commons.Paged.PageResult[SchoolPal.Marketing.Pinke.Web.Models.Enroll.Response.NewActivityExmapleDto]]"
+            }
+          }
+        }
+      }
+    },
+    "/api/Enroll/CreateProduct": {
+      "post": {
+        "tags": [
+          "Enroll"
+        ],
+        "summary": "保存商品",
+        "operationId": "Enroll_CreateProduct",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Enroll.Request.CreateProductReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result[System.Int64]"
+            }
+          }
+        }
+      }
+    },
+    "/api/Enroll/EditProduct": {
+      "post": {
+        "tags": [
+          "Enroll"
+        ],
+        "summary": "编辑商品",
+        "operationId": "Enroll_EditProduct",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Enroll.Request.EditProductReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result"
+            }
+          }
+        }
+      }
+    },
+    "/api/Enroll/UpdateProductSatus": {
+      "post": {
+        "tags": [
+          "Enroll"
+        ],
+        "summary": "修改商品状态",
+        "operationId": "Enroll_UpdateProductSatus",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Enroll.Request.UpdateProductSatusReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result"
+            }
+          }
+        }
+      }
+    },
+    "/api/Enroll/CreateGroupBookingOrder": {
+      "post": {
+        "tags": [
+          "Enroll"
+        ],
+        "summary": "下单（包括开团）",
+        "operationId": "Enroll_CreateGroupBookingOrder",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Enroll.Request.CreateGroupBookingOrderReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result[System.Int64]"
+            }
+          }
+        }
+      }
+    },
+    "/api/Enroll/PayReturn": {
+      "post": {
+        "tags": [
+          "Enroll"
+        ],
+        "summary": "收银宝支付回调接口",
+        "operationId": "Enroll_PayReturn",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "schoolPalPayReturnRequestDto",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Helper.SchoolPalPay.Model.SchoolPalPayReturnRequestDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result"
             }
           }
         }
@@ -385,6 +1150,47 @@
         }
       }
     },
+    "/api/GroupBooking/GetGroupBookingOrderDetail": {
+      "post": {
+        "tags": [
+          "GroupBooking"
+        ],
+        "summary": "根据订单Id获取订单详情",
+        "operationId": "GroupBooking_GetGroupBookingOrderDetail",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.GroupBooking.Request.GetGroupBookingOrderDetailReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result[SchoolPal.Marketing.Pinke.Web.Models.GroupBooking.Response.GroupBookingOrderDetailDto]"
+            }
+          }
+        }
+      }
+    },
     "/api/Home/GetHomeProductList": {
       "post": {
         "tags": [
@@ -531,6 +1337,71 @@
           }
         }
       }
+    },
+    "/api/User/GetTotalStatisticsByOrgId": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "获取总计数据",
+        "operationId": "User_GetTotalStatisticsByOrgId",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result[SchoolPal.Marketing.Pinke.Web.Models.User.Response.TotalStatisticsByOrgIdDto]"
+            }
+          }
+        }
+      }
+    },
+    "/api/User/GetActivityData": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "获取活动统计数据",
+        "operationId": "User_GetActivityData",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "req",
+            "in": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.User.Request.GetActivityDataReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Component.Commons.Result[System.Collections.Generic.List[SchoolPal.Marketing.Pinke.Web.Models.User.Response.ActivityDataDto]]"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -658,12 +1529,12 @@
         }
       }
     },
-    "SchoolPal.Marketing.Pinke.Component.Commons.Result[SchoolPal.Marketing.Pinke.Web.Security.Model.CurrentUser]": {
+    "SchoolPal.Marketing.Pinke.Component.Commons.Result[SchoolPal.Marketing.Pinke.Web.Models.Common.Response.CurrentUserDto]": {
       "description": "消息结构体",
       "type": "object",
       "properties": {
         "data": {
-          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Security.Model.CurrentUser",
+          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Common.Response.CurrentUserDto",
           "description": "具体数据"
         },
         "state": {
@@ -677,14 +1548,10 @@
         }
       }
     },
-    "SchoolPal.Marketing.Pinke.Web.Security.Model.CurrentUser": {
-      "description": "当前用户登录信息",
+    "SchoolPal.Marketing.Pinke.Web.Models.Common.Response.CurrentUserDto": {
+      "description": "当前用户信息",
       "type": "object",
       "properties": {
-        "openId": {
-          "description": "OpenId",
-          "type": "string"
-        },
         "headImageUrl": {
           "description": "头像",
           "type": "string"
@@ -693,7 +1560,7 @@
           "description": "昵称",
           "type": "string"
         },
-        "id": {
+        "userId": {
           "format": "int64",
           "description": "用户Id",
           "type": "integer"
@@ -701,6 +1568,388 @@
         "shopId": {
           "format": "int64",
           "description": "店铺Id",
+          "type": "integer"
+        },
+        "signId": {
+          "format": "int64",
+          "description": "云账号Id",
+          "type": "integer"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Common.Request.GetOpenIdByCodeReq": {
+      "description": "获取OpenId的请求数据",
+      "required": [
+        "code"
+      ],
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "用来获取openid的code",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Component.Commons.Result": {
+      "description": "消息结构体",
+      "type": "object",
+      "properties": {
+        "state": {
+          "format": "int32",
+          "description": "状态码，0为请求成功，大于0为存在异常信息，小于0为失败，具体请参考状态码表",
+          "type": "integer"
+        },
+        "msg": {
+          "description": "错误消息",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Common.Request.SignByPhoneReq": {
+      "description": "根据手机号获取云账号",
+      "required": [
+        "phone"
+      ],
+      "type": "object",
+      "properties": {
+        "phone": {
+          "description": "手机号",
+          "pattern": "^1[3-9]\\d{9}$",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Common.Request.SignByWeixinPhoneReq": {
+      "description": "根据微信手机号注册云账号",
+      "type": "object",
+      "properties": {
+        "encryptedData": {
+          "description": "包括敏感数据在内的完整用户信息的加密数据，详细见加密数据解密算法",
+          "type": "string"
+        },
+        "iv": {
+          "description": "加密算法的初始向量",
+          "type": "string"
+        },
+        "code": {
+          "description": "获取OpenId的code",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Common.Request.CreateOrgReq": {
+      "description": "创建机构请求数据",
+      "required": [
+        "orgName",
+        "orgIntroduce",
+        "concat",
+        "address"
+      ],
+      "type": "object",
+      "properties": {
+        "orgName": {
+          "description": "机构名称",
+          "type": "string"
+        },
+        "orgIntroduce": {
+          "description": "机构介绍",
+          "type": "string"
+        },
+        "concat": {
+          "description": "机构联系方式",
+          "type": "string"
+        },
+        "address": {
+          "description": "机构地址",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Common.Request.SaveShopInfoReq": {
+      "description": "保存店铺信息请求数据",
+      "required": [
+        "orgName",
+        "orgIntroduce",
+        "concat",
+        "address"
+      ],
+      "type": "object",
+      "properties": {
+        "orgId": {
+          "format": "int64",
+          "description": "机构名称",
+          "maximum": 2147483647,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "orgName": {
+          "description": "机构名称",
+          "type": "string"
+        },
+        "orgIntroduce": {
+          "description": "机构介绍",
+          "type": "string"
+        },
+        "concat": {
+          "description": "机构联系方式",
+          "type": "string"
+        },
+        "address": {
+          "description": "机构地址",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Component.Commons.Result[System.Collections.Generic.List[SchoolPal.Marketing.Pinke.Web.Models.Common.Response.OrgInfoDto]]": {
+      "description": "消息结构体",
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "具体数据",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Common.Response.OrgInfoDto"
+          }
+        },
+        "state": {
+          "format": "int32",
+          "description": "状态码，0为请求成功，大于0为存在异常信息，小于0为失败，具体请参考状态码表",
+          "type": "integer"
+        },
+        "msg": {
+          "description": "错误消息",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Common.Response.OrgInfoDto": {
+      "description": "机构信息数据模型",
+      "type": "object",
+      "properties": {
+        "orgId": {
+          "format": "int64",
+          "description": "机构Id",
+          "type": "integer"
+        },
+        "orgName": {
+          "description": "机构名称",
+          "type": "string"
+        },
+        "crmver": {
+          "description": "机构版本",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Common.Request.SaveChosenOrgReq": {
+      "description": "保存机构选择的请求数据",
+      "type": "object",
+      "properties": {
+        "orgId": {
+          "format": "int64",
+          "description": "机构Id",
+          "maximum": 2147483647,
+          "minimum": 1,
+          "type": "integer"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Component.Commons.Result[SchoolPal.Marketing.Pinke.Web.Models.Common.Response.SaveChosenOrgResultEnum]": {
+      "description": "消息结构体",
+      "type": "object",
+      "properties": {
+        "data": {
+          "format": "int32",
+          "description": "具体数据",
+          "enum": [
+            0,
+            1
+          ],
+          "type": "integer"
+        },
+        "state": {
+          "format": "int32",
+          "description": "状态码，0为请求成功，大于0为存在异常信息，小于0为失败，具体请参考状态码表",
+          "type": "integer"
+        },
+        "msg": {
+          "description": "错误消息",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Component.Commons.Result[System.String]": {
+      "description": "消息结构体",
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "具体数据",
+          "type": "string"
+        },
+        "state": {
+          "format": "int32",
+          "description": "状态码，0为请求成功，大于0为存在异常信息，小于0为失败，具体请参考状态码表",
+          "type": "integer"
+        },
+        "msg": {
+          "description": "错误消息",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Common.Request.UpdateHeadImageAndNickNameReq": {
+      "description": "更新用户头像昵称请求数据",
+      "required": [
+        "nickName",
+        "headImageUrl"
+      ],
+      "type": "object",
+      "properties": {
+        "nickName": {
+          "description": "昵称",
+          "type": "string"
+        },
+        "headImageUrl": {
+          "description": "头像",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Common.Request.UpdateShopLocationInfoReq": {
+      "description": "更新店铺地理位置",
+      "required": [
+        "latitude",
+        "longitude"
+      ],
+      "type": "object",
+      "properties": {
+        "provinceCode": {
+          "format": "int32",
+          "description": "省份编码",
+          "maximum": 2147483647,
+          "minimum": 100000,
+          "type": "integer"
+        },
+        "cityCode": {
+          "format": "int32",
+          "description": "城市编码",
+          "maximum": 2147483647,
+          "minimum": 100000,
+          "type": "integer"
+        },
+        "districtCode": {
+          "format": "int32",
+          "description": "县区编码",
+          "maximum": 2147483647,
+          "minimum": 100000,
+          "type": "integer"
+        },
+        "latitude": {
+          "format": "double",
+          "description": "纬度",
+          "type": "number"
+        },
+        "longitude": {
+          "format": "double",
+          "description": "经度",
+          "type": "number"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Common.Request.CreateUserVisitLogReq": {
+      "description": "创建访问日志请求数据",
+      "type": "object",
+      "properties": {
+        "location": {
+          "format": "int32",
+          "description": "访问页面类型",
+          "enum": [],
+          "type": "integer"
+        },
+        "targetId": {
+          "format": "int64",
+          "description": "访问页面Id",
+          "type": "integer"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Common.Request.SendValidateCodeReq": {
+      "description": "发送验证码请求数据",
+      "required": [
+        "phone"
+      ],
+      "type": "object",
+      "properties": {
+        "phone": {
+          "description": "手机号",
+          "pattern": "^1[3-9]\\d{9}$",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Common.Request.CheckValidateCodeReq": {
+      "description": "校验验证码请求数据",
+      "required": [
+        "code"
+      ],
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "验证码",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Component.Commons.Result[SchoolPal.Marketing.Pinke.Web.Models.Common.Response.ShopIntroduceInfoDto]": {
+      "description": "消息结构体",
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Common.Response.ShopIntroduceInfoDto",
+          "description": "具体数据"
+        },
+        "state": {
+          "format": "int32",
+          "description": "状态码，0为请求成功，大于0为存在异常信息，小于0为失败，具体请参考状态码表",
+          "type": "integer"
+        },
+        "msg": {
+          "description": "错误消息",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Common.Response.ShopIntroduceInfoDto": {
+      "description": "店铺信息",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "店铺名称",
+          "type": "string"
+        },
+        "introduce": {
+          "description": "介绍",
+          "type": "string"
+        },
+        "address": {
+          "description": "地址",
+          "type": "string"
+        },
+        "contact": {
+          "description": "联系方式",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Common.Request.CreateProductShareLogReq": {
+      "description": "创建商品分享日志",
+      "type": "object",
+      "properties": {
+        "productId": {
+          "format": "int64",
+          "description": "商品id",
+          "maximum": 2147483647,
+          "minimum": 1,
           "type": "integer"
         }
       }
@@ -807,7 +2056,7 @@
           "description": "图片",
           "type": "string"
         },
-        "targetId": {
+        "productId": {
           "format": "int64",
           "description": "示例Id",
           "type": "integer"
@@ -826,6 +2075,316 @@
           "format": "int64",
           "description": "方案Id",
           "type": "integer"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Enroll.Request.CreateProductReq": {
+      "description": "创建商品请求数据",
+      "required": [
+        "name",
+        "introduce",
+        "images",
+        "productClass",
+        "groupBookingInfo"
+      ],
+      "type": "object",
+      "properties": {
+        "templateId": {
+          "format": "int64",
+          "description": "模板Id",
+          "maximum": 2147483647,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "name": {
+          "description": "商品名称",
+          "type": "string"
+        },
+        "introduce": {
+          "description": "商品介绍",
+          "type": "string"
+        },
+        "price": {
+          "format": "double",
+          "description": "商品价格",
+          "type": "number"
+        },
+        "originPrice": {
+          "format": "double",
+          "description": "原价",
+          "type": "number"
+        },
+        "images": {
+          "description": "商品封面图",
+          "type": "string"
+        },
+        "endTime": {
+          "format": "date-time",
+          "description": "营销结束时间",
+          "type": "string"
+        },
+        "stock": {
+          "format": "int32",
+          "description": "库存",
+          "maximum": 2147483647,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "config": {
+          "description": "配置信息",
+          "type": "string"
+        },
+        "productIntroduceImg": {
+          "description": "商品介绍图",
+          "type": "string"
+        },
+        "productClass": {
+          "format": "int32",
+          "description": "课程类别",
+          "enum": [
+            3,
+            7,
+            9,
+            10,
+            11,
+            13,
+            17,
+            18
+          ],
+          "type": "integer"
+        },
+        "groupBookingInfo": {
+          "description": "拼团信息",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Enroll.Request.GroupBookingInfoDto"
+          }
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Enroll.Request.GroupBookingInfoDto": {
+      "description": "拼团信息",
+      "type": "object",
+      "properties": {
+        "memberCount": {
+          "format": "int32",
+          "description": "成团人数",
+          "type": "integer"
+        },
+        "price": {
+          "format": "double",
+          "description": "价格（单位：分）",
+          "type": "number"
+        },
+        "comment": {
+          "description": "备注",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Component.Commons.Result[System.Int64]": {
+      "description": "消息结构体",
+      "type": "object",
+      "properties": {
+        "data": {
+          "format": "int64",
+          "description": "具体数据",
+          "type": "integer"
+        },
+        "state": {
+          "format": "int32",
+          "description": "状态码，0为请求成功，大于0为存在异常信息，小于0为失败，具体请参考状态码表",
+          "type": "integer"
+        },
+        "msg": {
+          "description": "错误消息",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Enroll.Request.EditProductReq": {
+      "description": "编辑商品请求数据",
+      "required": [
+        "name",
+        "introduce",
+        "images",
+        "productClass",
+        "groupBookingInfo"
+      ],
+      "type": "object",
+      "properties": {
+        "productId": {
+          "format": "int64",
+          "description": "商品Id",
+          "maximum": 2147483647,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "name": {
+          "description": "商品名称",
+          "type": "string"
+        },
+        "introduce": {
+          "description": "商品介绍",
+          "type": "string"
+        },
+        "price": {
+          "format": "double",
+          "description": "商品价格",
+          "type": "number"
+        },
+        "originPrice": {
+          "format": "double",
+          "description": "原价",
+          "type": "number"
+        },
+        "images": {
+          "description": "商品封面图",
+          "type": "string"
+        },
+        "endTime": {
+          "format": "date-time",
+          "description": "营销结束时间",
+          "type": "string"
+        },
+        "stock": {
+          "format": "int32",
+          "description": "库存",
+          "maximum": 2147483647,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "config": {
+          "description": "配置信息",
+          "type": "string"
+        },
+        "productIntroduceImg": {
+          "description": "商品介绍图",
+          "type": "string"
+        },
+        "productClass": {
+          "format": "int32",
+          "description": "课程类别",
+          "enum": [
+            3,
+            7,
+            9,
+            10,
+            11,
+            13,
+            17,
+            18
+          ],
+          "type": "integer"
+        },
+        "groupBookingInfo": {
+          "description": "拼团信息",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.Enroll.Request.GroupBookingInfoDto"
+          }
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Enroll.Request.UpdateProductSatusReq": {
+      "description": "更新商品状态请求数据",
+      "required": [
+        "status"
+      ],
+      "type": "object",
+      "properties": {
+        "productId": {
+          "format": "int64",
+          "description": "商品Id",
+          "maximum": 2147483647,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "status": {
+          "format": "int32",
+          "description": "商品状态",
+          "enum": [
+            0,
+            1,
+            2
+          ],
+          "type": "integer"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.Enroll.Request.CreateGroupBookingOrderReq": {
+      "description": "创建订单请求数据",
+      "required": [
+        "userName",
+        "userPhone",
+        "formId"
+      ],
+      "type": "object",
+      "properties": {
+        "productId": {
+          "format": "int64",
+          "description": "商品Id",
+          "maximum": 2147483647,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "groupBookingTaskId": {
+          "format": "int64",
+          "description": "拼团Id（没有拼团Id表示新开团）",
+          "type": "integer"
+        },
+        "userName": {
+          "description": "用户下单时填写的姓名",
+          "type": "string"
+        },
+        "userPhone": {
+          "description": "订单用户手机",
+          "type": "string"
+        },
+        "comment": {
+          "description": "备注",
+          "type": "string"
+        },
+        "formId": {
+          "description": "推送服务消息用的formid",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Helper.SchoolPalPay.Model.SchoolPalPayReturnRequestDto": {
+      "description": "收银宝支付回调接口请求参数",
+      "type": "object",
+      "properties": {
+        "merchantTradeNo": {
+          "description": "订单交易号（就是MicroShopOrder上面的OrderNumber）",
+          "type": "string"
+        },
+        "merchantId": {
+          "format": "int64",
+          "description": "收银宝店铺Id",
+          "type": "integer"
+        },
+        "schoolPalCloudPayTradeNo": {
+          "description": "校宝云支付交易号",
+          "type": "string"
+        },
+        "realPayAmount": {
+          "format": "double",
+          "description": "实际支付金额",
+          "type": "number"
+        },
+        "paymentTime": {
+          "format": "date-time",
+          "description": "交易支付时间",
+          "type": "string"
+        },
+        "nonceStr": {
+          "description": "随机字符串",
+          "type": "string"
+        },
+        "sign": {
+          "description": "业务方签名",
+          "type": "string"
         }
       }
     },
@@ -1977,6 +3536,135 @@
         }
       }
     },
+    "SchoolPal.Marketing.Pinke.Web.Models.GroupBooking.Request.GetGroupBookingOrderDetailReq": {
+      "description": "获取订单详情请求数据",
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int64",
+          "description": "订单Id",
+          "maximum": 2147483647,
+          "minimum": 1,
+          "type": "integer"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Component.Commons.Result[SchoolPal.Marketing.Pinke.Web.Models.GroupBooking.Response.GroupBookingOrderDetailDto]": {
+      "description": "消息结构体",
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.GroupBooking.Response.GroupBookingOrderDetailDto",
+          "description": "具体数据"
+        },
+        "state": {
+          "format": "int32",
+          "description": "状态码，0为请求成功，大于0为存在异常信息，小于0为失败，具体请参考状态码表",
+          "type": "integer"
+        },
+        "msg": {
+          "description": "错误消息",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.GroupBooking.Response.GroupBookingOrderDetailDto": {
+      "description": "订单详情数据模型",
+      "type": "object",
+      "properties": {
+        "createAt": {
+          "format": "date-time",
+          "description": "创建时间",
+          "type": "string"
+        },
+        "expireAt": {
+          "format": "date-time",
+          "description": "过期时间",
+          "type": "string"
+        },
+        "id": {
+          "format": "int64",
+          "description": "Id",
+          "type": "integer"
+        },
+        "isPayStatus": {
+          "description": "支付状态",
+          "type": "string",
+          "readOnly": true
+        },
+        "marketModeName": {
+          "description": "商品类型描述",
+          "type": "string"
+        },
+        "merchantId": {
+          "format": "int64",
+          "description": "收银宝钱包Id",
+          "type": "integer"
+        },
+        "orderNumber": {
+          "description": "订单号",
+          "type": "string"
+        },
+        "orderState": {
+          "format": "int32",
+          "description": "订单状态",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            -1
+          ],
+          "type": "integer"
+        },
+        "orgContact": {
+          "description": "机构联系方式",
+          "type": "string"
+        },
+        "orgName": {
+          "description": "机构名称",
+          "type": "string"
+        },
+        "originPrice": {
+          "format": "double",
+          "description": "原价",
+          "type": "number"
+        },
+        "paymentDateTime": {
+          "format": "date-time",
+          "description": "支付时间",
+          "type": "string"
+        },
+        "price": {
+          "format": "double",
+          "description": "支付金额",
+          "type": "number"
+        },
+        "productId": {
+          "format": "int64",
+          "description": "商品Id",
+          "type": "integer"
+        },
+        "productImgUrl": {
+          "description": "商品图片（Images）",
+          "type": "string"
+        },
+        "productName": {
+          "description": "商品名称",
+          "type": "string"
+        },
+        "userName": {
+          "description": "用户报名的姓名",
+          "type": "string"
+        },
+        "userPhone": {
+          "description": "用户报名的手机号",
+          "type": "string"
+        }
+      }
+    },
     "SchoolPal.Marketing.Pinke.Web.Models.Home.Request.GetHomeProductListReq": {
       "description": "获取首页商品列表的请求数据",
       "required": [
@@ -2533,6 +4221,109 @@
       "description": "周总计数据",
       "type": "object",
       "properties": {
+        "visitCount": {
+          "format": "int32",
+          "description": "访问量",
+          "type": "integer"
+        },
+        "visitorCount": {
+          "format": "int32",
+          "description": "访问人数",
+          "type": "integer"
+        },
+        "attendCount": {
+          "format": "int32",
+          "description": "参与人数",
+          "type": "integer"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Component.Commons.Result[SchoolPal.Marketing.Pinke.Web.Models.User.Response.TotalStatisticsByOrgIdDto]": {
+      "description": "消息结构体",
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.User.Response.TotalStatisticsByOrgIdDto",
+          "description": "具体数据"
+        },
+        "state": {
+          "format": "int32",
+          "description": "状态码，0为请求成功，大于0为存在异常信息，小于0为失败，具体请参考状态码表",
+          "type": "integer"
+        },
+        "msg": {
+          "description": "错误消息",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.User.Response.TotalStatisticsByOrgIdDto": {
+      "description": "获取店铺总计数据模型",
+      "type": "object",
+      "properties": {
+        "visitCount": {
+          "format": "int32",
+          "description": "访问量",
+          "type": "integer"
+        },
+        "visitorCount": {
+          "format": "int32",
+          "description": "访问人数",
+          "type": "integer"
+        },
+        "attendCount": {
+          "format": "int32",
+          "description": "参与人数",
+          "type": "integer"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.User.Request.GetActivityDataReq": {
+      "description": "获取一周/一天统计数据的请求",
+      "type": "object",
+      "properties": {
+        "groupBy": {
+          "format": "int32",
+          "description": "取数据的方式",
+          "enum": [
+            1,
+            2
+          ],
+          "type": "integer"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Component.Commons.Result[System.Collections.Generic.List[SchoolPal.Marketing.Pinke.Web.Models.User.Response.ActivityDataDto]]": {
+      "description": "消息结构体",
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "具体数据",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SchoolPal.Marketing.Pinke.Web.Models.User.Response.ActivityDataDto"
+          }
+        },
+        "state": {
+          "format": "int32",
+          "description": "状态码，0为请求成功，大于0为存在异常信息，小于0为失败，具体请参考状态码表",
+          "type": "integer"
+        },
+        "msg": {
+          "description": "错误消息",
+          "type": "string"
+        }
+      }
+    },
+    "SchoolPal.Marketing.Pinke.Web.Models.User.Response.ActivityDataDto": {
+      "description": "一周/一天统计数据",
+      "type": "object",
+      "properties": {
+        "date": {
+          "format": "date-time",
+          "description": "日期/时间",
+          "type": "string"
+        },
         "visitCount": {
           "format": "int32",
           "description": "访问量",
