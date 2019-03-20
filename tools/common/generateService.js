@@ -9,6 +9,9 @@ module.exports = function (url, httpType, apiInfo, definitions) {
     let responseType = ''
     if (responses['200']) {
         responseClassName = util.getResponseClassName(responses['200'].schema, definitions)
+        if (responseClassName.indexOf('CheckShopInfo') != -1) {
+            console.log(1);
+        }
         let shortNameList = responseClassName.split('.')
         responseShortClassName = shortNameList[shortNameList.length - 1]
         if (responses['200'].schema.$ref.indexOf('PageResult') !== -1) {
@@ -24,6 +27,8 @@ module.exports = function (url, httpType, apiInfo, definitions) {
                 responseShortClassName = 'string'
             } else if (responseClassName === 'System.Int64') {
                 responseShortClassName = 'number'
+            } else if (responseClassName === 'System.Boolean') {
+                responseShortClassName = 'boolean'
             } else if (!definitions[responseClassName]) {
                 console.warn(`not found class from definitions : ${responseClassName}`)
                 responseShortClassName = 'number'

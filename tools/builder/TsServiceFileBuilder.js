@@ -37,7 +37,7 @@ class NodeServiceFileBuilder {
                 if (responseClassName === 'SchoolPal.Marketing.Pinke.Component.Commons.Result') {
                     continue
                 }
-                if (responseClassName === 'System.String' || responseClassName === 'System.Int64') {
+                if (responseClassName === 'System.String' || responseClassName === 'System.Int64' || responseClassName === 'System.Boolean') {
                     continue
                 }
                 if (!this.definitions[responseClassName]) {
