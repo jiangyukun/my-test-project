@@ -1,32 +1,23 @@
 {
-  "code": 200,
-  "msg": "成功",
-  "data": [
-    {
-      "citycode": [],
-      "adcode": "100000",
-      "name": "中华人民共和国",
-      "center": "116.3683244,39.915085",
-      "level": "country",
-      "districts": [
-        {
-          "citycode": [],
-          "adcode": "440000",
-          "name": "广东省",
-          "center": "113.280637,23.125178",
-          "level": "province",
-          "districts": [
-            {
-              "citycode": "0754",
-              "adcode": "440500",
-              "name": "汕头市",
-              "center": "116.708463,23.37102",
-              "level": "city",
-              "districts": []
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  "data": {
+    "id": 55,
+    "orgId": 306049,
+    "name": "江雨",
+    "introduce": "，你，你，。，",
+    "address": "广东省 汕头市 人民",
+    "contact": "18768105877",
+    "introduceImage": "[{\"url\":\"https://greedyint-dev.oss-cn-hangzhou.aliyuncs.com/xbshow/MicroShop/20190401162014-84c59.JPG\"},{\"url\":\"https://greedyint-dev.oss-cn-hangzhou.aliyuncs.com/xbshow/MicroShop/20190401162017-3ed74.JPG\"},{\"url\":\"https://greedyint-dev.oss-cn-hangzhou.aliyuncs.com/xbshow/MicroShop/20190401162020-4b",
+    "images": "",
+    "logo": "",
+    "merchantId": 5973,
+    "provinceCode": 440000,
+    "cityCode": 440500,
+    "districtCode": 0,
+    "latitude": 23.3541,
+    "longitude": 116.682,
+    "createdAt": "2019-03-27T16:49:39+08:00",
+    "updatedAt": "2019-04-01T16:20:23+08:00"
+  },
+  "state": 0,
+  "msg": null
 }

@@ -33,13 +33,13 @@ function generateCode() {
         }
 
         for (let service of serviceSet) {
-            if (service === 'Values') {
+            if (service === 'Test') {
                 continue
             }
             autoGenerator({
                 filename: `${service}`,
                 filter(apiPath) {
-                    return apiPath.indexOf(`/${service}/`) !== -1 && apiPath.indexOf('/api/Common/UploadImage') === -1
+                    return apiPath.indexOf(`/${service}/`) !== -1 && apiPath.indexOf('/api/Common/UploadImage') === -1 && apiPath.indexOf('/api/Common/Test') === -1
                 }
             })
         }
