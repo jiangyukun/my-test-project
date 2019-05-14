@@ -1,0 +1,29 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+.container {
+    height: 100%;
+}
+
+.to-enroll {
+    position: absolute;
+    top: 105vw;
+    left: 28%;
+    width: 44%;
+}
+
+.to-enroll.scroll {
+    bottom: 150px;
+    top: auto;
+}
+
+.bg {
+    width: 100%;
+    vertical-align: middle;
+}
+
+.last-padding {
+    padding-bottom: 250px;
+    background-color: rgba(1, 68, 147, 1);
+}

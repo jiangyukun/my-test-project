@@ -1,0 +1,50 @@
+{
+  "status": "1",
+  "regeocode": {
+    "addressComponent": {
+      "city": "杭州市",
+      "province": "浙江省",
+      "adcode": "330105",
+      "district": "拱墅区",
+      "towncode": "330105001000",
+      "streetNumber": {
+        "number": "318号",
+        "location": "120.15507,30.2740839",
+        "direction": "Center",
+        "distance": "0",
+        "street": "环城北路"
+      },
+      "country": "中国",
+      "township": "米市巷街道",
+      "businessAreas": [
+        {
+          "location": "120.137878,30.253167",
+          "name": "西湖",
+          "id": "330106"
+        },
+        {
+          "location": "120.09103,30.271791",
+          "name": "西溪",
+          "id": "330106"
+        },
+        {
+          "location": "120.142881,30.263047",
+          "name": "北山",
+          "id": "330106"
+        }
+      ],
+      "building": {
+        "name": "杭州市人民政府",
+        "type": "政府机构及社会团体;政府机关;地市级政府及事业单位"
+      },
+      "neighborhood": {
+        "name": [],
+        "type": []
+      },
+      "citycode": "0571"
+    },
+    "formatted_address": "浙江省杭州市拱墅区米市巷街道杭州市人民政府"
+  },
+  "info": "OK",
+  "infocode": "10000"
+}
