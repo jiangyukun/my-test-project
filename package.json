@@ -8,6 +8,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "recast": "^0.16.1",
+    "rxjs": "^6.5.2",
     "webpack": "^4.30.0"
   },
   "devDependencies": {

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            font-family: PingFangSC-Semibold;
+        }
+
+        body {
+            background: #fff;
+            padding: 0;
+            margin: 0;
+            font-weight: 600;
+            line-height: 1.41;
+        }
+
+        .org-location-info {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .org-location-info img {
+            width: 20px;
+        }
+
+        .org-location-info span {
+            margin-left: 8px;
+            font-size: 14px;
+            color: #444444;
+        }
+
+        .org-picture {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .org-picture img {
+            height: 280px;
+            display: block;
+        }
+
+        .course-info {
+            padding: 16px 20px 14px;
+        }
+
+        .course-name {
+            color: #222222;
+            font-size: 18px;
+        }
+
+        .rmb-icon {
+            font-size: 16px;
+        }
+
+        .discount-price {
+            color: #FF3200;
+            font-size: 28px;
+            margin-top: 1px;
+        }
+
+        .original-price {
+            color: #999999;
+            text-decoration: line-through;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .footer {
+            text-align: center;
+        }
+
+        .footer img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .long-press {
+            color: #9B9B9B;
+            font-size: 12px;
+            font-weight: 400;
+        }
+
+        .go-to-pinke {
+            margin-top: 5px;
+            color: #FF4A26;
+            font-size: 16px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="org-location-info">
+    <img src="https://cdn.xiaobaoxiu.cn/xbshow/XcxImages/newpintuan1/house0523.png"/>
+    <span>华星时代广场</span>
+</div>
+
+<div class="org-picture">
+    <img id="xxx" src="https://greedyint-dev.oss-cn-hangzhou.aliyuncs.com/xbshow/MicroShop/20190428183246-4670b.jpg"/>
+</div>
+
+<div class="course-info">
+    <div class="course-name">暑假数学奥数培训课程暑假数学奥数培训课程</div>
+    <div class="discount-price">
+        <span class="rmb-icon">￥</span>
+        1999.0
+    </div>
+    <div class="original-price">
+        ￥299
+    </div>
+
+    <div class="footer">
+        <div><img src=""/></div>
+        <div class="long-press">
+            长按识别小程序码
+        </div>
+        <div class="go-to-pinke">限时拼团，火速抢购中</div>
+    </div>
+</div>
+<script>
+    document.querySelector('#xxx').addEventListener('load', function (e) {
+        let ele = document.querySelector('#xxx')
+        let width1 = ele.naturalWidth * 280 / ele.naturalHeight
+        ele.style.marginLeft = -(width1 - window.outerWidth) / 2 + 'px'
+    })
+</script>
+</body>
+</html>
