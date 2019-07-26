@@ -1,23 +1,18 @@
 {
   "compilerOptions": {
+    "allowJs": true,
+    "strictNullChecks": false,
     "moduleResolution": "node",
-    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "noImplicitAny": true,
-    "strictFunctionTypes": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "target": "es2017",
-    "module": "commonjs",
-    "rootDir": "src",
-    "outDir": "lib",
-    "sourceMap": true,
-    "removeComments": true,
     "experimentalDecorators": true,
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "jsx": "react",
+    "target": "es6",
+    "strict": true
   },
-  "include": ["src/**/*", "tests/**/*"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "exclude": [
+  ]
 }

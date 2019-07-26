@@ -6,9 +6,11 @@
   "author": "jiangyukun",
   "license": "MIT",
   "dependencies": {
+    "@types/node": "^12.6.8",
     "axios": "^0.18.0",
-    "recast": "^0.16.1",
+    "recast": "0.18.1",
     "rxjs": "^6.5.2",
+    "typescript": "^3.5.3",
     "webpack": "^4.30.0"
   },
   "devDependencies": {
