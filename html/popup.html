@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+
+    <style>
+        .container {
+            position: absolute;
+            top: 90%;
+            left: 0;
+            right: 0;
+            background: beige;
+        }
+
+        .content {
+            height: 400px;
+        }
+
+
+        @keyframes up1 {
+            0% {
+                top: 90%;
+            }
+
+            100% {
+                bottom: 0;
+                top: initial;
+            }
+        }
+
+        .off {
+            animation: up1 2s;
+        }
+
+        .box {
+            height: 100px;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+
+<button id="btn">xxx</button>
+
+
+<div class="box">
+    <div class="container">
+        <div class="content">
+
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('btn').addEventListener('click', function (e) {
+        document.querySelector('.container').className += ' off'
+    })
+</script>
+</body>
+</html>

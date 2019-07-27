@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>keyframe</title>
+    <style>
+
+        .a {
+            border: 1px solid #aaa;
+
+            width: 100px;
+        }
+
+        .b {
+            animation: a1 3000ms;
+        }
+
+        @keyframes a1 {
+            0% {
+                height: 0;
+            }
+
+        }
+
+    </style>
+</head>
+<body>
+
+
+<div class="a">
+
+
+    <div>a</div>
+    <div>a</div>
+    <div>a</div>
+    <div>a</div>
+    <div>a</div>
+    <div>a</div>
+</div>
+
+
+<script>
+
+    let a = document.querySelector('.a')
+
+    console.log(a.clientHeight);
+    a.style.height = a.clientHeight + 'px'
+    a.className += ' b'
+
+</script>
+
+</body>
+</html>
