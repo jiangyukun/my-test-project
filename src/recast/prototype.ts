@@ -8,27 +8,33 @@ let builders = recast.types.builders
 let {ifStatement, blockStatement, expressionStatement, callExpression, memberExpression} = builders
 let {classDeclaration, classProperty, identifier, classBody, methodDefinition} = builders
 
-let code = fs.readFileSync('static/mxEditor.js').toString()
+let code = `
+
+class A {
+  constructor() {
+    super()
+  }
+}
+`
 
 // console.log(code)
 
-let astResult = recast.parse('')
-let astResult1 = recast.parse(`
-class A {
-  a() {
-    
-  }
-}
-`)
+let astResult = recast.parse(code)
+let astResult1 = recast.parse(`a()`)
 
 
 let bodyAst: any[] = []
 
 
-function handlePrototype(code: string) {
+function handlePrototype1(code: string) {
   let ast = recast.parse(code)
   recast.visit(ast, {
+    visitObjectExpression() {
+      console.log(123);
+      return false
+    },
     visitAssignmentExpression(path: any) {
+      console.log(1);
       let leftCode = recast.print(path.value.left).code
       let rightCode = recast.print(path.value.right).code
       let right = path.value.right
@@ -63,7 +69,7 @@ function handlePrototype(code: string) {
 }
 
 
-let r = handlePrototype(code)
+let r = handlePrototype1(code)
 
 r += `
 export default Editor
