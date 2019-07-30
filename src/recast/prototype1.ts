@@ -2,20 +2,24 @@ let recast = require('recast')
 let fs = require('fs')
 let mkdirp = require('mkdirp')
 
+let _findModuleInner = require('./b')
+
 let builders = recast.types.builders
 let {expressionStatement, callExpression} = builders
 let {classDeclaration, classProperty, identifier, classBody, methodDefinition, functionExpression} = builders
 let superE = builders.super
 
 
-let rootDir = 'E:/WEB-Projects/mxgraph/javascript/src/js'
+let rootDir = '/Users/wangji/web_study/mxgraph/javascript/src/js'
+let distDir = '/Users/wangji/web_study/mxgraph/javascript/dist/js'
 
-function handlePrototype(filePath: string, moduleName: string, code: string) {
+function handlePrototype(moduleName: string, code: string, filePath: string): { code: string, otherModules?: string[] } {
     let bodyAst: any[] = []
     let ast = recast.parse(code)
     let astResult = recast.parse('')
 
     let unHandlePropertyList: string[] = []
+    let otherModules: string[] = []
     let superClass: any = null
     let constructor: any = null
     recast.visit(ast, {
@@ -73,7 +77,8 @@ function handlePrototype(filePath: string, moduleName: string, code: string) {
                 constructor = methodDefinition('constructor', identifier('constructor'), functionExpression(null, path.value.params, path.value.body))
                 bodyAst.push(constructor)
             } else {
-                console.log(`${moduleName} 模块包含其他模块 ${path.value.id.name}`)
+                // console.log(`${moduleName} 模块包含其他模块 ${path.value.id.name}`)
+                otherModules.push(path.value.id.name)
             }
             return false
         }
@@ -98,19 +103,16 @@ function handlePrototype(filePath: string, moduleName: string, code: string) {
         }
         astResult.program.body.push(classDeclaration(identifier(moduleName), classBody(bodyAst), superClass))
         if (unHandlePropertyList.length != 0) {
-            if (moduleName != 'mxSwimlaneLayout') {
-                // console.log(moduleName, unHandlePropertyList)
-            }
+            // console.log(moduleName, unHandlePropertyList)
         }
         let convertCode = recast.print(astResult, {quote: "single", trailingComma: false}).code + `
 
 export default ${moduleName}
 `
+        let deps = handleModuleDep(code, moduleName)
+        let importStr = deps.reduce((str, current) => str += `import ${current} from '${handleModulePath(filePath, current)}'\n`, '')
 
-        let list = handleModuleDep(code, moduleName)
-        let importStr = list.reduce((str, current) => str += `import ${current} from '${handleModulePath(filePath, current)}'\n`, '')
-
-        return importStr + '\n' + convertCode
+        return {code: importStr + '\n' + convertCode, otherModules}
     } else {
         // 常量类
         let returnOldCode = false
@@ -118,6 +120,7 @@ export default ${moduleName}
             visitVariableDeclaration(path: any) {
                 let value = path.value
                 let declaration = value.declarations[0]
+                let code = recast.print(value).code
                 if (declaration.id.name == moduleName) {
                     returnOldCode = true
                 }
@@ -125,12 +128,32 @@ export default ${moduleName}
             },
             visitFunctionDeclaration() {
                 return false
+            },
+            visitCallExpression(): any {
+                return false
             }
         })
         if (returnOldCode) {
-            return recast.print(ast).code + `\n export default ${moduleName}`
+            return {code: recast.print(ast).code + `\n export default ${moduleName}`, otherModules}
         } else {
-            console.log(moduleName + '不是一个模块')
+            let isRegister = false
+            recast.visit(ast, {
+                visitCallExpression(path: any) {
+                    let value = path.value
+                    let callee = value.callee
+                    if (callee.object.name == 'mxCodecRegistry' && callee.property.name == 'register') {
+                        isRegister = true
+                    }
+                    return false
+                }
+            })
+            if (isRegister) {
+                return {code: recast.print(ast).code, otherModules}
+            } else {
+                console.log(moduleName + '不是一个模块')
+                return {otherModules, code: null}
+            }
+
         }
     }
 }
@@ -143,6 +166,9 @@ function handleModulePath(currentModulePath: string, depModule: string) {
         path += '../'
     }
     let depPath = findModule(rootDir, depModule)
+    if (!depPath) {
+        depPath = _findModuleInner(rootDir, depModule)
+    }
     if (depPath) {
         let t = depPath.substring(currentModulePath.indexOf('/js/') + 4)
         t = t.substring(0, t.length - 3)
@@ -173,6 +199,7 @@ function findModule(fileDir: string, moduleName: string) {
     return null
 }
 
+
 function handleModuleDep(code: string, moduleName: string): string[] {
     let moduleList: string[] = []
     let ast = recast.parse(code)
@@ -183,7 +210,7 @@ function handleModuleDep(code: string, moduleName: string): string[] {
 
             let name = identify.name
 
-            if (name.startsWith('mx')) {
+            if (name.startsWith('mx') && name != 'mxLoadResources') {
                 if (moduleList.indexOf(name) == -1 && name != moduleName) {
                     moduleList.push(name)
                 }
@@ -194,17 +221,12 @@ function handleModuleDep(code: string, moduleName: string): string[] {
     return moduleList
 }
 
-let ignoreList = [
-    'mxCodecRegistry',
-    'mxDefaultToolbarCodec',
-    'mxStylesheetCodec'
-]
 
 function reserveFile(dir: string): void {
     let list = fs.readdirSync(dir)
     list.forEach(function (fileName: string) {
         let filePath = dir + '/' + fileName
-        var stat = fs.statSync(filePath)
+        let stat = fs.statSync(filePath)
         if (stat && stat.isDirectory()) {
             // 递归子文件夹
             reserveFile(filePath)
@@ -212,26 +234,52 @@ function reserveFile(dir: string): void {
             if (!filePath.endsWith('.js')) {
                 return
             }
-            if (ignoreList.find(ignoreFileName => ignoreFileName + '.js' == fileName)) {
-                return
-            }
             let moduleName = fileName.substring(0, fileName.length - 3)
             let code = fs.readFileSync(filePath).toString()
-            let convertCode = ''
-            try {
-                convertCode = handlePrototype(filePath, moduleName, code)
-            } catch (e) {
-                throw e
-            }
-            if (convertCode) {
-                let distPath = filePath.replace('src', 'dist')
-                let distDir = distPath.substring(0, filePath.lastIndexOf('/') + 1)
-                mkdirp(distDir, () => {
-                    fs.writeFileSync(distPath, convertCode)
+            let resultInfo = handlePrototype(moduleName, code, filePath)
+            let convertCode = resultInfo.code
+            if (resultInfo.otherModules.length > 0) {
+                resultInfo.otherModules.forEach(moduleName => {
+                    let otherModulePath = (dir + '/' + moduleName + '.js').replace('src', 'dist')
+                    let resultInfo1 = handlePrototype(moduleName, code, dir + '/' + moduleName + '.js')
+                    writeCodeToFile(otherModulePath, resultInfo1.code)
                 })
             }
+            let distPath = filePath.replace('src', 'dist')
+            writeCodeToFile(distPath, convertCode)
         }
     })
 }
 
+function handleFileImport(fileDir: string) {
+    let list = fs.readdirSync(fileDir)
+    for (let fileName of list) {
+        let filePath = fileDir + '/' + fileName
+        let stat = fs.statSync(filePath)
+        if (stat && stat.isDirectory()) {
+            // 递归子文件夹
+            handleFileImport(filePath)
+
+        } else {
+            let moduleName = fileName.substring(0, fileName.length - 3)
+            let code = fs.readFileSync(filePath).toString()
+            let distCode = fs.readFileSync(filePath).toString()
+            let deps = handleModuleDep(code, moduleName)
+            let importStr = deps.reduce((str, current) => str += `import ${current} from '${handleModulePath(filePath, current)}'\n`, '')
+            writeCodeToFile(filePath.replace('src', 'dist'), importStr + `\n` + distCode)
+        }
+    }
+}
+
+function writeCodeToFile(distPath: string, code: string) {
+    if (!code) {
+        return
+    }
+    let distDir = distPath.substring(0, distPath.lastIndexOf('/') + 1)
+    mkdirp(distDir, () => {
+        fs.writeFileSync(distPath, code)
+    })
+}
+
 reserveFile(rootDir)
+// handleFileImport(rootDir)
