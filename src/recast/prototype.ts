@@ -9,12 +9,7 @@ let {ifStatement, blockStatement, expressionStatement, callExpression, memberExp
 let {classDeclaration, classProperty, identifier, classBody, methodDefinition} = builders
 
 let code = `
-
-class A {
-  constructor() {
-    super()
-  }
-}
+let a = {}
 `
 
 // console.log(code)
