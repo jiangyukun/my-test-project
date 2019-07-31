@@ -9,9 +9,8 @@ let {expressionStatement, callExpression} = builders
 let {classDeclaration, classProperty, identifier, classBody, methodDefinition, functionExpression} = builders
 let superE = builders.super
 
-
-let rootDir = '/Users/wangji/web_study/mxgraph/javascript/src/js'
-let distDir = '/Users/wangji/web_study/mxgraph/javascript/dist/js'
+let rootDir = 'E:/WEB-Projects/mxgraph/javascript/src/js'
+let distDir = 'E:/Web-Project1/controller-draw/draw/src/graph/js-es6'
 
 function handlePrototype(moduleName: string, code: string, filePath: string): { code: string, otherModules?: string[] } {
     let bodyAst: any[] = []
@@ -109,10 +108,7 @@ function handlePrototype(moduleName: string, code: string, filePath: string): { 
 
 export default ${moduleName}
 `
-        let deps = handleModuleDep(code, moduleName)
-        let importStr = deps.reduce((str, current) => str += `import ${current} from '${handleModulePath(filePath, current)}'\n`, '')
-
-        return {code: importStr + '\n' + convertCode, otherModules}
+        return {code: getImportStr(filePath, code, moduleName) + '\n' + convertCode, otherModules}
     } else {
         // 常量类
         let returnOldCode = false
@@ -134,7 +130,10 @@ export default ${moduleName}
             }
         })
         if (returnOldCode) {
-            return {code: recast.print(ast).code + `\n export default ${moduleName}`, otherModules}
+            return {
+                code: getImportStr(filePath, code, moduleName) + '\n' + recast.print(ast).code + `\n export default ${moduleName}`,
+                otherModules
+            }
         } else {
             let isRegister = false
             recast.visit(ast, {
@@ -148,7 +147,7 @@ export default ${moduleName}
                 }
             })
             if (isRegister) {
-                return {code: recast.print(ast).code, otherModules}
+                return {code: getImportStr(filePath, code, moduleName) + '\n' + recast.print(ast).code, otherModules}
             } else {
                 console.log(moduleName + '不是一个模块')
                 return {otherModules, code: null}
@@ -156,6 +155,16 @@ export default ${moduleName}
 
         }
     }
+}
+
+function getImportStr(filePath: string, code: string, moduleName: string) {
+    return handleModuleDep(code, moduleName).reduce((str, current) => {
+        let modulePath = handleModulePath(filePath, current)
+        if (modulePath) {
+            return str + `import ${current} from '${modulePath}'\n`
+        }
+        return str
+    }, '')
 }
 
 function handleModulePath(currentModulePath: string, depModule: string) {
@@ -175,8 +184,10 @@ function handleModulePath(currentModulePath: string, depModule: string) {
         path += t
         // console.log(path);
     }
-
-    return path
+    if (depPath) {
+        return path
+    }
+    return null
 }
 
 function findModule(fileDir: string, moduleName: string) {
@@ -199,28 +210,31 @@ function findModule(fileDir: string, moduleName: string) {
     return null
 }
 
-
 function handleModuleDep(code: string, moduleName: string): string[] {
     let moduleList: string[] = []
     let ast = recast.parse(code)
-
     recast.visit(ast, {
         visitIdentifier(path: any): any {
             let identify = path.value
-
             let name = identify.name
-
-            if (name.startsWith('mx') && name != 'mxLoadResources') {
+            if (name.startsWith('mx') && name != 'mxLoadResources' && name != 'mxTransient') {
                 if (moduleList.indexOf(name) == -1 && name != moduleName) {
                     moduleList.push(name)
                 }
             }
-            this.traverse(path)
+            return false
+        },
+        visitFunctionDeclaration(path: any): any {
+            let code = recast.print(path.value).code
+            if (path.value.id.name != moduleName) {
+                return false
+            } else {
+                this.traverse(path)
+            }
         }
     })
     return moduleList
 }
-
 
 function reserveFile(dir: string): void {
     let list = fs.readdirSync(dir)
@@ -251,26 +265,6 @@ function reserveFile(dir: string): void {
     })
 }
 
-function handleFileImport(fileDir: string) {
-    let list = fs.readdirSync(fileDir)
-    for (let fileName of list) {
-        let filePath = fileDir + '/' + fileName
-        let stat = fs.statSync(filePath)
-        if (stat && stat.isDirectory()) {
-            // 递归子文件夹
-            handleFileImport(filePath)
-
-        } else {
-            let moduleName = fileName.substring(0, fileName.length - 3)
-            let code = fs.readFileSync(filePath).toString()
-            let distCode = fs.readFileSync(filePath).toString()
-            let deps = handleModuleDep(code, moduleName)
-            let importStr = deps.reduce((str, current) => str += `import ${current} from '${handleModulePath(filePath, current)}'\n`, '')
-            writeCodeToFile(filePath.replace('src', 'dist'), importStr + `\n` + distCode)
-        }
-    }
-}
-
 function writeCodeToFile(distPath: string, code: string) {
     if (!code) {
         return
@@ -282,4 +276,3 @@ function writeCodeToFile(distPath: string, code: string) {
 }
 
 reserveFile(rootDir)
-// handleFileImport(rootDir)
