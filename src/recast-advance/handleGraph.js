@@ -51,7 +51,7 @@ function handleModuleDep(code, moduleName) {
                 if (variableDeclarationList.indexOf(name) != -1) {
                     return false
                 }
-                if (moduleList.indexOf(name) == -1 && name != moduleName) {
+                if (moduleList.indexOf(name) == -1) {
                     moduleList.push(name)
                 }
             }
@@ -79,7 +79,11 @@ function reserveFile() {
     let convertCode = resultInfo.code
     if (resultInfo.otherModules.length > 0) {
         resultInfo.otherModules.forEach((moduleName) => {
-            let otherModulePath = (distPath + '/' + moduleName + '.js')
+            let newModuleName = moduleName
+            if (newModuleName.startsWith('mx')) {
+                newModuleName = newModuleName.substring(2)
+            }
+            let otherModulePath = (distPath + '/' + newModuleName + '.js')
             let resultInfo1 = handlePrototype(moduleName, code, () => getImportStr('', code, moduleName))
             writeCodeToFile(otherModulePath, resultInfo1.code)
         })

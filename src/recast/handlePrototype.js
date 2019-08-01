@@ -2,25 +2,52 @@ let recast = require('recast')
 let recastUtil = require('./recastUtil')
 
 let builders = recast.types.builders
-let {classDeclaration, classProperty, identifier, classBody, methodDefinition, arrowFunctionExpression} = builders
+let {classDeclaration, classProperty, identifier, classBody, methodDefinition, arrowFunctionExpression, callExpression, memberExpression} = builders
+let {spreadElement} = builders
 
 function handlePrototype(moduleName, code, findImport) {
     let bodyAst = []
     let ast = recast.parse(code)
+
+    let newModuleName = moduleName
+    if (newModuleName.startsWith('mx')) {
+        newModuleName = newModuleName.substring(2)
+    }
 
     let unHandlePropertyList = []
     let otherModules = recastUtil.getOtherModuleList(moduleName, ast)
     let superClass = recastUtil.getSuperClass(moduleName, ast)
     let constructor = recastUtil.getConstructor(moduleName, ast, superClass)
     let func = recastUtil.getFunction(moduleName, ast)
+    if (!superClass && moduleName.startsWith('mx')) {
+        superClass = identifier(moduleName)
+    }
 
     recast.visit(ast, {
         visitCallExpression(path) {
             let object = path.value.callee.object
             let property = path.value.callee.property
+            let arguments = path.value.arguments
             if (object) {
                 if (object.name == 'mxUtils' && property.name == 'bind') {
-                    path.replace(arrowFunctionExpression([], path.value.arguments[1].body, false))
+                    path.replace(arrowFunctionExpression([], arguments[1].body, false))
+                }
+            }
+            if (object && property && property.name == 'apply' && object.type == 'Identifier') {
+                if (arguments.length == 2 && arguments[0].type == 'ThisExpression' && arguments[1].name == 'arguments') {
+                    let parentPath = path.parentPath
+                    while (parentPath) {
+                        if (parentPath.value.type == 'AssignmentExpression') {
+                            break
+                        }
+                        parentPath = parentPath.parentPath
+                    }
+                    if (parentPath && parentPath.value.left.property) {
+                        let methodName = parentPath.value.left.property.name
+                        if (methodName != 'click') {
+                            path.replace(callExpression(memberExpression(identifier('super'), identifier(methodName)), [spreadElement(identifier('arguments'))]))
+                        }
+                    }
                 }
             }
             this.traverse(path)
@@ -65,9 +92,9 @@ function handlePrototype(moduleName, code, findImport) {
         if (unHandlePropertyList.length != 0) {
             // console.log(moduleName, unHandlePropertyList)
         }
-        let convertCode = recastUtil.getCode(classDeclaration(identifier(moduleName), classBody(bodyAst), superClass)) + `
+        let convertCode = recastUtil.getCode(classDeclaration(identifier(newModuleName), classBody(bodyAst), superClass)) + `
 
-export default ${moduleName}
+export default ${newModuleName}
 `
         return {code: findImport() + '\n' + convertCode, otherModules}
     } else {
