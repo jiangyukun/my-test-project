@@ -239,12 +239,10 @@ class mxCellEditor {
       // LATER: Fix undo/redo for paste
       if (!mxClient.IS_QUIRKS && document.documentMode !== 7 && document.documentMode !== 8)
       {
-          mxEvent.addListener(this.textarea, 'paste', mxUtils.bind(this, function(evt)
-          {
+          mxEvent.addListener(this.textarea, 'paste', () => {
               var clone = reference(this.textarea, this.textarea.cloneNode(true));
 
-              window.setTimeout(mxUtils.bind(this, function()
-              {
+              window.setTimeout(() => {
                   // Paste from Word or Excel
                   if (this.textarea != null &&
                       (this.textarea.innerHTML.indexOf('<o:OfficeDocumentSettings>') >= 0 ||
@@ -252,8 +250,8 @@ class mxCellEditor {
                   {
                       checkNode(this.textarea, clone);
                   }
-              }), 0);
-          }));
+              }, 0);
+          });
       }
   }
 

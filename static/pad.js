@@ -6,17 +6,14 @@ let { mxConstants, mxGraph, mxText, mxGraphModel, mxGraphView, mxClient, mxSvgCa
 , mxDictionary, mxCell, mxGeometry, mxImageExport, mxPopupMenuHandler, mxCellEditor, mxPolyline, mxOutline, mxPanningHandler, mxElbowEdgeHandler
 , mxImageShape, mxRectangleShape } = mxGraph4
 
-class pad {
-  constructor(number) {
-      var r = String(number);
-      
-      if (r.length === 1) 
-      {
-          r = '0' + r;
-      }
-      
-      return r;
-  }
+function pad(number)
+{
+    var r = String(number);
+    
+    if (r.length === 1) 
+    {
+        r = '0' + r;
+    }
+    
+    return r;
 }
-
-export default pad

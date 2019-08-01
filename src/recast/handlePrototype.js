@@ -2,29 +2,28 @@ let recast = require('recast')
 let recastUtil = require('./recastUtil')
 
 let builders = recast.types.builders
-let {classDeclaration, classProperty, identifier, classBody, methodDefinition} = builders
-
+let {classDeclaration, classProperty, identifier, classBody, methodDefinition, arrowFunctionExpression} = builders
 
 function handlePrototype(moduleName, code, findImport) {
     let bodyAst = []
     let ast = recast.parse(code)
-    let astResult = recast.parse('')
 
     let unHandlePropertyList = []
     let otherModules = recastUtil.getOtherModuleList(moduleName, ast)
     let superClass = recastUtil.getSuperClass(moduleName, ast)
     let constructor = recastUtil.getConstructor(moduleName, ast, superClass)
-
-    if (constructor) {
-        bodyAst.push(constructor)
-    }
+    let func = recastUtil.getFunction(moduleName, ast)
 
     recast.visit(ast, {
         visitCallExpression(path) {
+            let object = path.value.callee.object
+            let property = path.value.callee.property
+            if (object) {
+                if (object.name == 'mxUtils' && property.name == 'bind') {
+                    path.replace(arrowFunctionExpression([], path.value.arguments[1].body, false))
+                }
+            }
             this.traverse(path)
-        },
-        visitObjectExpression() {
-            return false
         },
         visitAssignmentExpression(path) {
             let leftCode = recast.print(path.value.left).code
@@ -53,16 +52,20 @@ function handlePrototype(moduleName, code, findImport) {
             } else if (leftCode.indexOf('.prototype.') != -1) {
                 unHandlePropertyList.push(leftCode)
             }
-            return false
+            this.traverse(path)
         }
     })
-
-    if (bodyAst.length != 0) {
-        astResult.program.body.push(classDeclaration(identifier(moduleName), classBody(bodyAst), superClass))
+    if (func && bodyAst.length == 0) {
+        // 普通函数
+        return {code: findImport() + '\n' + recastUtil.getCode(func), otherModules}
+    } else if (bodyAst.length > 0) {
+        if (constructor) {
+            bodyAst.unshift(constructor)
+        }
         if (unHandlePropertyList.length != 0) {
             // console.log(moduleName, unHandlePropertyList)
         }
-        let convertCode = recast.print(astResult, {quote: "single", trailingComma: false}).code + `
+        let convertCode = recastUtil.getCode(classDeclaration(identifier(moduleName), classBody(bodyAst), superClass)) + `
 
 export default ${moduleName}
 `

@@ -7,6 +7,10 @@ let { mxConstants, mxGraph, mxText, mxGraphModel, mxGraphView, mxClient, mxSvgCa
 , mxRectangleShape } = mxGraph4
 
 class mxGuide {
+  getGuideColor(state, horizontal) {
+      return (state.cell == null) ? '#ffa500' /* orange */ : mxConstants.GUIDE_COLOR;
+  }
+
   isEnabledForEvent(evt) {
       return !mxEvent.isAltDown(evt);
   }

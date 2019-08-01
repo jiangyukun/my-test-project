@@ -130,13 +130,11 @@ class mxEdgeHandler {
       edgeHandlerInit.apply(this, arguments);
       
       // Disables connection points
-      this.constraintHandler.isEnabled = mxUtils.bind(this, function()
-      {
+      this.constraintHandler.isEnabled = () => {
           return this.state.view.graph.connectionHandler.isEnabled();
-      });
+      };
       
-      var update = mxUtils.bind(this, function()
-      {
+      var update = () => {
           if (this.linkHint != null)
           {
               this.linkHint.style.display = (this.graph.getSelectionCount() == 1) ? '' : 'none';
@@ -146,22 +144,20 @@ class mxEdgeHandler {
           {
               this.labelShape.node.style.display = (this.graph.isEnabled() && this.graph.getSelectionCount() < this.graph.graphHandler.maxCells) ? '' : 'none';
           }
-      });
+      };
 
-      this.selectionHandler = mxUtils.bind(this, function(sender, evt)
-      {
+      this.selectionHandler = () => {
           update();
-      });
+      };
       
       this.graph.getSelectionModel().addListener(mxEvent.CHANGE, this.selectionHandler);
       
-      this.changeHandler = mxUtils.bind(this, function(sender, evt)
-      {
+      this.changeHandler = () => {
           this.updateLinkHint(this.graph.getLinkForCell(this.state.cell),
               this.graph.getLinksForState(this.state));
           update();
           this.redrawHandles();
-      });
+      };
       
       this.graph.getModel().addListener(mxEvent.CHANGE, this.changeHandler);
 

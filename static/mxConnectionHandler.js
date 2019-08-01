@@ -43,14 +43,13 @@ class mxConnectionHandler {
       var marker = mxConnectionHandlerCreateMarker.apply(this, arguments);
   
       var markerGetCell = marker.getCell;
-      marker.getCell = mxUtils.bind(this, function(me)
-      {
+      marker.getCell = () => {
           var result = markerGetCell.apply(this, arguments);
       
           this.error = null;
           
           return result;
-      });
+      };
       
       return marker;
   }
@@ -64,10 +63,9 @@ class mxConnectionHandler {
   init() {
       connectionHandlerInit.apply(this, arguments);
       
-      this.constraintHandler.isEnabled = mxUtils.bind(this, function()
-      {
+      this.constraintHandler.isEnabled = () => {
           return this.graph.connectionHandler.isEnabled();
-      });
+      };
   }
 }
 

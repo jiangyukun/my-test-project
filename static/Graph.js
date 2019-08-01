@@ -140,21 +140,18 @@ class Graph extends mxGraph {
           var handleClick = true;
           var first = null;
           
-          var down = mxUtils.bind(this, function(evt)
-          {
+          var down = () => {
               handleClick = true;
               first = new mxPoint(mxEvent.getClientX(evt), mxEvent.getClientY(evt));
-          });
+          };
           
-          var move = mxUtils.bind(this, function(evt)
-          {
+          var move = () => {
               handleClick = handleClick && first != null &&
                   Math.abs(first.x - mxEvent.getClientX(evt)) < tol &&
                   Math.abs(first.y - mxEvent.getClientY(evt)) < tol;
-          });
+          };
           
-          var up = mxUtils.bind(this, function(evt)
-          {
+          var up = () => {
               if (handleClick)
               {
                   var elt = mxEvent.getSource(evt)
@@ -170,7 +167,7 @@ class Graph extends mxGraph {
                       elt = elt.parentNode;
                   }
               }
-          });
+          };
           
           mxEvent.addGestureListeners(shape.node, down, move, up);
           mxEvent.addListener(shape.node, 'click', function(evt)
@@ -748,8 +745,7 @@ class Graph extends mxGraph {
       
       for (var i = 0; i < childCount; i++)
       {
-          (mxUtils.bind(this, function(layer)
-          {
+          ((() => {
               var span = document.createElement('div');
               span.style.overflow = 'hidden';
               span.style.textOverflow = 'ellipsis';
@@ -2455,8 +2451,7 @@ class Graph extends mxGraph {
 
   addClickHandler(highlight, beforeClick, onClick) {
       // Replaces links in labels for consistent right-clicks
-      var checkLinks = mxUtils.bind(this, function()
-      {
+      var checkLinks = () => {
           var links = this.container.getElementsByTagName('a');
           
           if (links != null)
@@ -2477,7 +2472,7 @@ class Graph extends mxGraph {
                   }
               }
           }
-      });
+      };
       
       this.model.addListener(mxEvent.CHANGE, checkLinks);
       checkLinks();
@@ -2962,10 +2957,9 @@ class Graph extends mxGraph {
       var exp = new mxImageExport();
       
       // Adds hyperlinks (experimental)
-      exp.getLinkForCellState = mxUtils.bind(this, function(state, canvas)
-      {
+      exp.getLinkForCellState = () => {
           return this.getLinkForCell(state.cell);
-      });
+      };
 
       return exp;
   }
@@ -3435,11 +3429,10 @@ class Graph extends mxGraph {
       // Handles custom links
       if (this.isCustomLink(link))
       {
-          mxEvent.addListener(a, 'click', mxUtils.bind(this, function(evt)
-          {
+          mxEvent.addListener(a, 'click', () => {
               this.customLinkClicked(link);
               mxEvent.consume(evt);
-          }));
+          });
       }
       
       return a;
@@ -3517,15 +3510,14 @@ class Graph extends mxGraph {
       // Shows popup menu if cell was selected or selection was empty and background was clicked
       // FIXME: Conflicts with mxPopupMenuHandler.prototype.getCellForPopupEvent in Editor.js by
       // selecting parent for selected children in groups before this check can be made.
-      this.popupMenuHandler.mouseUp = mxUtils.bind(this, function(sender, me)
-      {
+      this.popupMenuHandler.mouseUp = () => {
           this.popupMenuHandler.popupTrigger = !this.isEditing() && this.isEnabled() &&
               (me.getState() == null || !me.isSource(me.getState().control)) &&
               (this.popupMenuHandler.popupTrigger || (!menuShowing && !mxEvent.isMouseEvent(me.getEvent()) &&
               ((selectionEmpty && me.getCell() == null && this.isSelectionEmpty()) ||
               (cellSelected && this.isCellSelected(me.getCell())))));
           mxPopupMenuHandler.prototype.mouseUp.apply(this.popupMenuHandler, arguments);
-      });
+      };
   }
 
   tolerance = 12;

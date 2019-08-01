@@ -50,10 +50,9 @@ class HoverIcons {
 
       this.elts = [this.arrowUp, this.arrowRight, this.arrowDown, this.arrowLeft];
 
-      this.repaintHandler = mxUtils.bind(this, function()
-      {
+      this.repaintHandler = () => {
           this.repaint();
-      });
+      };
 
       this.graph.selectionModel.addListener(mxEvent.CHANGE, this.repaintHandler);
       this.graph.model.addListener(mxEvent.CHANGE, this.repaintHandler);
@@ -65,31 +64,27 @@ class HoverIcons {
       this.graph.addListener(mxEvent.ROOT, this.repaintHandler);
       
       // Resets the mouse point on escape
-      this.graph.addListener(mxEvent.ESCAPE, mxUtils.bind(this, function()
-      {
+      this.graph.addListener(mxEvent.ESCAPE, () => {
           this.mouseDownPoint = null;
-      }));
+      });
 
       // Removes hover icons if mouse leaves the container
-      mxEvent.addListener(this.graph.container, 'mouseleave',  mxUtils.bind(this, function(evt)
-      {
+      mxEvent.addListener(this.graph.container, 'mouseleave',  () => {
           // Workaround for IE11 firing mouseleave for touch in diagram
           if (evt.relatedTarget != null && mxEvent.getSource(evt) == this.graph.container)
           {
               this.setDisplay('none');
           }
-      }));
+      });
       
       // Resets current state when in-place editor starts
-      this.graph.addListener(mxEvent.START_EDITING, mxUtils.bind(this, function(evt)
-      {
+      this.graph.addListener(mxEvent.START_EDITING, () => {
           this.reset();
-      }));
+      });
       
       // Resets current state after update of selection state for touch events
       var graphClick = this.graph.click;
-      this.graph.click = mxUtils.bind(this, function(me)
-      {
+      this.graph.click = () => {
           graphClick.apply(this.graph, arguments);
           
           if (this.currentState != null && !this.graph.isCellSelected(this.currentState.cell) &&
@@ -97,7 +92,7 @@ class HoverIcons {
           {
               this.reset();
           }
-      });
+      };
       
       // Checks if connection handler was active in mouse move
       // as workaround for possible double connection inserted
@@ -106,8 +101,7 @@ class HoverIcons {
       // Implements a listener for hover and click handling
       this.graph.addMouseListener(
       {
-          mouseDown: mxUtils.bind(this, function(sender, me)
-          {
+          mouseDown: () => {
               connectionHandlerActive = false;
               var evt = me.getEvent();
               
@@ -126,9 +120,8 @@ class HoverIcons {
               }
               
               this.setDisplay('none');
-          }),
-          mouseMove: mxUtils.bind(this, function(sender, me)
-          {
+          },
+          mouseMove: () => {
               var evt = me.getEvent();
               
               if (this.isResetEvent(evt))
@@ -146,9 +139,8 @@ class HoverIcons {
               {
                   connectionHandlerActive = true;
               }
-          }),
-          mouseUp: mxUtils.bind(this, function(sender, me)
-          {
+          },
+          mouseUp: () => {
               var evt = me.getEvent();
               var pt = mxUtils.convertPoint(this.graph.container,
                   mxEvent.getClientX(evt), mxEvent.getClientY(evt))
@@ -190,7 +182,7 @@ class HoverIcons {
               
               connectionHandlerActive = false;
               this.resetActiveArrow();
-          })
+          }
       });
   }
 
@@ -239,8 +231,7 @@ class HoverIcons {
       arrow.style.position = 'absolute';
       arrow.style.cursor = this.cssCursor;
 
-      mxEvent.addGestureListeners(arrow, mxUtils.bind(this, function(evt)
-      {
+      mxEvent.addGestureListeners(arrow, () => {
           if (this.currentState != null && !this.isResetEvent(evt))
           {
               this.mouseDownPoint = mxUtils.convertPoint(this.graph.container,
@@ -250,13 +241,12 @@ class HoverIcons {
               this.setDisplay('none');
               mxEvent.consume(evt);
           }
-      }));
+      });
       
       // Captures mouse events as events on graph
       mxEvent.redirectMouseEvents(arrow, this.graph, this.currentState);
       
-      mxEvent.addListener(arrow, 'mouseenter', mxUtils.bind(this, function(evt)
-      {
+      mxEvent.addListener(arrow, 'mouseenter', () => {
           // Workaround for Firefox firing mouseenter on touchend
           if (mxEvent.isMouseEvent(evt))
           {
@@ -269,16 +259,15 @@ class HoverIcons {
               mxUtils.setOpacity(arrow, 100);
               this.activeArrow = arrow;
           }
-      }));
+      });
       
-      mxEvent.addListener(arrow, 'mouseleave', mxUtils.bind(this, function(evt)
-      {
+      mxEvent.addListener(arrow, 'mouseleave', () => {
           // Workaround for IE11 firing this event on touch
           if (!this.graph.isMouseDown)
           {
               this.resetActiveArrow();
           }
-      }));
+      });
       
       return arrow;
   }
@@ -515,8 +504,7 @@ class HoverIcons {
                   
                   var currentGeo = this.graph.getCellGeometry(this.currentState.cell);
                   
-                  var checkCollision = mxUtils.bind(this, function(cell, arrow)
-                  {
+                  var checkCollision = () => {
                       var geo = this.graph.model.isVertex(cell) && this.graph.getCellGeometry(cell);
                       
                       // Ignores collision if vertex is more than 3 times the size of this vertex
@@ -530,7 +518,7 @@ class HoverIcons {
                       {
                           arrow.style.visibility = 'visible';
                       }
-                  });
+                  };
                   
                   checkCollision(right, this.arrowRight);
                   checkCollision(left, this.arrowLeft);
@@ -672,15 +660,14 @@ class HoverIcons {
               if (state != null)
               {
                   // Starts timer to update current state with no mouse events
-                  this.updateThread = window.setTimeout(mxUtils.bind(this, function()
-                  {
+                  this.updateThread = window.setTimeout(() => {
                       if (!this.isActive() && !this.graph.isMouseDown &&
                           !this.graph.panningHandler.isActive())
                       {
                           this.prev = state;
                           this.update(state, x, y);
                       }
-                  }), this.updateDelay + 10);
+                  }, this.updateDelay + 10);
               }
           }
           else if (this.startTime != null)

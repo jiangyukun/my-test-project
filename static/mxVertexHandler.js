@@ -181,8 +181,7 @@ class mxVertexHandler {
           this.rotationShape.node.setAttribute('title', mxResources.get('rotateTooltip'));
       }
       
-      var update = mxUtils.bind(this, function()
-      {
+      var update = () => {
           // Shows rotation handle only if one vertex is selected
           if (this.rotationShape != null && this.rotationShape.node != null)
           {
@@ -195,29 +194,26 @@ class mxVertexHandler {
           }
           
           this.redrawHandles();
-      });
+      };
       
-      this.selectionHandler = mxUtils.bind(this, function(sender, evt)
-      {
+      this.selectionHandler = () => {
           update();
-      });
+      };
       
       this.graph.getSelectionModel().addListener(mxEvent.CHANGE, this.selectionHandler);
       
-      this.changeHandler = mxUtils.bind(this, function(sender, evt)
-      {
+      this.changeHandler = () => {
           this.updateLinkHint(this.graph.getLinkForCell(this.state.cell),
               this.graph.getLinksForState(this.state));
           update();
-      });
+      };
       
       this.graph.getModel().addListener(mxEvent.CHANGE, this.changeHandler);
       
       // Repaint needed when editing stops and no change event is fired
-      this.editingHandler = mxUtils.bind(this, function(sender, evt)
-      {
+      this.editingHandler = () => {
           this.redrawHandles();
-      });
+      };
       
       this.graph.addListener(mxEvent.EDITING_STOPPED, this.editingHandler);
 
@@ -276,12 +272,11 @@ class mxVertexHandler {
                   changeLink.style.cursor = 'pointer';
                   this.linkHint.appendChild(changeLink);
                   
-                  mxEvent.addListener(changeLink, 'click', mxUtils.bind(this, function(evt)
-                  {
+                  mxEvent.addListener(changeLink, 'click', () => {
                       this.graph.setSelectionCell(this.state.cell);
                       this.graph.editLink();
                       mxEvent.consume(evt);
-                  }));
+                  });
                   
                   var removeLink = document.createElement('img');
                   removeLink.setAttribute('src', Dialog.prototype.clearImage);
@@ -293,11 +288,10 @@ class mxVertexHandler {
                   removeLink.style.cursor = 'pointer';
                   this.linkHint.appendChild(removeLink);
                   
-                  mxEvent.addListener(removeLink, 'click', mxUtils.bind(this, function(evt)
-                  {
+                  mxEvent.addListener(removeLink, 'click', () => {
                       this.graph.setLinkForCell(this.state.cell, null);
                       mxEvent.consume(evt);
-                  }));
+                  });
               }
           }
 

@@ -65,6 +65,19 @@ function getConstructor(moduleName, ast, superClass) {
     return constructor
 }
 
+function getFunction(moduleName, ast) {
+    let func = null
+    recast.visit(ast, {
+        visitFunctionDeclaration(path) {
+            if (path.value.id.name == moduleName) {
+                func = path.value
+            }
+            return false
+        }
+    })
+    return func
+}
+
 function getOtherModuleList(moduleName, ast) {
     let otherModules = []
     recast.visit(ast, {
@@ -92,8 +105,22 @@ function getOtherModuleList(moduleName, ast) {
     return otherModules
 }
 
+function getCode(expressions) {
+    let astResult = recast.parse('')
+    if (expressions instanceof Array) {
+        expressions.forEach(exp => {
+            astResult.program.body.push(exp)
+        })
+    } else {
+        astResult.program.body.push(expressions)
+    }
+    return recast.print(astResult).code
+}
+
 module.exports = {
     getSuperClass,
     getConstructor,
-    getOtherModuleList
+    getOtherModuleList,
+    getFunction,
+    getCode
 }

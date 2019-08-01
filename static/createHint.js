@@ -6,15 +6,15 @@ let { mxConstants, mxGraph, mxText, mxGraphModel, mxGraphView, mxClient, mxSvgCa
 , mxDictionary, mxCell, mxGeometry, mxImageExport, mxPopupMenuHandler, mxCellEditor, mxPolyline, mxOutline, mxPanningHandler, mxElbowEdgeHandler
 , mxImageShape, mxRectangleShape } = mxGraph4
 
-class createHint {
-  constructor() {
-      var hint = document.createElement('div');
-      hint.className = 'geHint';
-      hint.style.whiteSpace = 'nowrap';
-      hint.style.position = 'absolute';
-      
-      return hint;
-  }
+/**
+ * Hints on handlers
+ */
+function createHint()
+{
+    var hint = document.createElement('div');
+    hint.className = 'geHint';
+    hint.style.whiteSpace = 'nowrap';
+    hint.style.position = 'absolute';
+    
+    return hint;
 }
-
-export default createHint

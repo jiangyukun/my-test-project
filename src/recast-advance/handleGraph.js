@@ -71,7 +71,7 @@ function handleModuleDep(code, moduleName) {
 }
 
 function reserveFile() {
-    let filePath = 'E:/WEB-Projects/mxgraph/javascript/examples/grapheditor/www/js/Graph.js'
+    let filePath = '/Users/wangji/web_study/mxgraph/javascript/examples/grapheditor/www/js/Graph.js'
     let distPath = path.join(process.cwd(), 'static')
     let moduleName = 'Graph'
     let code = fs.readFileSync(filePath).toString()
