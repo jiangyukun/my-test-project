@@ -3,41 +3,61 @@ let fs = require('fs')
 let path = require('path')
 let mkdirp = require('mkdirp')
 
-let _findModuleInner = require('../recast/b')
 let handlePrototype = require('../recast/handlePrototype')
 
-
-
-let rootDir = 'E:/WEB-Projects/mxgraph/javascript/src/js'
-
 function getImportStr(filePath, code, moduleName) {
-    return handleModuleDep(code, moduleName).reduce((str, current) => {
-        let modulePath = handleModulePath(filePath, current)
-        if (modulePath) {
-            return str + `import ${current} from '${modulePath}'\n`
+    let importGraphStr = `import mxGraph4 from 'mxgraph'`
+    let moduleStr = handleModuleDep(code, moduleName).reduce((str, current, index) => {
+        if (index % 10 == 9) {
+            return str + ', ' + current + '\n'
         }
-        return str
-    }, '')
-}
-
-function handleModulePath(currentModulePath, depModule) {
-    return 'mxgraph'
+        return str + ', ' + current
+    })
+    return importGraphStr + '\nlet { ' + moduleStr + ' } = mxGraph4\n'
 }
 
 function handleModuleDep(code, moduleName) {
     let moduleList = []
     let ast = recast.parse(code)
+    let variableDeclarationList = []
+    recast.visit(ast, {
+        visitVariableDeclaration(path) {
+            let declarations = path.value.declarations
+            declarations.forEach(d => {
+                if (d.id.name.startsWith('mx')) {
+                    if (variableDeclarationList.indexOf(d.id.name) == -1) {
+                        variableDeclarationList.push(d.id.name)
+                    }
+                }
+            })
+            return false
+        },
+        visitAssignmentExpression(path) {
+            let value = path.value
+            if (value.left.type == 'Identifier' && value.left.name.startsWith('mx')) {
+                if (variableDeclarationList.indexOf(value.left.name) == -1) {
+                    variableDeclarationList.push(value.left.name)
+                }
+            }
+            this.traverse(path)
+        }
+    })
+
     recast.visit(ast, {
         visitIdentifier(path) {
             let identify = path.value
             let name = identify.name
             if (name.startsWith('mx') && name != 'mxLoadResources' && name != 'mxTransient') {
+                if (variableDeclarationList.indexOf(name) != -1) {
+                    return false
+                }
                 if (moduleList.indexOf(name) == -1 && name != moduleName) {
                     moduleList.push(name)
                 }
             }
             return false
         },
+
         visitFunctionDeclaration(path) {
             let code = recast.print(path.value).code
             if (path.value.id.name != moduleName) {
@@ -51,7 +71,7 @@ function handleModuleDep(code, moduleName) {
 }
 
 function reserveFile() {
-    let filePath = '/Users/wangji/web_study/mxgraph/javascript/examples/grapheditor/www/js/Graph.js'
+    let filePath = 'E:/WEB-Projects/mxgraph/javascript/examples/grapheditor/www/js/Graph.js'
     let distPath = path.join(process.cwd(), 'static')
     let moduleName = 'Graph'
     let code = fs.readFileSync(filePath).toString()

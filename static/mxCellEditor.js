@@ -1,85 +1,37 @@
-import mxConstants from 'mxgraph'
-import mxGraph from 'mxgraph'
-import mxText from 'mxgraph'
-import mxGraphModel from 'mxgraph'
-import mxGraphView from 'mxgraph'
-import mxClient from 'mxgraph'
-import mxSvgCanvas2D from 'mxgraph'
-import mxShape from 'mxgraph'
-import mxUtils from 'mxgraph'
-import mxEvent from 'mxgraph'
-import mxPoint from 'mxgraph'
-import mxEdgeStyle from 'mxgraph'
-import mxRectangle from 'mxgraph'
-import mxEdgeHandler from 'mxgraph'
-import mxCellRenderer from 'mxgraph'
-import mxVertexHandler from 'mxgraph'
-import mxDragSource from 'mxgraph'
-import mxPopupMenu from 'mxgraph'
-import mxGuide from 'mxgraph'
-import mxGraphHandler from 'mxgraph'
-import mxConnectionHandler from 'mxgraph'
-import mxRubberband from 'mxgraph'
-import mxImage from 'mxgraph'
-import mxCellHighlight from 'mxgraph'
-import mxLayoutManager from 'mxgraph'
-import mxStackLayout from 'mxgraph'
-import mxCompactTreeLayout from 'mxgraph'
-import mxHierarchicalLayout from 'mxgraph'
-import mxEventObject from 'mxgraph'
-import mxResources from 'mxgraph'
-import mxGraphViewResetValidationState from 'mxgraph'
-import mxGraphViewValidateCellState from 'mxgraph'
-import mxCellRendererIsShapeInvalid from 'mxgraph'
-import mxGraphViewUpdateCellState from 'mxgraph'
-import mxConnectorPaintLine from 'mxgraph'
-import mxConnector from 'mxgraph'
-import mxGraphViewUpdateFloatingTerminalPoint from 'mxgraph'
-import mxStencilEvaluateTextAttribute from 'mxgraph'
-import mxStencil from 'mxgraph'
-import mxCellRendererCreateShape from 'mxgraph'
-import mxStencilRegistry from 'mxgraph'
-import mxConnectionHandlerCreateTarget from 'mxgraph'
-import mxConstraintHandler from 'mxgraph'
-import mxEllipse from 'mxgraph'
-import mxCellState from 'mxgraph'
-import mxConnectionHandlerCreateMarker from 'mxgraph'
-import mxStyleRegistry from 'mxgraph'
-import mxCodec from 'mxgraph'
-import mxConnectionConstraint from 'mxgraph'
-import mxValueChange from 'mxgraph'
-import mxDictionary from 'mxgraph'
-import mxCell from 'mxgraph'
-import mxGeometry from 'mxgraph'
-import mxImageExport from 'mxgraph'
-import mxPopupMenuHandler from 'mxgraph'
-import mxCellRendererInitializeLabel from 'mxgraph'
-import mxConstraintHandlerUpdate from 'mxgraph'
-import mxPolyline from 'mxgraph'
-import mxCellEditorStartEditing from 'mxgraph'
-import mxCellEditorResize from 'mxgraph'
-import mxCellEditorGetInitialValue from 'mxgraph'
-import mxCellEditorGetCurrentValue from 'mxgraph'
-import mxCellEditorStopEditing from 'mxgraph'
-import mxCellEditorApplyValue from 'mxgraph'
-import mxGraphHandlerMoveCells from 'mxgraph'
-import mxOutline from 'mxgraph'
-import mxPanningHandler from 'mxgraph'
-import mxRubberbandReset from 'mxgraph'
-import mxEdgeHandlerUpdatePreviewState from 'mxgraph'
-import mxEdgeHandlerIsOutlineConnectEvent from 'mxgraph'
-import mxElbowEdgeHandler from 'mxgraph'
-import mxImageShape from 'mxgraph'
-import mxRectangleShape from 'mxgraph'
-import mxGraphHandlerGetBoundingBox from 'mxgraph'
-import mxVertexHandlerGetSelectionBounds from 'mxgraph'
-import mxVertexHandlerMouseDown from 'mxgraph'
+import mxGraph4 from 'mxgraph'
+let { mxConstants, mxGraph, mxText, mxGraphModel, mxGraphView, mxClient, mxSvgCanvas2D, mxShape, mxUtils, mxEvent
+, mxPoint, mxEdgeStyle, mxRectangle, mxEdgeHandler, mxCellRenderer, mxVertexHandler, mxDragSource, mxPopupMenu, mxGuide, mxGraphHandler
+, mxConnectionHandler, mxRubberband, mxImage, mxCellHighlight, mxLayoutManager, mxStackLayout, mxCompactTreeLayout, mxHierarchicalLayout, mxEventObject, mxResources
+, mxConnector, mxStencil, mxStencilRegistry, mxConstraintHandler, mxEllipse, mxCellState, mxStyleRegistry, mxCodec, mxConnectionConstraint, mxValueChange
+, mxDictionary, mxCell, mxGeometry, mxImageExport, mxPopupMenuHandler, mxPolyline, mxOutline, mxPanningHandler, mxElbowEdgeHandler, mxImageShape
+, mxRectangleShape } = mxGraph4
 
 class mxCellEditor {
   isContentEditing() {
       var state = this.graph.view.getState(this.editingCell);
       
       return state != null && state.style['html'] == 1;
+  }
+
+  isTableSelected() {
+      return this.graph.getParentByName(
+          this.graph.getSelectedElement(),
+          'TABLE', this.textarea) != null;
+  }
+
+  alignText(align, evt) {
+      if (!this.isTableSelected() == (evt == null || !mxEvent.isShiftDown(evt)))
+      {
+          this.graph.cellEditor.setAlign(align);
+          
+          this.graph.processElements(this.textarea, function(elt)
+          {
+              elt.removeAttribute('align');
+              elt.style.textAlign = null;
+          });
+      }
+      
+      document.execCommand('justify' + align.toLowerCase(), false, null);
   }
 
   saveSelection() {
@@ -293,7 +245,13 @@ class mxCellEditor {
 
               window.setTimeout(mxUtils.bind(this, function()
               {
-                  checkNode(this.textarea, clone);
+                  // Paste from Word or Excel
+                  if (this.textarea != null &&
+                      (this.textarea.innerHTML.indexOf('<o:OfficeDocumentSettings>') >= 0 ||
+                      this.textarea.innerHTML.indexOf('<!--[if !mso]>') >= 0))
+                  {
+                      checkNode(this.textarea, clone);
+                  }
               }), 0);
           }));
       }
@@ -566,16 +524,19 @@ class mxCellEditor {
   }
 
   getBackgroundColor(state) {
-      var color = null;
-      
-      if (this.graph.getModel().isEdge(state.cell) || this.graph.getModel().isEdge(this.graph.getModel().getParent(state.cell)))
+      var color = mxUtils.getValue(state.style, mxConstants.STYLE_LABEL_BACKGROUNDCOLOR, null);
+
+      if ((color == null || color == mxConstants.NONE) &&
+          (state.cell.geometry != null && state.cell.geometry.width > 0) &&
+          (mxUtils.getValue(state.style, mxConstants.STYLE_ROTATION, 0) != 0 ||
+          mxUtils.getValue(state.style, mxConstants.STYLE_HORIZONTAL, 1) == 0))
       {
-          var color = mxUtils.getValue(state.style, mxConstants.STYLE_LABEL_BACKGROUNDCOLOR, null);
-          
-          if (color == mxConstants.NONE)
-          {
-              color = null;
-          }
+          color = mxUtils.getValue(state.style, mxConstants.STYLE_FILLCOLOR, null);
+      }
+
+      if (color == mxConstants.NONE)
+      {
+          color = null;
       }
       
       return color;
