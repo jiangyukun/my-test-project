@@ -10,17 +10,14 @@ class ConstraintHandler extends mxConstraintHandler {
   createHighlightShape() {
       var hl = new mxEllipse(null, this.highlightColor, this.highlightColor, 0);
       hl.opacity = mxConstants.HIGHLIGHT_OPACITY;
-      
+
       return hl;
   }
 
   update(me, source) {
-      if (this.isKeepFocusEvent(me) || !mxEvent.isAltDown(me.getEvent()))
-      {
+      if (this.isKeepFocusEvent(me) || !mxEvent.isAltDown(me.getEvent())) {
           super.update(...arguments);
-      }
-      else
-      {
+      } else {
           this.reset();
       }
   }

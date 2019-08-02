@@ -9,12 +9,12 @@ let { mxConstants, mxGraph, mxText, mxGraphModel, mxGraphView, mxClient, mxSvgCa
 class Date {
   toISOString() {
       return this.getUTCFullYear()
-          + '-' + pad( this.getUTCMonth() + 1 )
-          + '-' + pad( this.getUTCDate() )
-          + 'T' + pad( this.getUTCHours() )
-          + ':' + pad( this.getUTCMinutes() )
-          + ':' + pad( this.getUTCSeconds() )
-          + '.' + String( (this.getUTCMilliseconds()/1000).toFixed(3) ).slice( 2, 5 )
+          + '-' + pad(this.getUTCMonth() + 1)
+          + '-' + pad(this.getUTCDate())
+          + 'T' + pad(this.getUTCHours())
+          + ':' + pad(this.getUTCMinutes())
+          + ':' + pad(this.getUTCSeconds())
+          + '.' + String((this.getUTCMilliseconds() / 1000).toFixed(3)).slice(2, 5)
           + 'Z';
   }
 

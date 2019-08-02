@@ -9,19 +9,19 @@ let { mxConstants, mxGraph, mxText, mxGraphModel, mxGraphView, mxClient, mxSvgCa
 class PanningHandler extends mxPanningHandler {
   isPanningTrigger(me) {
       var evt = me.getEvent();
-      
+
       return (me.getState() == null && !mxEvent.isMouseEvent(evt)) ||
           (mxEvent.isPopupTrigger(evt) && (me.getState() == null ||
-          mxEvent.isControlDown(evt) || mxEvent.isShiftDown(evt)));
+              mxEvent.isControlDown(evt) || mxEvent.isShiftDown(evt)));
   }
 
   isPanningTrigger(me) {
       var evt = me.getEvent();
-      
+
       return (mxEvent.isLeftMouseButton(evt) && ((this.useLeftButtonForPanning &&
-              me.getState() == null) || (mxEvent.isControlDown(evt) &&
-              !mxEvent.isShiftDown(evt)))) || (this.usePopupTrigger &&
-              mxEvent.isPopupTrigger(evt));
+          me.getState() == null) || (mxEvent.isControlDown(evt) &&
+          !mxEvent.isShiftDown(evt)))) || (this.usePopupTrigger &&
+          mxEvent.isPopupTrigger(evt));
   }
 }
 

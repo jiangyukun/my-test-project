@@ -17,7 +17,7 @@ class Guide extends mxGuide {
 
   createGuideShape(horizontal) {
       var guide = new mxPolyline([], mxConstants.GUIDE_COLOR, mxConstants.GUIDE_STROKEWIDTH);
-      
+
       return guide;
   }
 }

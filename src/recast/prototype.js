@@ -7,7 +7,7 @@ let {ifStatement, blockStatement, expressionStatement, callExpression, memberExp
 let {classDeclaration, classProperty, identifier, classBody, methodDefinition} = builders
 
 let code = `
-a(...b)
+let a  = {}
 `
 
 // console.log(code)

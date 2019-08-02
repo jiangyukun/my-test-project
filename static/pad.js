@@ -6,14 +6,12 @@ let { mxConstants, mxGraph, mxText, mxGraphModel, mxGraphView, mxClient, mxSvgCa
 , mxDictionary, mxCell, mxGeometry, mxImageExport, mxPopupMenuHandler, mxCellEditor, mxPolyline, mxOutline, mxPanningHandler, mxElbowEdgeHandler
 , mxImageShape, mxRectangleShape } = mxGraph4
 
-function pad(number)
-{
+function pad(number) {
     var r = String(number);
-    
-    if (r.length === 1) 
-    {
+
+    if (r.length === 1) {
         r = '0' + r;
     }
-    
+
     return r;
 }

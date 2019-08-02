@@ -9,9 +9,8 @@ let { mxConstants, mxGraph, mxText, mxGraphModel, mxGraphView, mxClient, mxSvgCa
 class CellHighlight extends mxCellHighlight {
   getStrokeWidth(state) {
       var s = this.strokeWidth;
-      
-      if (this.graph.useCssTransforms)
-      {
+
+      if (this.graph.useCssTransforms) {
           s /= this.graph.currentScale;
       }
 

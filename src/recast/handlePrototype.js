@@ -5,36 +5,35 @@ let builders = recast.types.builders
 let {classDeclaration, classProperty, identifier, classBody, methodDefinition, arrowFunctionExpression, callExpression, memberExpression} = builders
 let {spreadElement} = builders
 
-function handlePrototype(moduleName, code, findImport) {
+function handlePrototype(moduleName, ast, options) {
     let bodyAst = []
-    let ast = recast.parse(code)
 
-    let newModuleName = moduleName
-    if (newModuleName.startsWith('mx')) {
-        newModuleName = newModuleName.substring(2)
-    }
+    let findImport = options.findImport || (() => '')
+    let newClassName = options.newClassName || moduleName
 
     let unHandlePropertyList = []
     let otherModules = recastUtil.getOtherModuleList(moduleName, ast)
-    let superClass = recastUtil.getSuperClass(moduleName, ast)
+    let superClass = options.superClass || recastUtil.getSuperClass(moduleName, ast)
     let constructor = recastUtil.getConstructor(moduleName, ast, superClass)
     let func = recastUtil.getFunction(moduleName, ast)
-    if (!superClass && moduleName.startsWith('mx')) {
-        superClass = identifier(moduleName)
-    }
 
     recast.visit(ast, {
+        visitObjectExpression() {
+            return false
+        },
         visitCallExpression(path) {
             let object = path.value.callee.object
             let property = path.value.callee.property
-            let arguments = path.value.arguments
+            let argumentList = path.value.arguments
             if (object) {
                 if (object.name == 'mxUtils' && property.name == 'bind') {
-                    path.replace(arrowFunctionExpression([], arguments[1].body, false))
+                    if (argumentList[1].type == 'FunctionExpression') {
+                        path.replace(arrowFunctionExpression([], argumentList[1].body, false))
+                    }
                 }
             }
             if (object && property && property.name == 'apply' && object.type == 'Identifier') {
-                if (arguments.length == 2 && arguments[0].type == 'ThisExpression' && arguments[1].name == 'arguments') {
+                if (argumentList.length == 2 && argumentList[0].type == 'ThisExpression' && argumentList[1].name == 'arguments') {
                     let parentPath = path.parentPath
                     while (parentPath) {
                         if (parentPath.value.type == 'AssignmentExpression') {
@@ -43,9 +42,12 @@ function handlePrototype(moduleName, code, findImport) {
                         parentPath = parentPath.parentPath
                     }
                     if (parentPath && parentPath.value.left.property) {
-                        let methodName = parentPath.value.left.property.name
-                        if (methodName != 'click') {
-                            path.replace(callExpression(memberExpression(identifier('super'), identifier(methodName)), [spreadElement(identifier('arguments'))]))
+                        let leftCode = recast.print(parentPath.value).code
+                        if (leftCode.indexOf('.prototype.') != -1) {
+                            let methodName = parentPath.value.left.property.name
+                            if (methodName != 'click') {
+                                path.replace(callExpression(memberExpression(identifier('super'), identifier(methodName)), [spreadElement(identifier('arguments'))]))
+                            }
                         }
                     }
                 }
@@ -82,6 +84,7 @@ function handlePrototype(moduleName, code, findImport) {
             this.traverse(path)
         }
     })
+
     if (func && bodyAst.length == 0) {
         // 普通函数
         return {code: findImport() + '\n' + recastUtil.getCode(func), otherModules}
@@ -92,13 +95,16 @@ function handlePrototype(moduleName, code, findImport) {
         if (unHandlePropertyList.length != 0) {
             // console.log(moduleName, unHandlePropertyList)
         }
-        let convertCode = recastUtil.getCode(classDeclaration(identifier(newModuleName), classBody(bodyAst), superClass)) + `
+        let convertCode = recastUtil.getCode(classDeclaration(identifier(newClassName), classBody(bodyAst), superClass)) + `
 
-export default ${newModuleName}
+export default ${newClassName}
 `
         return {code: findImport() + '\n' + convertCode, otherModules}
     } else {
         // 常量类
+        if (moduleName == '') {
+
+        }
         let returnOldCode = false
         recast.visit(ast, {
             visitVariableDeclaration(path) {
@@ -118,7 +124,7 @@ export default ${newModuleName}
         })
         if (returnOldCode) {
             return {
-                code: findImport() + '\n' + recast.print(ast).code + `\n export default ${moduleName}`,
+                code: findImport() + '\n' + recast.print(ast).code + `\n export default ${newClassName}`,
                 otherModules
             }
         } else {
@@ -127,9 +133,14 @@ export default ${newModuleName}
                 visitCallExpression(path) {
                     let value = path.value
                     let callee = value.callee
-                    if (callee.object.name == 'mxCodecRegistry' && callee.property.name == 'register') {
-                        isRegister = true
+                    try {
+                        if (callee.object.name == 'mxCodecRegistry' && callee.property.name == 'register') {
+                            isRegister = true
+                        }
+                    } catch (e) {
+                        console.log(1);
                     }
+
                     return false
                 }
             })

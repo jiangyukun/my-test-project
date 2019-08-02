@@ -1,11 +1,17 @@
 let recast = require('recast')
 let fs = require('fs')
 let path = require('path')
-let mkdirp = require('mkdirp')
 
+let builders = recast.types.builders
+
+let recastUtil = require('../recast/recastUtil')
 let handlePrototype = require('../recast/handlePrototype')
+let utils = require('../recast/utils')
 
-function getImportStr(filePath, code, moduleName) {
+let {writeCodeToFile} = utils
+let {identifier} = builders
+
+function getImportStr(code, moduleName) {
     let importGraphStr = `import mxGraph4 from 'mxgraph'`
     let moduleStr = handleModuleDep(code, moduleName).reduce((str, current, index) => {
         if (index % 10 == 9) {
@@ -70,35 +76,46 @@ function handleModuleDep(code, moduleName) {
     return moduleList
 }
 
-function reserveFile() {
-    let filePath = '/Users/wangji/web_study/mxgraph/javascript/examples/grapheditor/www/js/Graph.js'
+function handleGraph() {
+    let filePath = 'E:/WEB-Projects/mxgraph/javascript/examples/grapheditor/www/js/Graph.js'
     let distPath = path.join(process.cwd(), 'static')
     let moduleName = 'Graph'
     let code = fs.readFileSync(filePath).toString()
-    let resultInfo = handlePrototype(moduleName, code, () => getImportStr(filePath, code, moduleName))
-    let convertCode = resultInfo.code
+
+    let resultInfo = handleModule(moduleName, code, null, distPath)
     if (resultInfo.otherModules.length > 0) {
         resultInfo.otherModules.forEach((moduleName) => {
             let newModuleName = moduleName
             if (newModuleName.startsWith('mx')) {
                 newModuleName = newModuleName.substring(2)
             }
-            let otherModulePath = (distPath + '/' + newModuleName + '.js')
-            let resultInfo1 = handlePrototype(moduleName, code, () => getImportStr('', code, moduleName))
-            writeCodeToFile(otherModulePath, resultInfo1.code)
+            if (newModuleName == 'Graph') {
+                newModuleName = 'Graph1'
+            }
+            handleModule(moduleName, code, newModuleName, distPath)
         })
     }
-    writeCodeToFile(distPath + '/Graph.js', convertCode)
 }
 
-function writeCodeToFile(distPath, code) {
-    if (!code) {
-        return
-    }
-    let distDir = distPath.substring(0, distPath.lastIndexOf('/') + 1)
-    mkdirp(distDir, () => {
-        fs.writeFileSync(distPath, code)
+function handleModule(moduleName, code, newClassName, distPath) {
+    let ast = recast.parse(code)
+
+    let resultInfo = handlePrototype(moduleName, ast, {
+        findImport: () => getImportStr(code, moduleName),
+        newClassName,
+        superClass: getSuperClass(moduleName, ast)
     })
+    let convertCode = resultInfo.code
+    writeCodeToFile(distPath + `/${newClassName || moduleName}.js`, convertCode)
+    return resultInfo
 }
 
-reserveFile()
+function getSuperClass(moduleName, ast) {
+    let superClass = recastUtil.getSuperClass(moduleName, ast)
+    if (!superClass && moduleName.startsWith('mx')) {
+        superClass = identifier(moduleName)
+    }
+    return superClass
+}
+
+handleGraph()

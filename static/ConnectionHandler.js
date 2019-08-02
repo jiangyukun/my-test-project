@@ -18,20 +18,19 @@ class ConnectionHandler extends mxConnectionHandler {
       var style = this.graph.createCurrentEdgeStyle();
       var edge = this.graph.createEdge(null, null, null, null, null, style);
       var state = new mxCellState(this.graph.view, edge, this.graph.getCellStyle(edge));
-      
-      for (var key in this.graph.currentEdgeStyle)
-      {
+
+      for (var key in this.graph.currentEdgeStyle) {
           state.style[key] = this.graph.currentEdgeStyle[key];
       }
-      
+
       return state;
   }
 
   createShape() {
       var shape = super.createShape(...arguments);
-      
+
       shape.isDashed = this.graph.currentEdgeStyle[mxConstants.STYLE_DASHED] == '1';
-      
+
       return shape;
   }
 
@@ -41,16 +40,16 @@ class ConnectionHandler extends mxConnectionHandler {
 
   createMarker() {
       var marker = super.createMarker(...arguments);
-  
+
       var markerGetCell = marker.getCell;
       marker.getCell = () => {
-          var result = super.getCell(...arguments);
-      
+          var result = markerGetCell.apply(this, arguments);
+
           this.error = null;
-          
+
           return result;
       };
-      
+
       return marker;
   }
 
@@ -62,7 +61,7 @@ class ConnectionHandler extends mxConnectionHandler {
 
   init() {
       super.init(...arguments);
-      
+
       this.constraintHandler.isEnabled = () => {
           return this.graph.connectionHandler.isEnabled();
       };

@@ -100,6 +100,9 @@ function getOtherModuleList(moduleName, ast) {
                 }
             }
             return false
+        },
+        visitObjectExpression() {
+            return false
         }
     })
     return otherModules

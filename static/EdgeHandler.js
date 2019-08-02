@@ -10,8 +10,7 @@ class EdgeHandler extends mxEdgeHandler {
   snapToTerminals = true;
 
   updateHint(me, point) {
-      if (this.hint == null)
-      {
+      if (this.hint == null) {
           this.hint = createHint();
           this.state.view.graph.container.appendChild(this.hint);
       }
@@ -20,29 +19,24 @@ class EdgeHandler extends mxEdgeHandler {
       var s = this.graph.view.scale;
       var x = this.roundLength(point.x / s - t.x);
       var y = this.roundLength(point.y / s - t.y);
-      
+
       this.hint.innerHTML = x + ', ' + y;
       this.hint.style.visibility = 'visible';
-      
-      if (this.isSource || this.isTarget)
-      {
+
+      if (this.isSource || this.isTarget) {
           if (this.constraintHandler.currentConstraint != null &&
-              this.constraintHandler.currentFocus != null)
-          {
+              this.constraintHandler.currentFocus != null) {
               var pt = this.constraintHandler.currentConstraint.point;
-              this.hint.innerHTML = '[' + Math.round(pt.x * 100) + '%, '+ Math.round(pt.y * 100) + '%]';
-          }
-          else if (this.marker.hasValidState())
-          {
+              this.hint.innerHTML = '[' + Math.round(pt.x * 100) + '%, ' + Math.round(pt.y * 100) + '%]';
+          } else if (this.marker.hasValidState()) {
               this.hint.style.visibility = 'hidden';
           }
       }
-      
+
       this.hint.style.left = Math.round(me.getGraphX() - this.hint.clientWidth / 2) + 'px';
       this.hint.style.top = (Math.max(me.getGraphY(), point.y) + this.state.view.graph.gridSize) + 'px';
-      
-      if (this.linkHint != null)
-      {
+
+      if (this.linkHint != null) {
           this.linkHint.style.display = 'none';
       }
   }
@@ -72,24 +66,21 @@ class EdgeHandler extends mxEdgeHandler {
 
   updatePreviewState(edge, point, terminalState, me) {
       super.updatePreviewState(...arguments);
-      
-      if (terminalState != this.currentTerminalState)
-      {
+
+      if (terminalState != this.currentTerminalState) {
           startTime = new Date().getTime();
           timeOnTarget = 0;
-      }
-      else
-      {
+      } else {
           timeOnTarget = new Date().getTime() - startTime;
       }
-      
+
       this.currentTerminalState = terminalState;
   }
 
   isOutlineConnectEvent(me) {
       return (this.currentTerminalState != null && me.getState() == this.currentTerminalState && timeOnTarget > 2000) ||
           ((this.currentTerminalState == null || mxUtils.getValue(this.currentTerminalState.style, 'outlineConnect', '1') != '0') &&
-          super.isOutlineConnectEvent(...arguments));
+              super.isOutlineConnectEvent(...arguments));
   }
 
   createHandleShape(index, virtual) {
@@ -101,25 +92,21 @@ class EdgeHandler extends mxEdgeHandler {
       var pt = (c != null) ? this.graph.getConnectionPoint(this.state.getVisibleTerminalState(source), c) : null;
       var img = (pt != null) ? this.fixedHandleImage : ((c != null && terminalState != null) ?
           this.terminalHandleImage : this.handleImage);
-      
-      if (img != null)
-      {
+
+      if (img != null) {
           var shape = new mxImageShape(new mxRectangle(0, 0, img.width, img.height), img.src);
-          
+
           // Allows HTML rendering of the images
           shape.preserveImageAspect = false;
 
           return shape;
-      }
-      else
-      {
+      } else {
           var s = mxConstants.HANDLE_SIZE;
-          
-          if (this.preferHtml)
-          {
+
+          if (this.preferHtml) {
               s -= 1;
           }
-          
+
           return new mxRectangleShape(new mxRectangle(0, 0, s, s), mxConstants.HANDLE_FILLCOLOR, mxConstants.HANDLE_STROKECOLOR);
       }
   }
@@ -128,20 +115,18 @@ class EdgeHandler extends mxEdgeHandler {
 
   init() {
       super.init(...arguments);
-      
+
       // Disables connection points
       this.constraintHandler.isEnabled = () => {
           return this.state.view.graph.connectionHandler.isEnabled();
       };
-      
+
       var update = () => {
-          if (this.linkHint != null)
-          {
+          if (this.linkHint != null) {
               this.linkHint.style.display = (this.graph.getSelectionCount() == 1) ? '' : 'none';
           }
-          
-          if (this.labelShape != null)
-          {
+
+          if (this.labelShape != null) {
               this.labelShape.node.style.display = (this.graph.isEnabled() && this.graph.getSelectionCount() < this.graph.graphHandler.maxCells) ? '' : 'none';
           }
       };
@@ -149,23 +134,22 @@ class EdgeHandler extends mxEdgeHandler {
       this.selectionHandler = () => {
           update();
       };
-      
+
       this.graph.getSelectionModel().addListener(mxEvent.CHANGE, this.selectionHandler);
-      
+
       this.changeHandler = () => {
           this.updateLinkHint(this.graph.getLinkForCell(this.state.cell),
               this.graph.getLinksForState(this.state));
           update();
           this.redrawHandles();
       };
-      
+
       this.graph.getModel().addListener(mxEvent.CHANGE, this.changeHandler);
 
       var link = this.graph.getLinkForCell(this.state.cell);
       var links = this.graph.getLinksForState(this.state);
-                              
-      if (link != null || (links != null && links.length > 0))
-      {
+
+      if (link != null || (links != null && links.length > 0)) {
           this.updateLinkHint(link, links);
           this.redrawHandles();
       }
@@ -174,20 +158,17 @@ class EdgeHandler extends mxEdgeHandler {
   redrawHandles() {
       // Workaround for special case where handler
       // is reset before this which leads to a NPE
-      if (this.marker != null)
-      {
+      if (this.marker != null) {
           edgeHandlerRedrawHandles.apply(this);
-  
-          if (this.state != null && this.linkHint != null)
-          {
+
+          if (this.state != null && this.linkHint != null) {
               var b = this.state;
-              
-              if (this.state.text != null && this.state.text.bounds != null)
-              {
+
+              if (this.state.text != null && this.state.text.bounds != null) {
                   b = new mxRectangle(b.x, b.y, b.width, b.height);
                   b.add(this.state.text.bounds);
               }
-              
+
               this.linkHint.style.left = Math.max(0, Math.round(b.x + (b.width - this.linkHint.clientWidth) / 2)) + 'px';
               this.linkHint.style.top = Math.round(b.y + b.height + 6 + this.state.view.graph.tolerance) + 'px';
           }
@@ -196,30 +177,26 @@ class EdgeHandler extends mxEdgeHandler {
 
   reset() {
       super.reset(...arguments);
-      
-      if (this.linkHint != null)
-      {
+
+      if (this.linkHint != null) {
           this.linkHint.style.visibility = '';
       }
   }
 
   destroy() {
       super.destroy(...arguments);
-      
-      if (this.linkHint != null)
-      {
+
+      if (this.linkHint != null) {
           this.linkHint.parentNode.removeChild(this.linkHint);
           this.linkHint = null;
       }
 
-      if (this.selectionHandler != null)
-      {
+      if (this.selectionHandler != null) {
           this.graph.getSelectionModel().removeListener(this.selectionHandler);
           this.selectionHandler = null;
       }
 
-      if  (this.changeHandler != null)
-      {
+      if (this.changeHandler != null) {
           this.graph.getModel().removeListener(this.changeHandler);
           this.changeHandler = null;
       }

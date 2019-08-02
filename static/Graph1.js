@@ -6,17 +6,31 @@ let { mxConstants, mxGraph, mxText, mxGraphModel, mxGraphView, mxClient, mxSvgCa
 , mxDictionary, mxCell, mxGeometry, mxImageExport, mxPopupMenuHandler, mxCellEditor, mxPolyline, mxOutline, mxPanningHandler, mxElbowEdgeHandler
 , mxImageShape, mxRectangleShape } = mxGraph4
 
-class Stencil extends mxStencil {
-  evaluateTextAttribute(node, attribute, shape) {
-      var result = super.evaluateTextAttribute(...arguments);
-      var placeholders = node.getAttribute('placeholders');
+class Graph1 extends mxGraph {
+  pageBreakColor = '#c0c0c0';
+  pageScale = 1;
 
-      if (placeholders == '1' && shape.state != null) {
-          result = shape.state.view.graph.replacePlaceholders(shape.state.cell, result);
+  pageFormat = (lang === 'en-us' || lang === 'en-ca' || lang === 'es-mx') ?
+      mxConstants.PAGE_FORMAT_LETTER_PORTRAIT : mxConstants.PAGE_FORMAT_A4_PORTRAIT;
+
+  updatePageBreaks(visible, width, height) {
+      var useCssTranforms = this.useCssTransforms, scale = this.view.scale,
+          translate = this.view.translate;
+
+      if (useCssTranforms) {
+          this.view.scale = 1;
+          this.view.translate = new mxPoint(0, 0);
+          this.useCssTransforms = false;
       }
 
-      return result;
+      super.updatePageBreaks(...arguments);
+
+      if (useCssTranforms) {
+          this.view.scale = scale;
+          this.view.translate = translate;
+          this.useCssTransforms = true;
+      }
   }
 }
 
-export default Stencil
+export default Graph1

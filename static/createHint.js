@@ -9,12 +9,11 @@ let { mxConstants, mxGraph, mxText, mxGraphModel, mxGraphView, mxClient, mxSvgCa
 /**
  * Hints on handlers
  */
-function createHint()
-{
+function createHint() {
     var hint = document.createElement('div');
     hint.className = 'geHint';
     hint.style.whiteSpace = 'nowrap';
     hint.style.position = 'absolute';
-    
+
     return hint;
 }
