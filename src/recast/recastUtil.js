@@ -120,10 +120,22 @@ function getCode(expressions) {
     return recast.print(astResult).code
 }
 
+function isInExpression(path, expression) {
+    let parentPath = path.parentPath
+    while (parentPath) {
+        if (parentPath.value.type == expression) {
+            return true
+        }
+        parentPath = parentPath.parentPath
+    }
+    return false
+}
+
 module.exports = {
     getSuperClass,
     getConstructor,
     getOtherModuleList,
     getFunction,
-    getCode
+    getCode,
+    isInExpression
 }

@@ -45,9 +45,7 @@ function handlePrototype(moduleName, ast, options) {
                         let leftCode = recast.print(parentPath.value).code
                         if (leftCode.indexOf('.prototype.') != -1) {
                             let methodName = parentPath.value.left.property.name
-                            if (methodName != 'click') {
-                                path.replace(callExpression(memberExpression(identifier('super'), identifier(methodName)), [spreadElement(identifier('arguments'))]))
-                            }
+                            path.replace(callExpression(memberExpression(identifier('super'), identifier(methodName)), [spreadElement(identifier('arguments'))]))
                         }
                     }
                 }
@@ -55,6 +53,9 @@ function handlePrototype(moduleName, ast, options) {
             this.traverse(path)
         },
         visitAssignmentExpression(path) {
+            if (recastUtil.isInExpression(path, 'FunctionExpression')) {
+                return this.traverse(path)
+            }
             let leftCode = recast.print(path.value.left).code
             let right = path.value.right
 
@@ -102,9 +103,6 @@ export default ${newClassName}
         return {code: findImport() + '\n' + convertCode, otherModules}
     } else {
         // 常量类
-        if (moduleName == '') {
-
-        }
         let returnOldCode = false
         recast.visit(ast, {
             visitVariableDeclaration(path) {
@@ -130,9 +128,16 @@ export default ${newClassName}
         } else {
             let isRegister = false
             recast.visit(ast, {
+                visitFunctionExpression() {
+                  return false
+                },
+                visitFunctionDeclaration() {
+                    return false
+                },
                 visitCallExpression(path) {
                     let value = path.value
                     let callee = value.callee
+
                     try {
                         if (callee.object.name == 'mxCodecRegistry' && callee.property.name == 'register') {
                             isRegister = true
@@ -140,7 +145,6 @@ export default ${newClassName}
                     } catch (e) {
                         console.log(1);
                     }
-
                     return false
                 }
             })
