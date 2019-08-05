@@ -5,10 +5,9 @@ let _findModuleInner = require('../recast/b')
 
 let handlePrototype = require('../recast/handlePrototype')
 let utils = require('../recast/utils')
+let config = require('../recast/config')
 
 let {writeCodeToFile} = utils
-
-let rootDir = 'E:/WEB-Projects/mxgraph/javascript/src/js'
 
 function getImportStr(filePath, moduleName, code) {
     return handleModuleDep(code, moduleName).reduce((str, current) => {
@@ -27,9 +26,9 @@ function handleModulePath(currentModulePath, depModule) {
     for (let i = 0; i < count; i++) {
         path += '../'
     }
-    let depPath = findModule(rootDir, depModule)
+    let depPath = findModule(config.mxGraphRoot, depModule)
     if (!depPath) {
-        depPath = _findModuleInner(rootDir, depModule)
+        depPath = _findModuleInner(config.mxGraphRoot, depModule)
     }
     if (depPath) {
         let t = depPath.substring(currentModulePath.indexOf('/js/') + 4)
@@ -137,4 +136,4 @@ function handleModule(moduleName, code, filePath) {
     return resultInfo
 }
 
-reserveFile(rootDir)
+reserveFile(config.mxGraphRoot)

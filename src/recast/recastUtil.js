@@ -60,6 +60,20 @@ function getConstructor(moduleName, ast, superClass) {
                 }
             }
             return false
+        },
+        visitAssignmentExpression(path) {
+            let left = path.value.left
+            let right = path.value.right
+            if (left.type == 'Identifier' && left.name == moduleName && right.type == 'FunctionExpression') {
+                constructor = methodDefinition('constructor', identifier('constructor'), functionExpression(null, right.params, right.body))
+            }
+            return false
+        },
+        visitIfStatement(path) {
+            return false
+        },
+        visitObjectExpression(path) {
+            return false
         }
     })
     return constructor

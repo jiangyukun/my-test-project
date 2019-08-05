@@ -28,7 +28,7 @@ function handlePrototype(moduleName, ast, options) {
             if (object) {
                 if (object.name == 'mxUtils' && property.name == 'bind') {
                     if (argumentList[1].type == 'FunctionExpression') {
-                        path.replace(arrowFunctionExpression([], argumentList[1].body, false))
+                        path.replace(arrowFunctionExpression(argumentList[1].params, argumentList[1].body, false))
                     }
                 }
             }

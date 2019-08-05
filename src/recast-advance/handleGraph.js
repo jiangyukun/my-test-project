@@ -1,6 +1,7 @@
 let recast = require('recast')
 let fs = require('fs')
 let path = require('path')
+let config = require('../recast/config')
 
 let builders = recast.types.builders
 
@@ -77,7 +78,7 @@ function handleModuleDep(code, moduleName) {
 }
 
 function handleGraph() {
-    let filePath = 'E:/WEB-Projects/mxgraph/javascript/examples/grapheditor/www/js/Graph.js'
+    let filePath = config.graphRoot
     let distPath = path.join(process.cwd(), 'static')
     let moduleName = 'Graph'
     let code = fs.readFileSync(filePath).toString()
