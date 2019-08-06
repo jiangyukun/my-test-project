@@ -3,7 +3,7 @@ let recastUtil = require('./recastUtil')
 
 let builders = recast.types.builders
 let {classDeclaration, classProperty, identifier, classBody, methodDefinition, arrowFunctionExpression, callExpression, memberExpression} = builders
-let {spreadElement} = builders
+let {spreadElement, arrayExpression} = builders
 
 function handlePrototype(moduleName, ast, options) {
     let bodyAst = []
@@ -18,6 +18,14 @@ function handlePrototype(moduleName, ast, options) {
     let func = recastUtil.getFunction(moduleName, ast)
 
     recast.visit(ast, {
+        // visitIdentifier(path) {
+        //     let value = path.value
+        //     if (value.name == 'arguments') {
+        //         let parentPath = recastUtil.findParentPath(path, 'FunctionExpression')
+        //         path.replace(arrayExpression(parentPath.value.params))
+        //     }
+        //     return false
+        // },
         visitObjectExpression() {
             return false
         },
@@ -27,23 +35,17 @@ function handlePrototype(moduleName, ast, options) {
             let argumentList = path.value.arguments
             if (object) {
                 if (object.name == 'mxUtils' && property.name == 'bind') {
-                    if (argumentList[1].type == 'FunctionExpression') {
+                    if (argumentList[1].type == 'FunctionExpression' && recastUtil.canUseArrowExpression(this, path)) {
                         path.replace(arrowFunctionExpression(argumentList[1].params, argumentList[1].body, false))
                     }
                 }
             }
             if (object && property && property.name == 'apply' && object.type == 'Identifier') {
                 if (argumentList.length == 2 && argumentList[0].type == 'ThisExpression' && argumentList[1].name == 'arguments') {
-                    let parentPath = path.parentPath
-                    while (parentPath) {
-                        if (parentPath.value.type == 'AssignmentExpression') {
-                            break
-                        }
-                        parentPath = parentPath.parentPath
-                    }
+                    let parentPath = recastUtil.findParentPath(path, 'AssignmentExpression')
                     if (parentPath && parentPath.value.left.property) {
                         let leftCode = recast.print(parentPath.value).code
-                        if (leftCode.indexOf('.prototype.') != -1) {
+                        if (leftCode.indexOf(`${moduleName}.prototype.`) != -1) {
                             let methodName = parentPath.value.left.property.name
                             path.replace(callExpression(memberExpression(identifier('super'), identifier(methodName)), [spreadElement(identifier('arguments'))]))
                         }
@@ -129,7 +131,7 @@ export default ${newClassName}
             let isRegister = false
             recast.visit(ast, {
                 visitFunctionExpression() {
-                  return false
+                    return false
                 },
                 visitFunctionDeclaration() {
                     return false

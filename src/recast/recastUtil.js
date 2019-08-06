@@ -145,11 +145,29 @@ function isInExpression(path, expression) {
     return false
 }
 
+function findParentPath(path, expression) {
+    let parentPath = path.parentPath
+    while (parentPath) {
+        if (parentPath.value.type == expression) {
+            return parentPath
+        }
+        parentPath = parentPath.parentPath
+    }
+    return null
+}
+
+function canUseArrowExpression(context, path) {
+    let code = recast.print(path.value).code
+    return code.indexOf('arguments') == -1
+}
+
 module.exports = {
     getSuperClass,
     getConstructor,
     getOtherModuleList,
     getFunction,
     getCode,
-    isInExpression
+    isInExpression,
+    findParentPath,
+    canUseArrowExpression
 }
