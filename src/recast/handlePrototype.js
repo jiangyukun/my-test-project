@@ -40,14 +40,37 @@ function handlePrototype(moduleName, ast, options) {
                     }
                 }
             }
-            if (object && property && property.name == 'apply' && object.type == 'Identifier') {
-                if (argumentList.length == 2 && argumentList[0].type == 'ThisExpression' && argumentList[1].name == 'arguments') {
-                    let parentPath = recastUtil.findParentPath(path, 'AssignmentExpression')
-                    if (parentPath && parentPath.value.left.property) {
-                        let leftCode = recast.print(parentPath.value).code
-                        if (leftCode.indexOf(`${moduleName}.prototype.`) != -1) {
-                            let methodName = parentPath.value.left.property.name
-                            path.replace(callExpression(memberExpression(identifier('super'), identifier(methodName)), [spreadElement(identifier('arguments'))]))
+            if (!superClass) {
+                return this.traverse(path)
+            }
+
+            if (object && property && property.name == 'apply') {
+                if (object.type == 'Identifier') {
+                    if (argumentList.length == 2 && argumentList[0].type == 'ThisExpression') {
+                        let parentPath = recastUtil.findParentPath(path, 'AssignmentExpression')
+                        if (parentPath && parentPath.value.left.property) {
+                            let leftCode = recast.print(parentPath.value.left).code
+                            let sameFunction = leftCode.toLowerCase().indexOf(object.name.toLowerCase()) != -1
+                            if (sameFunction && leftCode.indexOf(`${moduleName}.prototype.`) != -1) {
+                                console.log(recast.print(path.value).code)
+                                let methodName = parentPath.value.left.property.name
+                                if (argumentList[1]) {
+                                    path.replace(callExpression(memberExpression(identifier('super'), identifier(methodName)), [spreadElement(argumentList[1])]))
+                                } else {
+                                    path.replace(callExpression(memberExpression(identifier('super'), identifier(methodName)), []))
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    let leftCode = recast.print(object).code
+                    if (leftCode.indexOf(`${superClass.name}.prototype.`) != -1) {
+                        console.log(leftCode);
+                        let name = leftCode.split('.')[2]
+                        if (argumentList[1]) {
+                            path.replace(callExpression(memberExpression(identifier('super'), identifier(name)), [spreadElement(identifier('arguments'))]))
+                        } else {
+                            path.replace(callExpression(memberExpression(identifier('super'), identifier(name)), []))
                         }
                     }
                 }
