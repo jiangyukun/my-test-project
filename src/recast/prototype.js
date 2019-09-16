@@ -7,7 +7,10 @@ let {ifStatement, blockStatement, expressionStatement, callExpression, memberExp
 let {classDeclaration, classProperty, identifier, classBody, methodDefinition} = builders
 
 let code = `
-A = function(){}
+function a() {
+    b(arguments)
+    c([1,2,34])
+}
 `
 
 // console.log(code)
