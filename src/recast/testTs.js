@@ -1,16 +1,15 @@
 let recast = require('recast')
 
 let ast = recast.parse(`
-
-interface A {
-    name: string
+async function x() {
+  let a: any = await b()
 }
 `, {
     parser: require('recast/parsers/typescript')
 })
 
 recast.visit(ast, {
-    visitTSInterfaceDeclaration(path) {
+    visitAssignmentPattern(path) {
         console.log(1);
         return false
     }
