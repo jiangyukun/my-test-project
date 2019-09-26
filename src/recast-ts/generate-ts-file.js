@@ -40,7 +40,16 @@ app.post('/generate', (req, res) => {
 
     let interfaceTxt = generateType(req.body.data, interfaceName)
     if (interfaceTxt) {
-        interfaceTxt = `// ${url} \n` + interfaceTxt
+        let convertUrl = parts.reduce((url, item) => {
+            if (/^\d+$/.test(item)) {
+                return url + '/:num'
+            }
+            if (item == 'true' || item == 'false') {
+                return url + '/:bool'
+            }
+            return url + '/' + item
+        }, '')
+        interfaceTxt = `// ${convertUrl} \nexport ` + interfaceTxt
         interfaceTxt = recast.print(recast.parse(interfaceTxt, {
             parser: require('recast/parsers/typescript')
         }), {tabWidth: 4}).code
@@ -58,7 +67,7 @@ app.post('/generate', (req, res) => {
         if (oldContent.indexOf(interfaceName) == -1) {
             writeCodeToFile(interfacePath, oldContent + '\n\n' + interfaceTxt)
         } else {
-            console.log(`重复的interface ${interfaceName}`)
+            console.log(`    重复的interface ${interfaceName}`)
         }
     }
     res.send('ok')
