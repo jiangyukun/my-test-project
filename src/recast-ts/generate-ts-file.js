@@ -18,9 +18,21 @@ app.all('*', function (req, res, next) {
     next();
 });
 
+let apiList = []
+
 app.post('/generate', (req, res) => {
+
     let url = req.body.url
-    let parts = url.split('/')
+    let data = req.body.data
+
+    apiList.push({url, data})
+
+
+    let convertUrl = url
+    if (convertUrl.indexOf('|') != -1) {
+        convertUrl = url.split('|')[0]
+    }
+    let parts = convertUrl.split('/')
     if (parts[0] == '') {
         parts.shift()
     }
@@ -38,18 +50,9 @@ app.post('/generate', (req, res) => {
 
     console.log(interfaceName)
 
-    let interfaceTxt = generateType(req.body.data, interfaceName)
+    let interfaceTxt = generateType(data, interfaceName)
     if (interfaceTxt) {
-        let convertUrl = parts.reduce((url, item) => {
-            if (/^\d+$/.test(item)) {
-                return url + '/:num'
-            }
-            if (item == 'true' || item == 'false') {
-                return url + '/:bool'
-            }
-            return url + '/' + item
-        }, '')
-        interfaceTxt = `// ${convertUrl} \nexport ` + interfaceTxt
+        interfaceTxt = `// ${url} \nexport ` + interfaceTxt
         interfaceTxt = recast.print(recast.parse(interfaceTxt, {
             parser: require('recast/parsers/typescript')
         }), {tabWidth: 4}).code
@@ -70,6 +73,11 @@ app.post('/generate', (req, res) => {
             console.log(`    重复的interface ${interfaceName}`)
         }
     }
+    res.send('ok')
+})
+
+app.get('/save', (req, res) => {
+    writeCodeToFile(path.join(__dirname, 'api-data.json'), JSON.stringify({list: apiList}))
     res.send('ok')
 })
 
