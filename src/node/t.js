@@ -1,3 +1,8 @@
+// console.log(process.env)
 
-let a = {}
-console.log(a instanceof Function)
+setInterval(() => {
+    console.log(process.env.a);
+    process.env.a = 'b'
+    process.send({from: 't.js'})
+}, 1000)
+

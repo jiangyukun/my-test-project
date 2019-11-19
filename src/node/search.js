@@ -1,0 +1,1 @@
+console.log('xiiee\'abcd\''.match(/'(\w*)'/));
