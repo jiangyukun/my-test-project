@@ -3,16 +3,15 @@ const {SyncWaterfallHook} = require("tapable")
 
 let factory = new SyncWaterfallHook(['factory'])
 
-factory.tap('test', () => () => {
-    console.log(1)
+factory.tap('test', (before) => (r) => {
+    return r + 1
 })
 
 factory.tap('test', (before) => () => {
-    before()
-    console.log(2)
+    let t = before(334)
+    return t
 })
 
 let xx = factory.call()
 
-xx()
-
+console.log(xx());

@@ -15,13 +15,13 @@ compiler.hooks.compilation.tap('TT', (compilation, {normalModuleFactory}) => {
 
     normalModuleFactory.hooks.parser
         .for("javascript/auto")
-        .tap("UseStrictPlugin", handler);
+        .tap("TT", handler);
     normalModuleFactory.hooks.parser
         .for("javascript/dynamic")
-        .tap("UseStrictPlugin", handler);
+        .tap("TT", handler);
     normalModuleFactory.hooks.parser
         .for("javascript/esm")
-        .tap("UseStrictPlugin", handler);
+        .tap("TT", handler);
 })
 
 compiler.run((err)=> {
