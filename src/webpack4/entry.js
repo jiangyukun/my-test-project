@@ -2,6 +2,12 @@ import a from './entry1'
 import './entry.css'
 import events from 'events'
 import jQuery from 'jquery'
+import c from './c'
+
+
+=33
+
+console.log(c);
 
 let eventEmitter = new events.EventEmitter();
 
