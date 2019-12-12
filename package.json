@@ -12,11 +12,14 @@
     "babylon": "^7.0.0-beta.47",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
+    "iconv-lite": "^0.5.0",
+    "node-cmd": "^3.0.0",
     "recast": "0.18.1",
     "rxjs": "^6.5.2",
     "tapable": "^1.1.3",
     "typescript": "^3.5.3",
-    "webpack": "^4.30.0"
+    "webpack": "^4.30.0",
+    "webpack-chain": "^6.0.0"
   },
   "devDependencies": {
     "acorn": "^6.1.0",
