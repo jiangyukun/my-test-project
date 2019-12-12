@@ -1,17 +1,18 @@
 const {SyncWaterfallHook} = require("tapable")
 
-
 let factory = new SyncWaterfallHook(['factory'])
 
-factory.tap('test', (before) => (r) => {
-    return r + 1
+
+factory.tap('test', (factor) => (result, callback) => {
+
+    callback(22)
+
 })
 
-factory.tap('test', (before) => () => {
-    let t = before(334)
-    return t
+let xx = factory.call(null)
+
+xx(1, (r) => {
+    console.log(r);
 })
 
-let xx = factory.call()
-
-console.log(xx());
+// console.log(xx());
