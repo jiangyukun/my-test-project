@@ -1,21 +1,47 @@
 const {spawn} = require('child_process');
 const fs = require('fs');
-var iconv = require('iconv-lite');
-var encoding = 'cp936';
 
-const spawnObj = spawn('git', ['push', '-C D:\\2019\\Porjects\\scada'], {encoding: 'binary'});
-spawnObj.stdout.on('data', function (chunk) {
-    console.log(chunk);
+function startPush(name) {
+    console.log(`start push ${name}`);
+    const spawnObj = spawn('git', ['push'], {
+        cwd: 'D:/2019/Porjects/scada'
+    });
+    spawnObj.stdout.on('data', function (data) {
+        let result = data.toString()
+        console.log(result);
+        if (result.indexOf('up-to-date') != -1) {
+            process.exit(-1)
+        }
+    })
+    spawnObj.stderr.on('data', (data) => {
+        let result = data.toString()
+        if (result.indexOf('TaskCanceledException') != -1) {
+            spawnObj.kill()
+            startPush(name)
+        } else if (result.indexOf('up-to-date') != -1) {
+            console.log(result)
+            process.exit(-1)
+        } else {
+            console.log(result)
+        }
+    })
+    spawnObj.on('close', function (code) {
+        // console.log('close code : ' + code);
+    })
+    spawnObj.on('exit', (code) => {
+        // console.log('exit code : ' + code);
 
-    console.log(iconv.decode(new Buffer(chunk, 'binary'), encoding))
-});
-spawnObj.stderr.on('data', (data) => {
-    console.log(data.toString());
-});
-spawnObj.on('close', function (code) {
-    console.log('close code : ' + code);
-})
-spawnObj.on('exit', (code) => {
-    console.log('exit code : ' + code);
+    });
 
-});
+}
+
+startPush('1')
+startPush('2')
+startPush('3')
+startPush('4')
+startPush('5')
+startPush('6')
+startPush('7')
+startPush('8')
+startPush('9')
+startPush('10')

@@ -1,5 +1,7 @@
 let webpack = require('webpack')
 
+let FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+
 let LineLimitPlugin = require('./plugins/LineLimitPlugin')
 let FunctionNamePlugin = require('./plugins/FunctionNamePlugin')
 let TodoTaskPlugin = require('./plugins/TodoTaskPlugin')
@@ -35,6 +37,7 @@ let config = {
         // new LineLimitPlugin(),
         new FunctionNamePlugin(),
         new TodoTaskPlugin(),
+        new FriendlyErrorsPlugin(),
 
         new webpack.DefinePlugin({
             mode: JSON.stringify('dev')
