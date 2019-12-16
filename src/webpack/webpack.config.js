@@ -5,14 +5,15 @@ let FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 let LineLimitPlugin = require('./plugins/LineLimitPlugin')
 let FunctionNamePlugin = require('./plugins/FunctionNamePlugin')
 let TodoTaskPlugin = require('./plugins/TodoTaskPlugin')
+let SetClickIdPlugin = require('./plugins/SetClickIdPlugin')
 
 let config = {
     mode: "development",
-    devtool: "#source-map",
+    devtool: "source-map",
     context: __dirname,
     watch: true,
     entry: {
-        index: './input/index.js'
+        index: './input/index.tsx'
     },
     resolve: {
         symlinks: false
@@ -27,21 +28,20 @@ let config = {
     module: {
         rules: [
             {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: [/node_modules/]
+                test: /\.(js|ts|jsx|tsx)$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                }
             }
         ]
     },
     plugins: [
         // new LineLimitPlugin(),
-        new FunctionNamePlugin(),
-        new TodoTaskPlugin(),
+        // new FunctionNamePlugin(),
+        // new TodoTaskPlugin(),
         new FriendlyErrorsPlugin(),
-
-        new webpack.DefinePlugin({
-            mode: JSON.stringify('dev')
-        })
+        new SetClickIdPlugin()
 
     ]
 }
