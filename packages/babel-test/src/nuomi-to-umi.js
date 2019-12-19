@@ -4,6 +4,7 @@ const t = require('@babel/types')
 const parser = require('@babel/parser')
 const traverse = require('@babel/traverse').default
 const generator = require('@babel/generator').default
+const recast = require('recast')
 
 const fs = require('fs')
 const path = require('path')
@@ -55,10 +56,22 @@ reserveFile(path.join(projectPath, 'src/pages'), (path) => {
 function convertFile(inputPath, namespace) {
   const code = fs.readFileSync(inputPath).toString()
   let needImport = false, isImported = false, isActionTypeImported = false
-  const ast = parser.parse(code, {
-    sourceType: 'module',
-    plugins: ['typescript', 'jsx'],
-    createParenthesizedExpressions: true
+  // parser.parse(code, {
+  //   sourceType: 'module',
+  //   plugins: ['typescript', 'jsx'],
+  //   createParenthesizedExpressions: true
+  // })
+
+  const ast = recast.parse(code, {
+    parser: {
+      parse(source) {
+        return parser.parse(source, {
+          sourceType: 'module',
+          plugins: ['jsx', 'typescript'],
+          tokens: true
+        })
+      }
+    }
   })
 
   traverse(ast, {
@@ -122,6 +135,6 @@ function convertFile(inputPath, namespace) {
     }
   })
 
-  fs.writeFile(inputPath, generator(ast, {retainLines: true}).code, {}, () => null)
+  fs.writeFile(inputPath, recast.print(ast, {}).code, {}, () => null)
 
 }
