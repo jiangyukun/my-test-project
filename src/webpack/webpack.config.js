@@ -16,7 +16,8 @@ let config = {
         index: './input/index.tsx'
     },
     resolve: {
-        symlinks: false
+        symlinks: false,
+        extensions: ['.ts', '.tsx', '.js', '.jsx']
     },
     externals: {
         jquery: 'jQuery'
