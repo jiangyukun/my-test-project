@@ -1,6 +1,7 @@
 
 
 const code = `
+// eee
 let b ={...c}
 let d = 2
 function a() {}
