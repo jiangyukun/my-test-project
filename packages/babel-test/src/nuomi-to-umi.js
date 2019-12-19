@@ -1,6 +1,9 @@
 const babel = require('@babel/core')
 const template = require('@babel/template').default
 const t = require('@babel/types')
+const parser = require('@babel/parser')
+const traverse = require('@babel/traverse').default
+const generator = require('@babel/generator').default
 
 const fs = require('fs')
 const path = require('path')
@@ -9,7 +12,7 @@ const reserveFile = require('./utils')
 // let input = 'D:/2019/Porjects/ems2.0-mm-view/src/pages/rights-equipment/data-item-view/DataItemView.tsx'
 
 function addSeparateLine(dir) {
-  return `\\${dir}\\`
+  return `/${dir}/`
 }
 
 let pathNS = [
@@ -27,10 +30,12 @@ let pathNS = [
   {path: addSeparateLine('rights-role-list'), ns: 'r_o_role_list'},
 
   {path: addSeparateLine('rights-station'), ns: 'r_u_station'},
-  {path: addSeparateLine('rights-user-list'), ns: 'r_u_user_list'},
+  {path: addSeparateLine('rights-user-list'), ns: 'r_u_user_list'}
 ]
 
-reserveFile('D:\\2019\\Porjects\\ems2.0-mm-view\\src\\pages', (path) => {
+const projectPath = '/Users/wangji/web2022/'
+
+reserveFile(path.join(projectPath, 'src/pages'), (path) => {
   if (!path.endsWith('.tsx')) {
     return
   }
@@ -49,67 +54,74 @@ reserveFile('D:\\2019\\Porjects\\ems2.0-mm-view\\src\\pages', (path) => {
 
 function convertFile(inputPath, namespace) {
   const code = fs.readFileSync(inputPath).toString()
-  let needImportNs = false
-  let isImported = false
-  let result = babel.transformSync(code, {
-    filename: inputPath,
-    plugins: [plugin1],
-    presets: ['@babel/preset-typescript'],
-    retainLines: true
+  let needImport = false, isImported = false, isActionTypeImported = false
+  const ast = parser.parse(code, {
+    sourceType: 'module',
+    plugins: ['typescript', 'jsx'],
+    createParenthesizedExpressions: true
   })
-  fs.writeFile(inputPath, result.code, {}, () => null)
 
-  function plugin1() {
-    return {
-      visitor: {
-        Program(rootPath) {
-          rootPath.traverse({
-            CallExpression(path) {
-              let functionName = path.node.callee.name
-              if (functionName == 'dispatch') {
-                path.traverse({
-                  ObjectProperty(propertyPath) {
-                    let keyName = propertyPath.node.key.name
-                    let valueType = propertyPath.node.value.type
-                    if (keyName == 'type') {
-                      if (valueType == 'StringLiteral') {
-                        let typeValue = propertyPath.node.value.value
-                        // dispatch 当前模块
-                        if (typeValue.indexOf('/') == -1) {
-                          needImportNs = true
-                          let getActionTypeAst = template.ast(`getActionType(${namespace}, '${typeValue}')`)
-                          propertyPath.node.value = getActionTypeAst.expression
-                        } else {
-                          path.addComment(t.addComment(path.node, 'leading', ' todo', true))
-                        }
-                      }
+  traverse(ast, {
+    Program(rootPath) {
+      rootPath.traverse({
+        CallExpression(path) {
+          let functionName = path.node.callee.name
+          if (functionName == 'dispatch') {
+            path.traverse({
+              ObjectProperty(propertyPath) {
+                let keyName = propertyPath.node.key.name
+                let valueType = propertyPath.node.value.type
+                if (keyName == 'type') {
+                  if (valueType == 'StringLiteral') {
+                    let typeValue = propertyPath.node.value.value
+                    // dispatch 当前模块
+                    if (typeValue.indexOf('/') == -1) {
+                      needImport = true
+                      let getActionTypeAst = template.ast(`getActionType(${namespace}, '${typeValue}')`)
+                      propertyPath.node.value = getActionTypeAst.expression
+                    } else {
+                      path.addComment(t.addComment(path.node, 'leading', ' todo', true))
                     }
                   }
-                })
-              }
-            }
-          })
-          if (needImportNs) {
-            rootPath.traverse({
-              ImportSpecifier(importPath) {
-                if (importPath.node.imported.name == namespace) {
-                  isImported = true
                 }
               }
             })
           }
-          if (needImportNs) {
-            if (isImported) {
-              console.log(inputPath, namespace, '已经导入')
-              return
+        }
+      })
+      if (needImport) {
+        rootPath.traverse({
+          ImportSpecifier(importPath) {
+            if (importPath.node.imported.name == namespace) {
+              isImported = true
             }
-            let body = rootPath.node.body
-            let relativePath = path.relative(inputPath, 'D:\\2019\\Porjects\\ems2.0-mm-view\\src\\pages\\constants').replace(/\\/g, '/').substring(3)
-            let index = body.findIndex(statement => statement.type != 'ImportDeclaration')
-            body.splice(index, -1, template.ast(`import {${namespace}} from '${relativePath}'`))
+            if (importPath.node.imported.name == 'getActionType') {
+              isActionTypeImported = true
+            }
           }
+        })
+      }
+      if (needImport) {
+        if (isImported) {
+          console.log(inputPath, namespace, '已经导入')
+        } else {
+          let body = rootPath.node.body
+          let relativePath = path.relative(inputPath, path.join(projectPath, 'src/pages/constants')).replace(/\\/g, '/').substring(3)
+          let index = body.findIndex(statement => statement.type != 'ImportDeclaration')
+          body.splice(index, -1, template.ast(`\nimport {${namespace}} from '${relativePath}'`))
+        }
+        if (isActionTypeImported) {
+          console.log(inputPath, 'getActionType', '已经导入')
+        } else {
+          let body = rootPath.node.body
+          let relativePath = path.relative(inputPath, path.join(projectPath, 'src/pages/umi.helper')).replace(/\\/g, '/').substring(3)
+          let index = body.findIndex(statement => statement.type != 'ImportDeclaration')
+          body.splice(index, -1, template.ast(`\nimport {getActionType} from '${relativePath}'`))
         }
       }
     }
-  }
+  })
+
+  fs.writeFile(inputPath, generator(ast, {retainLines: true}).code, {}, () => null)
+
 }
