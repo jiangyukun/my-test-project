@@ -34,7 +34,7 @@ function convertCodeUseAst(code, visitor) {
     }
   })
   traverse(ast, visitor)
-  return recast.print(ast, {}).code
+  return recast.print(ast, {wrapColumn: 180}).code
 }
 
 function restNameAst(name) {
