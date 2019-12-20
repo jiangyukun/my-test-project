@@ -1,20 +1,26 @@
-
+const t = require('@babel/types')
+const template = require('@babel/template').default
 
 const code = `
-let a: any = (
-<a></a>
-)
-let b= 2
+let obj = {
+  effects: {
+    async c({name}) {
+      await a.b()
+    },
+    * d() {
+      yield 23
+    }
+  }
+}
 `
 
-const parser = require('@babel/parser')
-const traverse = require('@babel/traverse').default
-const t = require('@babel/types')
-const generator = require('@babel/generator').default
+const {convertCodeUseAst, restObj} = require('./utils')
 
-let ast = parser.parse(code, {plugins: ['typescript', 'jsx'], createParenthesizedExpressions: true})
+let convertCode = convertCodeUseAst(code, {
+  ObjectProperty(objectPath) {
+    let ast1 = template.ast('{a, b, c}')
+    console.log(2)
+  }
+})
 
-
-
-
-console.log(generator(ast, {retainLines: true}).code);
+console.log(convertCode)
