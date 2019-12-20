@@ -1,19 +1,12 @@
-const babel = require('@babel/core')
 const template = require('@babel/template').default
 const t = require('@babel/types')
-const parser = require('@babel/parser')
-const traverse = require('@babel/traverse').default
-const generator = require('@babel/generator').default
-const recast = require('recast')
 
 const fs = require('fs')
 const path = require('path')
-const reserveFile = require('./utils')
-
-// let input = 'D:/2019/Porjects/ems2.0-mm-view/src/pages/rights-equipment/data-item-view/DataItemView.tsx'
+const {reserveFile, convertCodeUseAst} = require('./utils')
 
 function addSeparateLine(dir) {
-  return `/${dir}/`
+  return `${path.sep}${dir}${path.sep}`
 }
 
 let pathNS = [
@@ -34,7 +27,7 @@ let pathNS = [
   {path: addSeparateLine('rights-user-list'), ns: 'r_u_user_list'}
 ]
 
-const projectPath = '/Users/wangji/web2022/'
+const projectPath = 'D:\\2019\\Porjects\\ems2.0-mm-view'
 
 reserveFile(path.join(projectPath, 'src/pages'), (path) => {
   if (!path.endsWith('.tsx')) {
@@ -56,25 +49,8 @@ reserveFile(path.join(projectPath, 'src/pages'), (path) => {
 function convertFile(inputPath, namespace) {
   const code = fs.readFileSync(inputPath).toString()
   let needImport = false, isImported = false, isActionTypeImported = false
-  // parser.parse(code, {
-  //   sourceType: 'module',
-  //   plugins: ['typescript', 'jsx'],
-  //   createParenthesizedExpressions: true
-  // })
 
-  const ast = recast.parse(code, {
-    parser: {
-      parse(source) {
-        return parser.parse(source, {
-          sourceType: 'module',
-          plugins: ['jsx', 'typescript'],
-          tokens: true
-        })
-      }
-    }
-  })
-
-  traverse(ast, {
+  let convertCode = convertCodeUseAst(code, {
     Program(rootPath) {
       rootPath.traverse({
         CallExpression(path) {
@@ -135,6 +111,6 @@ function convertFile(inputPath, namespace) {
     }
   })
 
-  fs.writeFile(inputPath, recast.print(ast, {}).code, {}, () => null)
+  fs.writeFile(inputPath, convertCode, {}, () => null)
 
 }
