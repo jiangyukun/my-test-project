@@ -2,7 +2,7 @@ const t = require('@babel/types')
 const template = require('@babel/template').default
 
 const code = `
-import a from 'aa'
+let a = {b:1}
 `
 
 const {convertCodeUseAst, restObj} = require('./utils')
