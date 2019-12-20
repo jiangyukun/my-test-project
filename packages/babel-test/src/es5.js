@@ -8,7 +8,7 @@ let a = {b:'2'}
 const {convertCodeUseAst, restObj} = require('./utils')
 
 let convertCode = convertCodeUseAst(code, {
-  ObjectExpression(path) {
+  Program(path) {
     let node = path.node
     console.log(1)
   }
