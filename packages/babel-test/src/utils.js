@@ -4,6 +4,7 @@ const path = require('path')
 const parser = require('@babel/parser')
 const traverse = require('@babel/traverse').default
 const t = require('@babel/types')
+const template = require('@babel/template').default
 const recast = require('recast')
 
 function reserveFile(dir, callback) {
@@ -44,6 +45,46 @@ function restObj(keys) {
   return t.objectPattern(keys.map(key => restNameAst(key)))
 }
 
+function isModuleImported(rootPath, moduleName, searchType = 'import') {
+  let isImported = false
+  if (searchType == 'import' || searchType == 'all') {
+    rootPath.traverse({
+      ImportSpecifier(importPath) {
+        if (importPath.node.imported.name == moduleName) {
+          isImported = true
+        }
+      }
+    })
+  }
+  if (searchType == 'importDefault' || searchType == 'all') {
+    rootPath.traverse({
+      ImportDefaultSpecifier(importPath) {
+        if (importPath.node.local.name == moduleName) {
+          isImported = true
+        }
+      }
+    })
+  }
+
+  return isImported
+}
+
+function addImportItem(rootPath, importStr) {
+  let body = rootPath.node.body
+  let index = body.findIndex(statement => statement.type != 'ImportDeclaration')
+  body.splice(index, -1, template.ast(importStr))
+}
+
+function sepLine(dir, sub) {
+  return `${path.sep}${dir}${path.sep}${sub || ''}`
+}
+
 module.exports = {
-  reserveFile, convertCodeUseAst, restNameAst, restObj
+  reserveFile,
+  convertCodeUseAst,
+  restNameAst,
+  restObj,
+  isModuleImported,
+  addImportItem,
+  sepLine
 }
