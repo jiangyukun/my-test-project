@@ -2,13 +2,14 @@ const t = require('@babel/types')
 const template = require('@babel/template').default
 
 const code = `
-let a = {b:1}
+let a = {b:'2'}
 `
 
 const {convertCodeUseAst, restObj} = require('./utils')
 
 let convertCode = convertCodeUseAst(code, {
-  ImportDefaultSpecifier(path) {
+  ObjectExpression(path) {
+    let node = path.node
     console.log(1)
   }
 })

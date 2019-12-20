@@ -79,6 +79,13 @@ function sepLine(dir, sub) {
   return `${path.sep}${dir}${path.sep}${sub || ''}`
 }
 
+function putObjAst(typeName, payloadExpression) {
+  return t.objectExpression([
+    t.objectProperty(t.identifier('type'), t.stringLiteral(typeName)),
+    t.objectProperty(t.identifier('payload'), payloadExpression),
+  ])
+}
+
 module.exports = {
   reserveFile,
   convertCodeUseAst,
@@ -86,5 +93,6 @@ module.exports = {
   restObj,
   isModuleImported,
   addImportItem,
+  putObjAst,
   sepLine
 }
