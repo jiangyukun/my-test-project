@@ -3,13 +3,9 @@ const t = require('@babel/types')
 
 const path = require('path')
 const {projectRoot} = require('./constants')
-const {traverseAndSelect, convertCodeUseAst} = require('./utils')
+const {wrap, convertCodeUseAst} = require('./utils')
 
-module.exports = function (dir, match) {
-  traverseAndSelect(dir)(match)((code, namespace, filePath) => {
-    return convertFile(code, namespace, filePath)
-  })
-}
+module.exports = wrap(convertFile)
 
 function convertFile(code, namespace, filePath) {
   let needImport = false, isImported = false, isActionTypeImported = false

@@ -4,13 +4,9 @@ const path = require('path')
 const {projectRoot} = require('./constants')
 const {addImportItem} = require('./utils')
 const {isModuleImported} = require('./utils')
-const {traverseAndSelect, convertCodeUseAst} = require('./utils')
+const {wrap, convertCodeUseAst} = require('./utils')
 
-module.exports = function (dir, match, callback) {
-  traverseAndSelect(dir)(match)((filePath, namespace) => {
-    return convertFile(filePath, namespace, callback)
-  })
-}
+module.exports = wrap(convertFile)
 
 function convertFile(code, namespace, filePath) {
   let needImport = false, newFunctionCallIndex = -1, newFunctionArg1

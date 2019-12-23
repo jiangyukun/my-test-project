@@ -1,12 +1,7 @@
-const fs = require('fs')
 const t = require('@babel/types')
-const {traverseAndSelect, convertCodeUseAst, putObjAst} = require('./utils')
+const {wrap, convertCodeUseAst, putObjAst} = require('./utils')
 
-module.exports = function (dir, match) {
-  traverseAndSelect(dir)(match)((code, namespace, filePath) => {
-    return convertFile(code, namespace, filePath)
-  })
-}
+module.exports = wrap(convertFile)
 
 function convertFile(code, namespace, filePath) {
   return convertCodeUseAst(code, {

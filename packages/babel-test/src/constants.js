@@ -2,6 +2,24 @@ const {sepLine} = require('./utils')
 
 const projectRoot = 'D:\\2019\\Porjects\\ems2.0-mm-view'
 
+let tsxPath = [
+  {path: sepLine('customerList'), ns: 'c_list'},
+  {path: 'StationInfo.tsx', ns: 'c_station_list'},
+
+  {path: sepLine('batch-addition'), ns: 'r_e_batch_addition'},
+  {path: sepLine('data-item-view'), ns: 'r_e_data_item'},
+  {path: sepLine('parameter-library'), ns: 'r_e_parameter_library'},
+  {path: sepLine('rights-equipment-list'), ns: 'r_e_equipment_list'},
+
+  {path: sepLine('rights-menu'), ns: 'r_m'},
+
+  {path: 'MenuSelect.tsx', ns: 'r_o_menu_select'},
+  {path: sepLine('rights-role-list'), ns: 'r_o_role_list'},
+
+  {path: sepLine('rights-station'), ns: 'r_u_station'},
+  {path: sepLine('rights-user-list'), ns: 'r_u_user_list'}
+]
+
 let modelPath = [
   {path: sepLine('models', 'customer-list.ts'), ns: 'c_list'},
   {path: sepLine('models', 'customer-station-list.ts'), ns: 'c_station_list'},
@@ -26,6 +44,7 @@ let global2Path = [
 
 module.exports = {
   projectRoot,
+  tsxPath,
   modelPath,
   global2Path
 }

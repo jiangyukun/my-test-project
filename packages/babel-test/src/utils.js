@@ -21,41 +21,54 @@ function reserveFile(dir, callback) {
   })
 }
 
-const traverseAndSelect = (dir) => (pathInfoList) => (callback) => {
+const traverseAndSelect = (dir, match) => (callback) => {
   reserveFile(dir, (filePath) => {
-    let list = pathInfoList.filter(item => filePath.indexOf(item.path) != -1)
-    if (list.length == 0) {
-      return
-    }
-    if (list.length == 1) {
-      let namespace = list[0].ns
-      // console.log(path, ' --- ', namespace)
+    const result = match(filePath)
+    if (result) {
+      const {namespace} = result
       const code = fs.readFileSync(filePath).toString()
       let convertedCode = callback(code, namespace, filePath)
       if (convertedCode != code) {
         fs.writeFileSync(filePath, convertedCode, {})
         console.log(filePath, '  --converted')
       }
-    } else {
-      console.log('多个模式匹配： ' + filePath)
     }
   })
 }
 
-function convertCodeUseAst(code, visitor) {
-  const ast = recast.parse(code, {
-    parser: {
-      parse(source) {
-        return parser.parse(source, {
-          sourceType: 'module',
-          plugins: ['jsx', 'typescript'],
-          tokens: true
-        })
-      }
+function getDefaultMatch(pathInfoList) {
+  return function (filePath) {
+    let list = pathInfoList.filter(item => filePath.indexOf(item.path) != -1)
+    if (list.length == 0) {
+      return
     }
-  })
-  traverse(ast, visitor)
-  return recast.print(ast, {wrapColumn: 180}).code
+    if (list.length == 1) {
+      return list[0].ns
+    } else {
+      console.log('多个模式匹配： ' + filePath)
+    }
+    return null
+  }
+}
+
+function convertCodeUseAst(code, visitor, filePath) {
+  try {
+    const ast = recast.parse(code, {
+      parser: {
+        parse(source) {
+          return parser.parse(source, {
+            sourceType: 'module',
+            plugins: ['jsx', 'typescript'],
+            tokens: true
+          })
+        }
+      }
+    })
+    traverse(ast, visitor)
+    return recast.print(ast, {wrapColumn: 180}).code
+  } catch (e) {
+    console.log(filePath + '  -- parse failure')
+  }
 }
 
 function getAstBody(code) {
@@ -122,9 +135,19 @@ function putObjAst(typeName, payloadExpression) {
   ])
 }
 
+function wrap(getMatch, doConvert) {
+  return function (dir, pathInfo) {
+    traverseAndSelect(dir, getMatch ? getMatch(pathInfo) : getDefaultMatch(pathInfo))((code, namespace, filePath) => {
+      return doConvert(code, namespace, filePath)
+    })
+  }
+}
+
 module.exports = {
+  wrap,
   reserveFile,
   traverseAndSelect,
+  getDefaultMatch,
   convertCodeUseAst,
   getAstBody,
   restNameAst,
