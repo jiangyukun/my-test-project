@@ -5,7 +5,7 @@ const {traverseAndSelect, convertCodeUseAst, addImportItem} = require('./utils')
 
 module.exports = function (dir, match) {
   traverseAndSelect(dir)(match)((code, namespace, filePath) => {
-    convertFile(code, namespace, filePath)
+    return convertFile(code, namespace, filePath)
   })
 }
 

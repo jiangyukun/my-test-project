@@ -32,7 +32,6 @@ const traverseAndSelect = (dir) => (pathInfoList) => (callback) => {
       // console.log(path, ' --- ', namespace)
       const code = fs.readFileSync(filePath).toString()
       let convertedCode = callback(code, namespace, filePath)
-      console.log(3)
       if (convertedCode != code) {
         fs.writeFileSync(filePath, convertedCode, {})
         console.log(filePath, '  --converted')

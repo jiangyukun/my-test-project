@@ -8,7 +8,7 @@ const {traverseAndSelect, convertCodeUseAst} = require('./utils')
 
 module.exports = function (dir, match, callback) {
   traverseAndSelect(dir)(match)((filePath, namespace) => {
-    convertFile(filePath, namespace, callback)
+    return convertFile(filePath, namespace, callback)
   })
 }
 
