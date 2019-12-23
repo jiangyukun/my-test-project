@@ -8,10 +8,9 @@ module.exports = function (dir, match) {
   })
 }
 
-function convertFile(inputPath, namespace) {
-  const code = fs.readFileSync(inputPath).toString()
+function convertFile(code, namespace, filePath) {
 
-  let convertCode = convertCodeUseAst(code, {
+  return convertCodeUseAst(code, {
     Program(rootPath) {
       rootPath.traverse({
         ObjectProperty(objectPath) {
@@ -34,5 +33,4 @@ function convertFile(inputPath, namespace) {
       })
     }
   })
-  fs.writeFile(inputPath, convertCode, {}, () => null)
 }

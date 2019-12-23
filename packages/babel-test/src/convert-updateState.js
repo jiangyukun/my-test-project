@@ -2,16 +2,14 @@ const fs = require('fs')
 const template = require('@babel/template').default
 const {traverseAndSelect, convertCodeUseAst} = require('./utils')
 
-module.exports = function (dir, match) {
+module.exports = function (dir, match, callback) {
   traverseAndSelect(dir)(match)((filePath, namespace) => {
-    convertFile(filePath, namespace)
+    convertFile(filePath, namespace, callback)
   })
 }
 
-function convertFile(inputPath, namespace) {
-  const code = fs.readFileSync(inputPath).toString()
-
-  let convertCode = convertCodeUseAst(code, {
+function convertFile(code, namespace, filePath) {
+  return convertCodeUseAst(code, {
     Program(rootPath) {
       rootPath.traverse({
         ObjectProperty(objectPath) {
@@ -34,5 +32,4 @@ function convertFile(inputPath, namespace) {
       })
     }
   })
-  fs.writeFile(inputPath, convertCode, {}, () => null)
 }

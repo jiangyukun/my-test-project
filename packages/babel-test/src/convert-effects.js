@@ -1,8 +1,8 @@
 const template = require('@babel/template').default
 const t = require('@babel/types')
 
-const fs = require('fs')
 const path = require('path')
+const {projectRoot} = require('./constants')
 const {getAstBody} = require('./utils')
 const {traverseAndSelect, convertCodeUseAst} = require('./utils')
 
@@ -12,11 +12,10 @@ module.exports = function (dir, match) {
   })
 }
 
-function convertFile(inputPath, namespace) {
-  const code = fs.readFileSync(inputPath).toString()
+function convertFile(code, namespace, filePath) {
   let needImport = false, isImported = false
 
-  let convertCode = convertCodeUseAst(code, {
+  return convertCodeUseAst(code, {
     Program(rootPath) {
       rootPath.traverse({
         ObjectProperty(objectPath) {
@@ -61,15 +60,14 @@ function convertFile(inputPath, namespace) {
       })
       if (needImport) {
         if (isImported) {
-          console.log(inputPath, namespace, '已经导入')
+          console.log(filePath, namespace, '已经导入')
         } else {
           let body = rootPath.node.body
-          let relativePath = path.relative(inputPath, path.join(projectPath, 'src/pages/constants')).replace(/\\/g, '/').substring(3)
+          let relativePath = path.relative(filePath, path.join(projectRoot, 'src/pages/constants')).replace(/\\/g, '/').substring(3)
           let index = body.findIndex(statement => statement.type != 'ImportDeclaration')
           body.splice(index, -1, template.ast(`\nimport {${namespace}} from '${relativePath}'`))
         }
       }
     }
   })
-  fs.writeFile(inputPath, convertCode, {}, () => null)
 }

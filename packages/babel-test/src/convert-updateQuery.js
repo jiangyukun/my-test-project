@@ -9,12 +9,10 @@ module.exports = function (dir, match) {
   })
 }
 
-function convertFile(inputPath, namespace) {
-  console.log(inputPath)
-  const code = fs.readFileSync(inputPath).toString()
-  let needDeclareVariable =false
+function convertFile(code, namespace, filePath) {
+  let needDeclareVariable = false
 
-  let convertCode = convertCodeUseAst(code, {
+  return convertCodeUseAst(code, {
     Program(rootPath) {
       rootPath.traverse({
         ObjectProperty(objectPath) {
@@ -37,9 +35,8 @@ function convertFile(inputPath, namespace) {
         }
       })
       if (needDeclareVariable) {
-          addImportItem(rootPath, `\nconst updateQuery = getUpdateQuery(${namespace})`)
+        addImportItem(rootPath, `\nconst updateQuery = getUpdateQuery(${namespace})`)
       }
     }
   })
-  fs.writeFile(inputPath, convertCode, {}, () => null)
 }

@@ -22,17 +22,19 @@ function reserveFile(dir, callback) {
 }
 
 const traverseAndSelect = (dir) => (pathInfoList) => (callback) => {
-  reserveFile(dir, (path) => {
-    let list = pathInfoList.filter(item => path.indexOf(item.path) != -1)
+  reserveFile(dir, (filePath) => {
+    let list = pathInfoList.filter(item => filePath.indexOf(item.path) != -1)
     if (list.length == 0) {
       return
     }
     if (list.length == 1) {
       let namespace = list[0].ns
       // console.log(path, ' --- ', namespace)
-      callback(path, namespace)
+      const code = fs.readFileSync(filePath).toString()
+      let convertedCode = callback(code, namespace, filePath)
+      fs.writeFileSync(filePath, convertedCode, {})
     } else {
-      console.log('多个模式匹配： ' + path)
+      console.log('多个模式匹配： ' + filePath)
     }
   })
 }
