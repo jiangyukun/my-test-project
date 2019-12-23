@@ -21,6 +21,22 @@ function reserveFile(dir, callback) {
   })
 }
 
+const traverseAndSelect = (dir) => (pathInfoList) => (callback) => {
+  reserveFile(dir, (path) => {
+    let list = pathInfoList.filter(item => path.indexOf(item.path) != -1)
+    if (list.length == 0) {
+      return
+    }
+    if (list.length == 1) {
+      let namespace = list[0].ns
+      // console.log(path, ' --- ', namespace)
+      callback(path, namespace)
+    } else {
+      console.log('多个模式匹配： ' + path)
+    }
+  })
+}
+
 function convertCodeUseAst(code, visitor) {
   const ast = recast.parse(code, {
     parser: {
@@ -35,6 +51,21 @@ function convertCodeUseAst(code, visitor) {
   })
   traverse(ast, visitor)
   return recast.print(ast, {wrapColumn: 180}).code
+}
+
+function getAstBody(code) {
+  const ast = recast.parse(code, {
+    parser: {
+      parse(source) {
+        return parser.parse(source, {
+          sourceType: 'module',
+          plugins: ['jsx', 'typescript'],
+          tokens: true
+        })
+      }
+    }
+  })
+  return ast.program.body
 }
 
 function restNameAst(name) {
@@ -88,7 +119,9 @@ function putObjAst(typeName, payloadExpression) {
 
 module.exports = {
   reserveFile,
+  traverseAndSelect,
   convertCodeUseAst,
+  getAstBody,
   restNameAst,
   restObj,
   isModuleImported,
