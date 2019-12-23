@@ -1,5 +1,4 @@
-const fs = require('fs')
-const template = require('@babel/template').default
+const t = require('@babel/types')
 const {traverseAndSelect, convertCodeUseAst} = require('./utils')
 
 module.exports = function (dir, match) {
@@ -9,6 +8,7 @@ module.exports = function (dir, match) {
 }
 
 function convertFile(code, namespace, filePath) {
+  let needImport = false
   return convertCodeUseAst(code, {
     Program(rootPath) {
       rootPath.traverse({
@@ -18,11 +18,11 @@ function convertFile(code, namespace, filePath) {
             objectPath.traverse({
               CallExpression(callPath) {
                 const node = callPath.node
-                if (node.callee.name == 'select') {
-                  if (node.arguments.length == 0) {
-                    node.arguments.push(
-                      template.expression(`state => state[${namespace}]`)()
-                    )
+                if (node.callee.type == 'MemberExpression') {
+                  const {object, property} = node.callee
+                  if (object.type == 'ThisExpression' && property.name == 'updateState') {
+                    needImport = true
+                    callPath.replaceWith(t.yieldExpression(t.callExpression(t.identifier('updateState'), [t.identifier('put'), ...node.arguments])))
                   }
                 }
               }

@@ -21,7 +21,7 @@ let modelPath = [
 ]
 
 let global2Path = [
-  {path: sepLine('models', 'global2.ts'), ns: 'global2'},
+  {path: sepLine('models', 'global2.ts'), ns: 'global2NS'},
 ]
 
 module.exports = {

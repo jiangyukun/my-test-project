@@ -1,4 +1,3 @@
-const fs = require('fs')
 const t = require('@babel/types')
 const template = require('@babel/template').default
 const {traverseAndSelect, convertCodeUseAst} = require('./utils')
