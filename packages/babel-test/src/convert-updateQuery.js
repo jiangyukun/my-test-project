@@ -4,14 +4,13 @@ const t = require('@babel/types')
 const {traverseAndSelect, convertCodeUseAst, addImportItem} = require('./utils')
 
 module.exports = function (dir, match) {
-  traverseAndSelect(dir)(match)((filePath, namespace) => {
-    convertFile(filePath, namespace)
+  traverseAndSelect(dir)(match)((code, namespace, filePath) => {
+    convertFile(code, namespace, filePath)
   })
 }
 
 function convertFile(code, namespace, filePath) {
   let needDeclareVariable = false
-
   return convertCodeUseAst(code, {
     Program(rootPath) {
       rootPath.traverse({

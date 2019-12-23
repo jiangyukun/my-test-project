@@ -1,9 +1,9 @@
 const t = require('@babel/types')
 const {traverseAndSelect, convertCodeUseAst} = require('./utils')
 
-module.exports = function (dir, match, callback) {
-  traverseAndSelect(dir)(match)((filePath, namespace) => {
-    convertFile(filePath, namespace, callback)
+module.exports = function (dir, match) {
+  traverseAndSelect(dir)(match)((code, namespace, filePath) => {
+    convertFile(code, namespace, filePath)
   })
 }
 

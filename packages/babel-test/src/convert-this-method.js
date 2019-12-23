@@ -4,8 +4,8 @@ const template = require('@babel/template').default
 const {traverseAndSelect, convertCodeUseAst} = require('./utils')
 
 module.exports = function (dir, match) {
-  traverseAndSelect(dir)(match)((filePath, namespace) => {
-    convertFile(filePath, namespace)
+  traverseAndSelect(dir)(match)((code, namespace, filePath) => {
+    convertFile(code, namespace, filePath)
   })
 }
 
