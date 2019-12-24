@@ -68,6 +68,7 @@ function convertCodeUseAst(code, visitor, filePath) {
     return recast.print(ast, {wrapColumn: 180}).code
   } catch (e) {
     console.log(filePath + '  -- parse failure')
+    throw e
   }
 }
 
@@ -135,7 +136,7 @@ function putObjAst(typeName, payloadExpression) {
   ])
 }
 
-function wrap(getMatch, doConvert) {
+function wrap(doConvert, getMatch) {
   return function (dir, pathInfo) {
     traverseAndSelect(dir, getMatch ? getMatch(pathInfo) : getDefaultMatch(pathInfo))((code, namespace, filePath) => {
       return doConvert(code, namespace, filePath)

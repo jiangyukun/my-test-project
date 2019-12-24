@@ -1,5 +1,8 @@
-const {wrap, getDefaultMatch, convertCodeUseAst} = require('../utils')
+/**
+ * 查看 payload 是否为对象
+ */
 
+const {wrap, getDefaultMatch, convertCodeUseAst} = require('../utils')
 
 function getTsxMatch(pathInfoList) {
   const defaultMatch = getDefaultMatch(pathInfoList)
@@ -11,11 +14,9 @@ function getTsxMatch(pathInfoList) {
   }
 }
 
-module.exports = wrap(getTsxMatch, convertFile)
+module.exports = wrap(convertFile, getTsxMatch)
 
 function convertFile(code, namespace, filePath) {
-  let needImport = false, isImported = false, isActionTypeImported = false
-
   return convertCodeUseAst(code, {
     Program(rootPath) {
       rootPath.traverse({
@@ -27,8 +28,8 @@ function convertFile(code, namespace, filePath) {
                 let keyName = propertyPath.node.key.name
                 let valueType = propertyPath.node.value.type
                 if (keyName == 'payload') {
-                  if (valueType == 'StringLiteral') {
-
+                  if (valueType != 'ObjectExpression') {
+                    console.log(filePath, propertyPath.node.value.loc.start.line)
                   }
                 }
               }

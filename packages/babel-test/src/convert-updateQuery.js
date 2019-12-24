@@ -1,6 +1,6 @@
 const t = require('@babel/types')
 
-const {traverseAndSelect, convertCodeUseAst, addImportItem} = require('./utils')
+const {wrap, convertCodeUseAst, addImportItem} = require('./utils')
 
 module.exports = wrap(convertFile)
 
