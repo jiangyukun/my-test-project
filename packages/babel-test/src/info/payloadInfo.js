@@ -2,17 +2,7 @@
  * 查看 payload 是否为对象
  */
 
-const {wrap, getDefaultMatch, convertCodeUseAst} = require('../utils')
-
-function getTsxMatch(pathInfoList) {
-  const defaultMatch = getDefaultMatch(pathInfoList)
-  return function (filePath) {
-    if (filePath.indexOf('.tsx') == -1) {
-      return null
-    }
-    return defaultMatch(filePath)
-  }
-}
+const {wrap, getTsxMatch, convertCodeUseAst} = require('../utils')
 
 module.exports = wrap(convertFile, getTsxMatch)
 

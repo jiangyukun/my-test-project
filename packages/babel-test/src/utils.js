@@ -25,7 +25,7 @@ const traverseAndSelect = (dir, match) => (callback) => {
   reserveFile(dir, (filePath) => {
     const result = match(filePath)
     if (result) {
-      const {namespace} = result
+      const namespace = result
       const code = fs.readFileSync(filePath).toString()
       let convertedCode = callback(code, namespace, filePath)
       if (convertedCode != code) {
@@ -144,6 +144,18 @@ function wrap(doConvert, getMatch) {
   }
 }
 
+
+function getTsxMatch(pathInfoList) {
+  const defaultMatch = getDefaultMatch(pathInfoList)
+  return function (filePath) {
+    if (filePath.indexOf('.tsx') == -1) {
+      return null
+    }
+    return defaultMatch(filePath)
+  }
+}
+
+
 module.exports = {
   wrap,
   reserveFile,
@@ -156,5 +168,6 @@ module.exports = {
   isModuleImported,
   addImportItem,
   putObjAst,
-  sepLine
+  sepLine,
+  getTsxMatch
 }

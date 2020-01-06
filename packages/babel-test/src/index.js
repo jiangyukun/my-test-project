@@ -1,6 +1,6 @@
 const path = require('path')
 
-const {global2Path, modelPath} = require('./constants')
+const {global2Path, modelPath, tsxPath} = require('./constants')
 const {projectRoot} = require('./constants')
 
 const pagesRoot = path.join(projectRoot, 'src/pages')
@@ -13,7 +13,7 @@ const convertGetState = require('./convert-getState')
 const convertUpdateState = require('./convert-updateState')
 const convertUpdateQuery = require('./convert-updateQuery')
 const convertCallService = require('./convert-call-service')
-const convertPayload = require('./convert-payload')
+const upgradeConnect = require('./upgrade-connect')
 
 // convertEffects(modelsRoot, global2Path)
 // convertGetState(modelsRoot, global2Path)
@@ -21,5 +21,5 @@ const convertPayload = require('./convert-payload')
 // convertUpdateQuery(modelsRoot, global2Path)
 // convertCallService(modelsRoot, global2Path)
 
-convertPayload(pagesRoot, modelPath)
+upgradeConnect(pagesRoot, tsxPath)
 
