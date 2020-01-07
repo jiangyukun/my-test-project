@@ -1,27 +1,44 @@
 const data = require('./api-data')
 
-const convertData = data.list.map(item => {
+let convertData = data.list.map(item => {
   const {url, data} = item
+  if (url == '/enums|get') {
+    return
+  }
   const parts = url.split('|')
   if (!parts[1]) {
-    parts[1] = 'get'
+    return null
   }
   return {
-    key: parts[1].toUpperCase() + ' /api2' + parts[0],
+    key: parts[1].toUpperCase() + ' /api' + parts[0],
     data
   }
 })
 
-let mockItem = convertData.map(item => {
-  return JSON.stringify(item.key) + ': ' + JSON.stringify({
-    errorMsg: '',
-    errorCode: 0,
-    results: item.data
-  }) + ','
+convertData = convertData.filter(item => item != null)
+
+let apis = []
+let keyList = []
+convertData.forEach((item) => {
+  if (keyList.indexOf(item.key) == -1) {
+    apis.push(JSON.stringify(item.key) + ': ' + JSON.stringify(item.data) + ',')
+  }
+  keyList.push(item.key)
 })
 
 console.log(`
 export default {
-${mockItem.join('\n')}
+'GET /api/enums': (req, res) => {
+    let resource = req.query.resource
+    let list = require('./enums')
+    let match = list.find(item => item.resource == resource)
+
+    res.json({
+      errorCode: 0,
+      errorMsg: '',
+      results: match ? match.data : []
+    })
+  },
+${apis.join('\n')}
 }
 `)
