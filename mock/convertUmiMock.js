@@ -10,7 +10,7 @@ let convertData = data.list.map(item => {
     return null
   }
   return {
-    key: parts[1].toUpperCase() + ' /api' + parts[0],
+    key: parts[1].toUpperCase() + ' /mock' + parts[0],
     data
   }
 })
@@ -28,7 +28,7 @@ convertData.forEach((item) => {
 
 console.log(`
 export default {
-'GET /api/enums': (req, res) => {
+'GET /mock/enums': (req, res) => {
     let resource = req.query.resource
     let list = require('./enums')
     let match = list.find(item => item.resource == resource)

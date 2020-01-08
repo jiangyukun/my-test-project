@@ -5,7 +5,7 @@ let convertData = data.list.filter(item => item.url == '/enums|get').map(item =>
 
   return {
     resource: param.resource,
-    data: data.results
+    data: data ? data.results: []
   }
 })
 
