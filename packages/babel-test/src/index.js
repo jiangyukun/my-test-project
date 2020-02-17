@@ -14,6 +14,7 @@ const convertUpdateState = require('./convert-updateState')
 const convertUpdateQuery = require('./convert-updateQuery')
 const convertCallService = require('./convert-call-service')
 const upgradeConnect = require('./upgrade-connect')
+const separate = require('./separate-columns')
 
 // convertEffects(modelsRoot, global2Path)
 // convertGetState(modelsRoot, global2Path)
@@ -21,5 +22,6 @@ const upgradeConnect = require('./upgrade-connect')
 // convertUpdateQuery(modelsRoot, global2Path)
 // convertCallService(modelsRoot, global2Path)
 
-upgradeConnect(pagesRoot, tsxPath)
+// upgradeConnect(pagesRoot, tsxPath)
+separate(pagesRoot, tsxPath)
 
