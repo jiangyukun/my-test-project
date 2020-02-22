@@ -1,6 +1,6 @@
 const {sepLine} = require('./utils')
 
-const projectRoot = 'D:\\2019\\Porjects\\ems2.0-mm-view'
+const projectRoot = '/Users/wangji/web2022/ems2.0-mm-view'
 
 let tsxPath = [
   {path: sepLine('customerList'), ns: 'c_list'},

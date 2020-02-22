@@ -1,17 +1,25 @@
 const t = require('@babel/types')
 const template = require('@babel/template').default
+const parser = require('@babel/parser')
+const traverse = require('@babel/traverse').default
+const generator = require('@babel/generator').default
 
 const code = `
-let a = {b:'2'}
+props.action('', {a: 1})
 `
 
-const {convertCodeUseAst, restObj} = require('./utils')
 
-let convertCode = convertCodeUseAst(code, {
+const ast = parser.parse(code, {
+  sourceType: 'module',
+  plugins: ['jsx', 'typescript'],
+  tokens: true
+})
+
+
+traverse(ast, {
   Program(path) {
     let node = path.node
-    console.log(1)
   }
 })
 
-console.log(convertCode)
+console.log(generator(ast, {retainFunctionParens: true, retainLines: true, concise: true}).code)
