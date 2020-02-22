@@ -6,6 +6,12 @@ let tsxPath = [
   {path: sepLine('customerList'), ns: 'c_list'},
   {path: 'StationInfo.tsx', ns: 'c_station_list'},
 
+  {path: sepLine('List'), ns: 'stationListNS'},
+  {path: sepLine('Detail'), ns: 'stationDetailNS'},
+  {path: sepLine('EnergyUnit'), ns: 'stationEnergyUnitNS'},
+  {path: sepLine('DataPoint'), ns: 'stationDataPointNS'},
+  {path: sepLine('Price'), ns: 'stationPriceNS'},
+
   {path: sepLine('batch-addition'), ns: 'r_e_batch_addition'},
   {path: sepLine('data-item-view'), ns: 'r_e_data_item'},
   {path: sepLine('parameter-library'), ns: 'r_e_parameter_library'},
@@ -39,7 +45,7 @@ let modelPath = [
 ]
 
 let global2Path = [
-  {path: sepLine('models', 'global2.ts'), ns: 'global2NS'},
+  {path: sepLine('models', 'global2.ts'), ns: 'global2NS'}
 ]
 
 module.exports = {

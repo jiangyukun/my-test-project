@@ -58,7 +58,7 @@ function convertCodeUseAst(code, visitor, filePath) {
         parse(source) {
           return parser.parse(source, {
             sourceType: 'module',
-            plugins: ['jsx', 'typescript'],
+            plugins: ['jsx', 'typescript', 'classProperties', 'optionalChaining'],
             tokens: true
           })
         }
