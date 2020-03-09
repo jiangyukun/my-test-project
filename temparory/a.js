@@ -1,17 +1,10 @@
-let list = [
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
-  {},
-]
 
-let rows = ['unit', 'value', 'qita'].map(key => {
-  let row = {}
-  list.forEach((item, index) => {
-    row['column' + index] = list[key]
-  })
-  return row
-})
+
+let a  = new Map()
+
+a.set(null, 2)
+a.set(null, 3)
+a.set(undefined, 3)
+a.set(0, 4)
+
+console.log(a.get(null))
