@@ -44,7 +44,7 @@ let config = {
     // new TodoTaskPlugin(),
     new FriendlyErrorsPlugin(),
     // new SetClickIdPlugin(),
-    new FindModulePlugin({subDir: ''})
+    // new FindModulePlugin({subDir: ''})
   ]
 }
 
