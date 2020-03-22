@@ -5,6 +5,8 @@ let notify = require('./notify-service')
 
 axios.defaults.withCredentials = true
 
+let json = null
+
 class List {
   constructor(size) {
     this.size = size || 2880
@@ -33,19 +35,7 @@ const listAu = new List()
 
 function fetchData() {
   axios.post('', `json=${json}`, {
-    headers: {
-      Cookie: 'JSESSIONID=0000wUxcIQfCgKONuNN0Fndia5f:1ci430u0n',
-      Accept: '*/*',
-      'Accept-Encoding': 'gzip, deflate, br',
-      'User-Agent': 'BOCMBCI/3.0.1 CFNetwork/1121.2.2 Darwin/19.3.0',
-      'Accept-Language': 'zh-cn',
-      'Content-Length': 579,
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-      'bfw-ctrl': 'json',
-      'secfactor': 'auk',
-      'Connection': 'keep-alive',
-      'Host': 'ccsa.ebsnew.boc.cn'
-    }
+
   }).then(res => {
     let list = res.data.result
 
@@ -93,19 +83,30 @@ function fetchData() {
 //   mock()
 // }, 1000)
 
-setInterval(() => {
-  // let weekday = moment().weekday()
-  // let hour = moment().hour()
-  //
-  // if (weekday == 5 && hour > 5) {
-  //   return
-  // }
-  // if (weekday == 6) {
-  //   return
-  // }
-  // if (weekday == 0 && hour < 7) {
-  //   return
-  // }
+function start() {
+  let time = moment()
+  let weekday = time.weekday()
+  let hour = time.hour()
+  let minute = time.minute()
+
+  if (weekday == 6 && hour > 5) {
+    return
+  }
+  if (weekday == 0) {
+    return
+  }
+  if (weekday == 1 && hour < 6) {
+    return
+  }
+  if (weekday == 1 && hour == 6 && minute < 50) {
+    return
+  }
 
   fetchData()
+}
+
+setInterval(() => {
+  start()
 }, 60 * 1000)
+
+start()
