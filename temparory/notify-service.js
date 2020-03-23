@@ -40,7 +40,7 @@ class MultiTimeStrategy extends BaseTimeStrategy {
   }
 
   getContent(pricePtList, pricePdList, priceAuList) {
-    if (!this.check(pricePtList)) {
+    if (!this.check(pricePtList) && pricePtList.length() > 1) {
       return null
     }
     const pricePt = pricePtList.get(pricePtList.length() - 1).price
