@@ -1,7 +1,7 @@
 import React from 'react'
 import { ColumnProps } from 'antd/lib/table'
 
-class List1 extends React.Component<any> {
+class List1 extends React.Component<any, any> {
   getColumns(): ColumnProps<any>[] {
     return [
       {

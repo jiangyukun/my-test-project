@@ -7,6 +7,7 @@ let FunctionNamePlugin = require('./plugins/FunctionNamePlugin')
 let TodoTaskPlugin = require('./plugins/TodoTaskPlugin')
 let SetClickIdPlugin = require('./plugins/SetClickIdPlugin')
 let FindModulePlugin = require('./plugins/FindModulePlugin')
+let AutoExportColumn = require('./plugins/AutoExportColumn')
 
 let config = {
   mode: 'development',
@@ -43,6 +44,7 @@ let config = {
     // new FunctionNamePlugin(),
     // new TodoTaskPlugin(),
     new FriendlyErrorsPlugin(),
+    new AutoExportColumn(),
     // new SetClickIdPlugin(),
     // new FindModulePlugin({subDir: ''})
   ]
