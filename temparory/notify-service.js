@@ -1,6 +1,17 @@
 let moment = require('moment')
 let push = require('./jpush')
 
+function isNight(now) {
+  let hour = moment(now).hour()
+  let minute = moment(now).minute()
+  if (hour < 6) {
+    return true
+  }
+  if (hour == 6 && minute < 30) {
+    return true
+  }
+  return false
+}
 
 class BaseTimeStrategy {
   constructor(seconds) {
@@ -10,6 +21,9 @@ class BaseTimeStrategy {
 
   check(priceList) {
     let now = priceList.get(priceList.length() - 1).seconds
+    if (isNight(now)) {
+      return false
+    }
     if (now - this.previousSeconds > this.seconds) {
       this.previousSeconds = moment().valueOf()
       return true
@@ -28,7 +42,7 @@ class TimeStrategy extends BaseTimeStrategy {
   getContent(priceList) {
     if (this.check(priceList)) {
       const price = priceList.get(priceList.length() - 1).price
-      return `定时通知: ${this.type}: ${price.sellRate}, ${price.buyRate}`
+      return `${this.type}: ${price.sellRate}, ${price.buyRate}`
     }
     return null
   }
@@ -46,9 +60,9 @@ class MultiTimeStrategy extends BaseTimeStrategy {
     const pricePt = pricePtList.get(pricePtList.length() - 1).price
     const pricePd = pricePdList.get(pricePdList.length() - 1).price
     const priceAu = priceAuList.get(priceAuList.length() - 1).price
-    return `定时通知: 铂金: ${pricePt.buyRate}, ${pricePt.sellRate}` + '\n' +
-      `定时通知: 钯金: ${pricePd.buyRate}, ${pricePd.sellRate}` + '\n' +
-      `定时通知: 黄金: ${priceAu.buyRate}, ${priceAu.sellRate}`
+    return `铂金: ${pricePt.buyRate}, ${pricePt.sellRate}` + '\n' +
+      `钯金: ${pricePd.buyRate}, ${pricePd.sellRate}` + '\n' +
+      `黄金: ${priceAu.buyRate}, ${priceAu.sellRate}`
   }
 }
 
@@ -80,7 +94,12 @@ class DiffStrategy {
     }
     let nearestSecondsIndex = this.getNearestIndex(priceList)
     if (nearestSecondsIndex != undefined) {
-      if (Math.abs(priceList.get(priceList.length() - 1).price.sellRate - priceList.get(nearestSecondsIndex).price.sellRate) > this.diff) {
+      const lastItem = priceList.get(priceList.length() - 1)
+      let diff = this.diff
+      if (isNight(lastItem.seconds)) {
+        diff = diff * 1.5
+      }
+      if (Math.abs(lastItem.price.sellRate - priceList.get(nearestSecondsIndex).price.sellRate) > diff) {
         return true
       }
     }
@@ -94,20 +113,29 @@ class DiffStrategy {
       this.previousSeconds = moment().valueOf()
       let nearestPrice = priceList.get(nearestSecondsIndex).price
       let diff = (price.sellRate - nearestPrice.sellRate).toFixed(1)
-      return `价格差：${diff} ,${this.type}: ${price.buyRate}, 之前：${nearestPrice.buyRate}`
+      return `浮动：${diff} ,${this.type}: ${price.buyRate}, ${parseInt(this.diffSeconds / 1000)}秒前：${nearestPrice.buyRate}`
     }
     return null
   }
 }
 
-// let timeStrategyPt = new TimeStrategy('铂金', 10 * 60 * 1000)
-// let timeStrategyPd = new TimeStrategy('钯金', 10 * 60 * 1000)
-// let timeStrategyAu = new TimeStrategy('黄金', 10 * 60 * 1000)
 let timeStrategy = new MultiTimeStrategy(30 * 60 * 1000)
 
-let diffStrategyPt = new DiffStrategy('铂金', 1, 60 * 1000)
-let diffStrategyPd = new DiffStrategy('钯金', 3, 60 * 1000)
-let diffStrategyAu = new DiffStrategy('黄金', 1.5, 60 * 1000)
+const oneMinute = 60 * 1000
+
+let diffStrategyList = [
+  new DiffStrategy('铂金', 1, oneMinute),
+  new DiffStrategy('铂金', 1.5, 2 * oneMinute),
+  new DiffStrategy('铂金', 3, 5 * oneMinute),
+
+  new DiffStrategy('钯金', 3, oneMinute),
+  new DiffStrategy('钯金', 5, 2 * oneMinute),
+  new DiffStrategy('钯金', 10, 5 * oneMinute),
+
+  new DiffStrategy('黄金', 1.5, oneMinute),
+  new DiffStrategy('黄金', 2, 2 * oneMinute),
+  new DiffStrategy('黄金', 3, 5 * oneMinute)
+]
 
 module.exports = function notify(pricePt, pricePd, priceAu) {
   let timeContent = timeStrategy.getContent(pricePt, pricePd, priceAu)
@@ -116,18 +144,10 @@ module.exports = function notify(pricePt, pricePd, priceAu) {
     push(timeContent)
   }
 
-  let diffPtContent = diffStrategyPt.getContent(pricePt)
-  if (diffPtContent) {
-    push(diffPtContent)
-  }
-
-  let diffPdContent = diffStrategyPd.getContent(pricePd)
-  if (diffPdContent) {
-    push(diffPdContent)
-  }
-
-  let diffAuContent = diffStrategyAu.getContent(priceAu)
-  if (diffAuContent) {
-    push(diffAuContent)
-  }
+  diffStrategyList.forEach(diffStrategy => {
+    let diffContent = diffStrategy.getContent(pricePt)
+    if (diffContent) {
+      push(diffContent)
+    }
+  })
 }
