@@ -113,7 +113,7 @@ class DiffStrategy {
       this.previousSeconds = moment().valueOf()
       let nearestPrice = priceList.get(nearestSecondsIndex).price
       let diff = (price.sellRate - nearestPrice.sellRate).toFixed(1)
-      return `浮动：${diff} ,${this.type}: ${price.buyRate}, ${parseInt(this.diffSeconds / 1000)}秒前：${nearestPrice.buyRate}`
+      return `价格浮动：${diff} ,${this.type}: ${price.buyRate}, ${parseInt(this.diffSeconds / 1000)}秒前：${nearestPrice.buyRate}`
     }
     return null
   }
@@ -124,17 +124,23 @@ let timeStrategy = new MultiTimeStrategy(30 * 60 * 1000)
 const oneMinute = 60 * 1000
 
 let diffStrategyList = [
-  new DiffStrategy('铂金', 1, oneMinute),
-  new DiffStrategy('铂金', 1.5, 2 * oneMinute),
-  new DiffStrategy('铂金', 3, 5 * oneMinute),
+  new DiffStrategy('铂金', 1.0, oneMinute),
+  new DiffStrategy('铂金', 1.2, 2 * oneMinute),
+  new DiffStrategy('铂金', 2, 5 * oneMinute),
+  new DiffStrategy('铂金', 3.5, 30 * oneMinute),
+  new DiffStrategy('铂金', 4.5, 60 * oneMinute),
 
-  new DiffStrategy('钯金', 3, oneMinute),
-  new DiffStrategy('钯金', 5, 2 * oneMinute),
-  new DiffStrategy('钯金', 10, 5 * oneMinute),
+  new DiffStrategy('钯金', 2.2, oneMinute),
+  new DiffStrategy('钯金', 3.0, 2 * oneMinute),
+  new DiffStrategy('钯金', 4.0, 5 * oneMinute),
+  new DiffStrategy('钯金', 8.0, 30 * oneMinute),
+  new DiffStrategy('钯金', 10, 60 * oneMinute),
 
-  new DiffStrategy('黄金', 1.5, oneMinute),
-  new DiffStrategy('黄金', 2, 2 * oneMinute),
-  new DiffStrategy('黄金', 3, 5 * oneMinute)
+  new DiffStrategy('黄金', 1.0, oneMinute),
+  new DiffStrategy('黄金', 1.3, 2 * oneMinute),
+  new DiffStrategy('黄金', 1.6, 5 * oneMinute),
+  new DiffStrategy('黄金', 2.2, 30 * oneMinute),
+  new DiffStrategy('黄金', 3.0, 60 * oneMinute)
 ]
 
 module.exports = function notify(pricePt, pricePd, priceAu) {
