@@ -5,7 +5,7 @@ const traverse = require('@babel/traverse').default
 const generator = require('@babel/generator').default
 
 const code = `
-props.action('', {a: 1})
+let a = <Icon/>
 `
 
 
@@ -15,9 +15,8 @@ const ast = parser.parse(code, {
   tokens: true
 })
 
-
 traverse(ast, {
-  Program(path) {
+  JSXElement(path) {
     let node = path.node
   }
 })

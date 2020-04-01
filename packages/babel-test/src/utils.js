@@ -28,6 +28,9 @@ const traverseAndSelect = (dir, match) => (callback) => {
       const namespace = result
       const code = fs.readFileSync(filePath).toString()
       let convertedCode = callback(code, namespace, filePath)
+      if (convertedCode == null) {
+        return
+      }
       if (convertedCode != code) {
         fs.writeFileSync(filePath, convertedCode, {})
         console.log(filePath, '  --converted')
@@ -68,7 +71,8 @@ function convertCodeUseAst(code, visitor, filePath) {
     return recast.print(ast, {wrapColumn: 180}).code
   } catch (e) {
     console.log(filePath + '  -- parse failure')
-    throw e
+    console.error(e)
+    // throw e
   }
 }
 
