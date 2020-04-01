@@ -4,9 +4,7 @@ const parser = require('@babel/parser')
 const traverse = require('@babel/traverse').default
 const generator = require('@babel/generator').default
 
-const code = `
-let a = <Icon/>
-`
+const code = `let a = {a: 1}`
 
 
 const ast = parser.parse(code, {
@@ -16,7 +14,7 @@ const ast = parser.parse(code, {
 })
 
 traverse(ast, {
-  JSXElement(path) {
+  ObjectProperty(path) {
     let node = path.node
   }
 })

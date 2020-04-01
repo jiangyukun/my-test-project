@@ -1,4 +1,5 @@
 const t = require('@babel/types')
+const {isModuleImported} = require('../../../utils/astUtil')
 const {addImportItem} = require('../../../utils/astUtil')
 const {wrap, convertCodeUseAst} = require('./utils')
 
@@ -26,9 +27,7 @@ function convertFile(code, namespace, filePath) {
                     if (node2.name.name == 'type') {
                       if (node2.value.type == 'StringLiteral') {
                         typeValue = node2.value.value
-                        if (typeValue.indexOf('wanke') == -1) {
                           path2.remove()
-                        }
                       }
                     }
                     if (node2.name.name == 'theme') {
@@ -40,14 +39,10 @@ function convertFile(code, namespace, filePath) {
                 if (typeValue == null) {
                   return
                 }
-                if (typeValue.indexOf('wanke') != -1) {
-                  // console.log('ignore', typeValue)
-                  return
-                }
                 let typeValue1 = typeValue
                   .replace(/^\w/, (w) => w.toUpperCase())
-                  .replace(/-\w/, (w) => w.toUpperCase())
-                  .replace('-', '')
+                  .replace(/-\w/g, (w) => w.toUpperCase())
+                  .replace(/-/g, '')
 
                 let theme = 'Outlined'
                 if (themeValue == 'filled') {
@@ -78,10 +73,14 @@ function convertFile(code, namespace, filePath) {
         }
       })
       for (let iconType of iconTypeList) {
-        // let isImported = isModuleImported(rootPath, '@ant-design/icons')
-        // if (!isImported) {
-        addImportItem(rootPath, `\nimport {${iconType}} from '@ant-design/icons'`)
-        // }
+        let isImported = isModuleImported(rootPath, iconType)
+        if (!isImported) {
+          if (iconType.indexOf('Wanke') != -1) {
+            addImportItem(rootPath, `\nimport {${iconType}} from 'wanke-gui/lib/icon/icons'`)
+          } else {
+            console.log(iconType)
+          }
+        }
       }
     }
   }, filePath)
