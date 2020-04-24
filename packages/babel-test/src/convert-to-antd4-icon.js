@@ -76,7 +76,7 @@ function convertFile(code, namespace, filePath) {
         let isImported = isModuleImported(rootPath, iconType)
         if (!isImported) {
           if (iconType.indexOf('Wanke') != -1) {
-            addImportItem(rootPath, `\nimport {${iconType}} from 'wanke-gui/lib/icon/icons'`)
+            addImportItem(rootPath, `\nimport {${iconType}} from 'wanke-icon/lib'`)
           } else {
             console.log(iconType)
           }
