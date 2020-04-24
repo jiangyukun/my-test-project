@@ -148,6 +148,14 @@ function wrap(doConvert, getMatch) {
   }
 }
 
+function bootstrap(doConvert, getMatch) {
+  return function (dir, pathInfo) {
+    traverseAndSelect(dir, getMatch ? getMatch(pathInfo) : getDefaultMatch(pathInfo))((code, namespace, filePath) => {
+      return doConvert(code, namespace, filePath)
+    })
+  }
+}
+
 
 function getTsxMatch(pathInfoList) {
   const defaultMatch = getDefaultMatch(pathInfoList)
@@ -162,6 +170,7 @@ function getTsxMatch(pathInfoList) {
 
 module.exports = {
   wrap,
+  bootstrap,
   reserveFile,
   traverseAndSelect,
   getDefaultMatch,

@@ -4,7 +4,7 @@ const parser = require('@babel/parser')
 const traverse = require('@babel/traverse').default
 const generator = require('@babel/generator').default
 
-const code = `let a = {a: 1}`
+const code = `export function a(){}`
 
 
 const ast = parser.parse(code, {
@@ -14,7 +14,7 @@ const ast = parser.parse(code, {
 })
 
 traverse(ast, {
-  ObjectProperty(path) {
+  Program(path) {
     let node = path.node
   }
 })
