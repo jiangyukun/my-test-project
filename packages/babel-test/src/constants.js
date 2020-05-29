@@ -1,6 +1,13 @@
+const path = require('path')
 const {sepLine} = require('./utils')
 
 const projectRoot = 'D:/2019/Porjects/ems2.0-mm-view'
+// const projectRoot = 'D:/2019/Porjects/ems2.0-mm-view'
+
+const pagesRoot = path.join(projectRoot, 'src/pages')
+const srcRoot = path.join(projectRoot, 'src')
+const layoutsRoot = path.join(projectRoot, 'src/layouts')
+const modelsRoot = path.join(projectRoot, 'src/models')
 
 let tsxPath = [
   {path: sepLine('customerList'), ns: 'c_list'},
@@ -50,6 +57,10 @@ let global2Path = [
 
 module.exports = {
   projectRoot,
+  pagesRoot,
+  srcRoot,
+  layoutsRoot,
+  modelsRoot,
   tsxPath,
   modelPath,
   global2Path
