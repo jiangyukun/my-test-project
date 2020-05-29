@@ -13,7 +13,7 @@ function convertFile(code, namespace, filePath) {
         return
       }
       if(superClass.type == 'Identifier') {
-        if(superClass.name == 'PageTable') {
+        if(superClass.name == 'BasicTable') {
           let columns = []
           path1.traverse({
             ClassMethod(path2) {
@@ -24,10 +24,10 @@ function convertFile(code, namespace, filePath) {
                   ObjectExpression(path3) {
                     let node3 = path3.node
                     path3.traverse({
-                      MemberExpression(path3) {
-                        let node3 = path3.node
-                        if(node3.object.type == 'ThisExpression') {
-                          path3.replaceWith(node3.property)
+                      MemberExpression(path4) {
+                        let node4 = path4.node
+                        if(node4.object.type == 'ThisExpression' && node4.property.name == 'props') {
+                          path3.replaceWith(node4.property)
                         }
                       }
                     })
@@ -38,56 +38,58 @@ function convertFile(code, namespace, filePath) {
             }
           })
 
-          let d = t.identifier('columns')
-          d.typeAnnotation = t.typeAnnotation(t.anyTypeAnnotation())
+          let typeColumns = t.identifier('columns')
+          typeColumns.typeAnnotation = t.tsTypeAnnotation(
+            t.tsArrayType(
+              t.tsTypeReference(
+                t.identifier('Column'),
+                t.tsTypeParameterInstantiation([t.tsAnyKeyword()])
+              )
+            )
+          )
+
+          let typeFunction = t.identifier(node1.id.name)
+          typeFunction.typeAnnotation = t.tsTypeAnnotation(
+            t.tsTypeReference(
+              t.tsQualifiedName(t.identifier('React'), t.identifier('FC')),
+              t.tsTypeParameterInstantiation([t.tsTypeReference(t.identifier('Props'))])
+            )
+          )
+
+          let typeThis = t.identifier('this')
+          typeThis.typeAnnotation = t.tsTypeAnnotation(t.tsNullKeyword())
+
           path1.replaceWith(
             t.variableDeclaration('const', [
               t.variableDeclarator(
-                t.identifier(node1.id.name),
+                typeFunction,
                 t.functionExpression(
                   null,
-                  [t.identifier('props')],
+                  [typeThis, t.identifier('props')],
                   t.blockStatement([
                     t.variableDeclaration('const', [
-
-                      t.variableDeclarator(d, columns)
+                      t.variableDeclarator(typeColumns, columns)
                     ]),
                     t.returnStatement(
                       t.jsxElement(
                         t.jsxOpeningElement(
-                          t.jsxIdentifier('Table2'),
+                          t.jsxIdentifier('Table1'),
                           [
                             t.jsxAttribute(
                               t.jsxIdentifier('loading'),
-                              t.jsxExpressionContainer(t.identifier('loading'))
+                              t.jsxExpressionContainer(t.memberExpression(t.identifier('props'), t.identifier('loading')))
                             ),
                             t.jsxAttribute(
                               t.jsxIdentifier('dataSource'),
-                              t.jsxExpressionContainer(t.identifier('dataSource'))
+                              t.jsxExpressionContainer(t.memberExpression(t.identifier('props'), t.identifier('dataSource')))
                             ),
                             t.jsxAttribute(
                               t.jsxIdentifier('columns'),
                               t.jsxExpressionContainer(t.identifier('columns'))
-                            ),
-                            t.jsxAttribute(
-                              t.jsxIdentifier('page'),
-                              t.jsxExpressionContainer(t.memberExpression(t.identifier('props'), t.identifier('page')))
-                            ),
-                            t.jsxAttribute(
-                              t.jsxIdentifier('size'),
-                              t.jsxExpressionContainer(t.memberExpression(t.identifier('props'), t.identifier('size')))
-                            ),
-                            t.jsxAttribute(
-                              t.jsxIdentifier('total'),
-                              t.jsxExpressionContainer(t.memberExpression(t.identifier('props'), t.identifier('total')))
-                            ),
-                            t.jsxAttribute(
-                              t.jsxIdentifier('onPageChange'),
-                              t.jsxExpressionContainer(t.memberExpression(t.identifier('props'), t.identifier('onPageChange')))
                             )
                           ]
                         ),
-                        t.jsxClosingElement(t.jsxIdentifier('Table2')),
+                        t.jsxClosingElement(t.jsxIdentifier('Table1')),
                         [],
                         true
                       )
@@ -101,7 +103,7 @@ function convertFile(code, namespace, filePath) {
         }
       }
     }
-  })
+  }, filePath)
   if(converted) {
     return resultCode
   }
