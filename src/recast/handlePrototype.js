@@ -54,9 +54,16 @@ function handlePrototype(moduleName, ast, options) {
           } else {
             line = parentValue.loc.start.line
           }
-          if (argumentList[1].type == 'FunctionExpression' && recastUtil.canUseArrowExpression(this, path)) {
-            // console.log(`处理bind函数 -- ${newClassName} ${toName}(${line})`)
-            path.replace(arrowFunctionExpression(argumentList[1].params, argumentList[1].body, false))
+          if (argumentList[1].type == 'FunctionExpression') {
+            if (recastUtil.canUseArrowExpression(this, path)) {
+              path.replace(arrowFunctionExpression(argumentList[1].params, argumentList[1].body, false))
+              // console.log(`处理bind函数 -- ${newClassName} ${toName}(${line})`)
+            } else {
+              console.log(`处理bind argument参数 -- ${newClassName} ${toName}(${line})`)
+              path.replace(arrowFunctionExpression(argumentList[1].params, argumentList[1].body, false))
+            }
+          } else {
+            console.log(`无法处理的mxUtils.bind -- ${newClassName} ${toName}(${line}) ${argumentList[1].type}`)
           }
         }
       }

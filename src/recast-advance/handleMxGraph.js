@@ -130,7 +130,7 @@ function reserveFile(dir) {
       let aLine = afterLine.toString().padStart(5)
       let percentStr = percent.toString().padStart(5)
       let showWarning = percent > 5
-      console.log(`${moduleName.padEnd(32, ' ')} -- ${bLine} => ${aLine} (${bLine - afterLine} ${percentStr}%) ${showWarning ? '!!!' : ''}`)
+      // console.log(`${moduleName.padEnd(32, ' ')} -- ${bLine} => ${aLine} (${bLine - afterLine} ${percentStr}%) ${showWarning ? '!!!' : ''}`)
     }
   })
 }
@@ -150,4 +150,4 @@ function handleModule(moduleName, code, filePath) {
 
 reserveFile(config.mxGraphRoot)
 
-console.log('源码共：' + srcTotalLine + ' 行')
+// console.log('源码共：' + srcTotalLine + ' 行')
