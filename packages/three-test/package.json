@@ -1,0 +1,31 @@
+{
+  "name": "three-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./startDev.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/react": "^16.9.43",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "three": "^0.118.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.1",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-import": "^1.13.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "html-webpack-plugin": "^4.3.0",
+    "typescript": "^3.5.2",
+    "webpack": "^4.43.0",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
