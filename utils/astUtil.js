@@ -11,7 +11,7 @@ function convertCodeUseAst(code, visitor, filePath) {
         parse(source) {
           return parser.parse(source, {
             sourceType: 'module',
-            plugins: ['jsx', 'typescript', 'classProperties', 'optionalChaining'],
+            plugins: ['jsx', 'typescript', 'classProperties', 'optionalChaining', 'nullishCoalescingOperator'],
             tokens: true
           })
         }
@@ -54,6 +54,11 @@ function isModuleImported(rootPath, moduleName, searchType = 'import') {
     rootPath.traverse({
       ImportSpecifier(importPath) {
         if (importPath.node.imported.name == moduleName) {
+          isImported = true
+        }
+      },
+      ImportDefaultSpecifier(importPath) {
+        if (importPath.node.local.name == moduleName) {
           isImported = true
         }
       }

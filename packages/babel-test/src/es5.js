@@ -4,7 +4,9 @@ const parser = require('@babel/parser')
 const traverse = require('@babel/traverse').default
 const generator = require('@babel/generator').default
 
-const code = `let a: A<any>[] = 1`
+const code = `
+import a from 'b'
+`
 
 const ast = parser.parse(code, {
   sourceType: 'module',
@@ -15,6 +17,21 @@ const ast = parser.parse(code, {
 traverse(ast, {
   Program(path) {
     let node = path.node
+  },
+  JSXElement(path) {
+    let node = path.node
+  },
+  TemplateElement(path) {
+    let node = path.node
+    let value = node.value.raw
+    node.value = {
+      raw: 'dd', cooked: 'dd'
+    }
+
+    // path.replaceWith(
+    //   t.templateElement({})
+    // )
+    console.log(value)
   }
 })
 
