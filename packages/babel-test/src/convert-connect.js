@@ -1,17 +1,15 @@
 const t = require('@babel/types')
-
 const path = require('path')
-const {projectRoot} = require('./constants')
-const {addImportItem} = require('./utils')
-const {isModuleImported} = require('./utils')
-const {wrap, convertCodeUseAst} = require('./utils')
 
-module.exports = wrap(convertFile)
+const {pagesRoot} = require('./constants')
+const {addImportItem} = require('./utils')
+const {convertCodeUseAst, isModuleImported} = require('../../../utils/astUtil')
 
 function convertFile(code, namespace, filePath) {
+  let converted = false
   let needImport = false, newFunctionCallIndex = -1, newFunctionArg1
 
-  return convertCodeUseAst(code, {
+  let resultCode = convertCodeUseAst(code, {
     Program(rootPath) {
       rootPath.traverse({
         CallExpression(path) {
@@ -48,5 +46,16 @@ function convertFile(code, namespace, filePath) {
         }
       }
     }
-  })
+  }, filePath)
+
+  if (converted) {
+    return resultCode
+  }
+  return null
 }
+
+let handle = bootstrap(convertFile, getTsxMatch)
+
+handle(pagesRoot, [
+  {path: sepLine('terminal-run-data'), ns: 't_diagram'},
+])

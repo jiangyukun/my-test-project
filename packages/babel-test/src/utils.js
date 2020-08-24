@@ -114,10 +114,6 @@ module.exports = {
   reserveFile,
   traverseAndSelect,
   getDefaultMatch,
-  getAstBody,
-  isModuleImported,
-  addImportItem,
-  putObjAst,
   sepLine,
   getTsxMatch
 }

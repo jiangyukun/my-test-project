@@ -2,16 +2,15 @@ const t = require('@babel/types')
 
 const path = require('path')
 const {projectRoot} = require('./constants')
-const {addImportItem} = require('./utils')
-const {isModuleImported} = require('./utils')
-const {wrap, convertCodeUseAst, getTsxMatch} = require('./utils')
-
-module.exports = wrap(convertFile, getTsxMatch)
+const {pagesRoot} = require('./constants')
+const {bootstrap, getTsxMatch, sepLine} = require('./utils')
+const {convertCodeUseAst, isModuleImported, addImportItem} = require('../../../utils/astUtil')
 
 function convertFile(code, namespace, filePath) {
+  let converted = false
   let needImport = false
 
-  return convertCodeUseAst(code, {
+  let resultCode = convertCodeUseAst(code, {
     Program(rootPath) {
       rootPath.traverse({
         CallExpression(path) {
@@ -21,6 +20,7 @@ function convertFile(code, namespace, filePath) {
               t.callExpression(t.identifier('makeConnect'), [t.identifier(namespace), t.identifier('mapStateToProps')])
             )
             needImport = true
+            converted = true
           }
         },
         VariableDeclarator(path) {
@@ -48,4 +48,16 @@ function convertFile(code, namespace, filePath) {
       }
     }
   })
+
+  if (converted) {
+    return resultCode
+  }
+  return null
 }
+
+let handle = bootstrap(convertFile, getTsxMatch)
+handle(pagesRoot, [
+  {path: sepLine('terminal-run-data'), ns: 't_diagram'},
+  {path: sepLine('terminal-analysis-query', 'battery'), ns: 't_battery'},
+  {path: sepLine('terminal-index'), ns: 't_index'},
+])

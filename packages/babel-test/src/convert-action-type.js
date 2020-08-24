@@ -2,15 +2,15 @@ const template = require('@babel/template').default
 const t = require('@babel/types')
 
 const path = require('path')
-const {projectRoot} = require('./constants')
-const {wrap, convertCodeUseAst} = require('./utils')
-
-module.exports = wrap(convertFile)
+const {srcRoot, projectRoot} = require('./constants')
+const {bootstrap, sepLine, getTsxMatch} = require('./utils')
+const {convertCodeUseAst} = require('../../../utils/astUtil')
 
 function convertFile(code, namespace, filePath) {
   let needImport = false, isImported = false, isActionTypeImported = false
 
-  return convertCodeUseAst(code, {
+  let converted = false
+  let resultCode = convertCodeUseAst(code, {
     Program(rootPath) {
       rootPath.traverse({
         CallExpression(path) {
@@ -31,6 +31,7 @@ function convertFile(code, namespace, filePath) {
                     } else {
                       path.addComment(t.addComment(path.node, 'leading', ' todo', true))
                     }
+                    converted = true
                   }
                 }
               }
@@ -69,5 +70,18 @@ function convertFile(code, namespace, filePath) {
         }
       }
     }
-  })
+  }, filePath)
+
+  if (converted) {
+    return resultCode
+  }
+
+  return null
 }
+
+
+let handle = bootstrap(convertFile, getTsxMatch)
+
+handle(srcRoot, [
+  {path: sepLine('terminal-run-data'), ns: 't_diagram'},
+])
