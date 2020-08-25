@@ -1,12 +1,6 @@
 const fs = require('fs')
 const path = require('path')
 
-const parser = require('@babel/parser')
-const traverse = require('@babel/traverse').default
-const t = require('@babel/types')
-const template = require('@babel/template').default
-const recast = require('recast')
-
 function reserveFile(dir, callback) {
   let list = fs.readdirSync(dir)
   list.forEach(function (fileName) {
@@ -41,6 +35,9 @@ const traverseAndSelect = (dir, match) => (callback) => {
 
 function getDefaultMatch(pathInfoList) {
   return function (filePath) {
+    if (['.ts', '.tsx', '.js', '.jsx'].find(suffix=> filePath.indexOf(suffix) != -1) === undefined) {
+      return null
+    }
     let list = pathInfoList.filter(item => filePath.indexOf(item.path) != -1)
     if (list.length == 0) {
       return
@@ -54,30 +51,8 @@ function getDefaultMatch(pathInfoList) {
   }
 }
 
-function getAstBody(code) {
-  const ast = recast.parse(code, {
-    parser: {
-      parse(source) {
-        return parser.parse(source, {
-          sourceType: 'module',
-          plugins: ['jsx', 'typescript'],
-          tokens: true
-        })
-      }
-    }
-  })
-  return ast.program.body
-}
-
 function sepLine(dir, sub) {
   return `${path.sep}${dir}${path.sep}${sub || ''}`
-}
-
-function putObjAst(typeName, payloadExpression) {
-  return t.objectExpression([
-    t.objectProperty(t.identifier('type'), t.stringLiteral(typeName)),
-    t.objectProperty(t.identifier('payload'), payloadExpression),
-  ])
 }
 
 function wrap(doConvert, getMatch) {

@@ -43,7 +43,7 @@ function convertFile(code, namespace, filePath) {
                   if(parts.length == 2) {
                     typeName = t.stringLiteral(parts[1])
                   }
-                } else if (property.value.arguments[0].name == namespace) {
+                } else if (property.value.arguments && property.value.arguments[0].name == namespace) {
                   typeName = property.value.arguments[1]
                 }
               }
@@ -102,4 +102,6 @@ handle(pagesRoot, [
   {path: sepLine('terminal-index'), ns: 't_index'},
   {path: sepLine('terminal-operation-duty', 'abnormalWarning'), ns: 't_abnormal_warning'},
   {path: sepLine('terminal-operation-duty', 'checkAbnormal'), ns: 't_check_abnormal'},
+  {path: sepLine('storage-index'), ns: 'storage_index'},
+  {path: sepLine('storage-station-monitor'), ns: 'storage_station_monitor'},
 ])
