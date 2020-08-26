@@ -10,7 +10,7 @@ function writeCodeToFile(distPath, code) {
   if (!code) {
     return
   }
-  let distDir = distPath.substring(0, distPath.lastIndexOf('/') + 1)
+  let distDir = distPath.substring(0, distPath.lastIndexOf(path.sep) + 1)
   mkdirp(distDir, () => {
     fs.writeFileSync(distPath, code)
   })

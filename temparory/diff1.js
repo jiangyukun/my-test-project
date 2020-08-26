@@ -58,6 +58,9 @@ fileUtils.reserveFile(diffFrom, (filePath) => {
     }
   } else {
     // console.log(`${relativePath} 找不到`)
+    if (relativePath.indexOf('index') != -1) {
+
+    }
   }
 })
 
