@@ -9,12 +9,10 @@ const diffTo = 'D:/2066/node/wanke-bff-common/src/models'
 fileUtils.reserveFile(diffFrom, (filePath) => {
   let relativePath = path.relative(diffFrom, filePath)
   let diffFilePath = path.join(diffTo, relativePath)
-  if (fs.existsSync(diffFilePath)) {
-
-  } else {
-
+  if (!fs.existsSync(diffFilePath)) {
     if (relativePath.indexOf('index') != -1) {
       let resultCode = convertCode(fileUtils.getFileContent(filePath))
+      console.log(`添加文件${relativePath}`)
       fileUtils.writeCodeToFile(diffFilePath, resultCode)
     }
   }
@@ -40,9 +38,18 @@ function convertCode(code) {
       if (isModuleImported(rootPath, 'IRequest')) {
         let matchInterface = body.filter(item => item.type == 'ImportDeclaration').find(item => item.source.value.indexOf('globals') != -1)
         matchInterface.source.value = '../../types/interface'
-        console.log(3)
       } else {
         addImportItem(rootPath, `import { IRequest, IEnums } from '../../types/globals'`)
+      }
+    },
+    FunctionDeclaration(funcPath) {
+      let node = funcPath.node
+      let funcName = node.id.name
+      if (funcName.indexOf('new') == 0) {
+        node.id.name = funcName.replace('new', 'post')
+      }
+      if (funcName.indexOf('revise') == 0) {
+        node.id.name = funcName.replace('revise', 'patch')
       }
     },
     CallExpression(callPath) {

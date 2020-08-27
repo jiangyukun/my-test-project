@@ -63,3 +63,48 @@ strategyCommandRecord\index.ts 找不到
 strategyCommandRecord\strategyCommandRecordControllers.ts 找不到
 transformerEfficiency\index.ts 找不到
 weathers\weathersControllers.ts 找不到
+
+
+comment: createModelAttributes=> postModelAttributes
+[ [ 'params', 'modelVersionId' ] ]
+comment: createStationTypes=> postStationTypes
+[ [ 'energyUnitTypeIds_regionIds', 'firmId' ] ]
+comment: updateStationTypes=> putStationTypes
+[ [ 'energyUnitTypeIds_regionIds', '' ] ]
+comment: changePassword=> putPassword
+[ [ '_params', 'other' ] ]
+comment: addVpps=> postVpps
+[ [ 'firmId', 'stationIdList' ] ]
+comment: updateWorkOrders=> patchWorkOrders
+[ [ 'req_body_id', '' ], [ 'params', '_params' ] ]
+
+Loss alarmStatus\index.ts getAlarmStatus
+Loss analogHistory\index.ts updateAnalogHistory
+Loss analogs\index.ts getAnalogsByPN
+Loss deviceChangeRecords\index.ts getDeviceAddOrDelDetail
+Loss devices\index.ts getChildDevices
+Loss devices\index.ts getDataTypes
+Loss differenceAnalysisRecords\index.ts getDifferenceAnalysisRecordsById
+Loss energyUnitEfficiencies\index.ts getEnergyUnitEfficiencies
+Loss energyUnits\index.ts getEnergyUnitsEfficiency
+Loss energyUnitTypes\index.ts updateEnergyUnitTypes
+Loss firms\index.ts addFirmAndUser
+Loss firms\index.ts updateFirms
+Loss firms\index.ts isBindStation
+Loss firms\index.ts createFirmAndUser
+Loss login\index.ts loginToken
+Loss measurements\index.ts getMeasurementsRealtimeObject
+Loss menus\index.ts bindByStationType
+Loss modelAttributes\index.ts getModelAttributesById
+Loss performanceRatio\index.ts amount
+Loss pointDataType\index.ts createPointDataTypes
+Loss prices\index.ts getPrice
+Loss prices\index.ts copyCostPrice
+Loss prices\index.ts copyGeneratePrice
+Loss prices\index.ts getCostPriceSeason
+Loss prices\index.ts getSeasonPriceDetailByStation
+Loss profits\index.ts savesLastDetail
+Loss profits\index.ts savesAmount
+Loss stations\index.ts updateStationsGeneratePrice
+Loss stations\index.ts updateStationsCostPrice
+Loss stations\index.ts getStationResources

@@ -31,14 +31,17 @@ fileUtils.reserveFile(diffFrom, (filePath) => {
             })
           }
         } else {
-          let newApi = list2.find(item3 => item3.comments.find(item4 => item4.value.indexOf(item.name) != -1))
+          // 查找修改名称后的api
+          let newApi = findTargetApi(item, list2)
           if (newApi) {
             diffInfo.push({
               type: 'Replace',
               funcName: item.name,
-              to: newApi.name
+              to: newApi.name,
+              diff: getDiff(item, newApi)
             })
           } else {
+            console.log('Loss', relativePath, item.name)
             diffInfo.push({
               type: 'Loss',
               funcName: item.name,
@@ -80,6 +83,7 @@ function getList(code) {
             let name = node.callee.property.name
             if (name == 'urlGenerator' || name == 'joinUrl') {
               let backApiList = node.arguments[1].elements
+              let data = node.arguments[2]
               params = backApiList.map(item => {
                 if (item.type == 'StringLiteral') {
                   return item.value
@@ -91,6 +95,25 @@ function getList(code) {
                   return handleMemberExpression(item)
                 }
               })
+              if (data) {
+                if (data.type == 'Identifier') {
+                  params.push(data.name)
+                  return
+                }
+                if (data.type == 'ObjectExpression') {
+                  params.push(data.properties.map(p => {
+                    if (p.type == 'ObjectProperty') {
+                      return p.key.name
+                    }
+                    if (p.type == 'SpreadElement') {
+                      return `...${p.argument.name}`
+                    }
+                    throw new Error('未知object类型')
+                  }).join('_'))
+                  return
+                }
+                throw new Error('未知类型22')
+              }
             }
           }
         }
@@ -143,12 +166,43 @@ function getDiff(api1, api2) {
   let params2 = api2.params
   if (params1.length >= params2.length) {
     return params1.map((p, index) => {
-      return p == params2[index] ? [] : [p, params2[index]]
+      return p == params2[index] ? [] : [p, params2[index] || '']
     })
   }
   if (params2.length > params1.length) {
     return params2.map((p, index) => {
-      return p == params1[index] ? [] : [p, params1[index]]
+      return p == params1[index] ? [] : [params1[index] || '', p]
     })
   }
+}
+
+function findTargetApi(api, list) {
+  let match = list.find(item => {
+    if (item.comments.length) {
+      let lastComment = item.comments[item.comments.length - 1]
+      return lastComment.value.indexOf(api.name) != -1
+    }
+    return false
+  })
+  if (match) { //校验注释的正确性
+    let diffs = getDiff(api, match).filter(diff => diff.length > 0)
+    if (diffs.length > 0) {
+      // console.log(`comment: ${api.name}=> ${match.name}`)
+      // console.log(diffs)
+      return match
+    }
+    return match
+  }
+  for (let targetApi of list) { // 自动查找对应的
+    if (api.params.length == targetApi.params.length) {
+      let diffs = getDiff(api, targetApi)
+      if (diffs.length >= 2 && diffs[0].length == 0 && diffs[1].length == 0) {
+        if (api.name.replace('new', 'post') == targetApi.name || api.name.replace('revise', 'patch') == targetApi.name) {
+          // console.log(`list  : ${api.name} => ${targetApi.name}`)
+          return targetApi
+        }
+      }
+    }
+  }
+  return null
 }
