@@ -862,3 +862,13 @@ users\users.ts                                          usersControllers => user
 users\users.ts                                          usersControllers => usersModels, saveUserinfo=>postUserinfo
 users\users.ts                                          frontHandler.paramLostRespGener => frontHandlers.getParamLost
 users\users.ts                                          usersControllers => usersModels
+
+
+
+
+socket.ts                                               analogTypesController => analogTypesModels
+socket.ts                                               stationTypesController => stationTypesModels
+socket.ts                                               stationStatusController => stationStatusModels
+socket.ts                                               frontHandler.paramLostRespGener => frontHandlers.getParamLost
+socket.ts                                               baseHandler.baseRespFactory => frontHandlers.getBaseResp
+

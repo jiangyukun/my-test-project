@@ -5,7 +5,7 @@ const traverse = require('@babel/traverse').default
 const generator = require('@babel/generator').default
 
 const code = `
-import a from 'b'
+export default {}
 `
 
 const ast = parser.parse(code, {
@@ -18,21 +18,7 @@ traverse(ast, {
   Program(path) {
     let node = path.node
   },
-  JSXElement(path) {
-    let node = path.node
-  },
-  TemplateElement(path) {
-    let node = path.node
-    let value = node.value.raw
-    node.value = {
-      raw: 'dd', cooked: 'dd'
-    }
 
-    // path.replaceWith(
-    //   t.templateElement({})
-    // )
-    console.log(value)
-  }
 })
 
 console.log(generator(ast, {retainFunctionParens: true, retainLines: true, concise: true}).code)

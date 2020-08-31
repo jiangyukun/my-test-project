@@ -80,5 +80,6 @@ module.exports = {
   traverseAndSelect,
   getDefaultMatch,
   sepLine,
-  getTsxMatch
+  getTsxMatch,
+  endWith
 }
