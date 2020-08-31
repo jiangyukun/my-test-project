@@ -1,9 +1,8 @@
 const path = require('path')
 const t = require('@babel/types')
-const {sepLine} = require('./utils')
-const {projectRoot, srcRoot} = require('./constants')
+const {projectRoot} = require('./constants')
 
-const {bootstrap} = require('./utils')
+const {bootstrap, sepLine} = require('../../../utils/utils')
 const {convertCodeUseAst} = require('../../../utils/astUtil')
 
 let apiList = []
@@ -53,7 +52,7 @@ function convertFile(code, namespace, filePath) {
         })
       }
     }
-  })
+  }, filePath)
   if (converted) {
     return resultCode
   }
@@ -63,18 +62,20 @@ function convertFile(code, namespace, filePath) {
 
 let handle = bootstrap(convertFile)
 
-handle(projectRoot, [
-  {path: sepLine('src', 'pages'), ns: 'empty'},
-  {path: sepLine('src', 'services'), ns: 'empty'},
+const srcRoot = path.join(projectRoot, 'src')
+
+handle(srcRoot, [
+  {path: sepLine('pages'), ns: 'empty'},
+  {path: sepLine('services'), ns: 'empty'},
 
 ])
 
 let sortList = apiList.map(item => {
+  if (item.path[0] != '/') {
+    item.path = '/' + item.path
+  }
   if (item.path.indexOf('/api/') != -1) {
     item.path = item.path.substring(4)
-  }
-  if (item.path.indexOf('api/') != -1) {
-    item.path = item.path.substring(3)
   }
   return item
 }).sort((a, b) => {
@@ -105,5 +106,7 @@ for (let d of ddd) {
   }
 }
 
-console.log(r)
-console.log(r.map(item=>item.category))
+// console.log(r)
+r.map(item => item.category).forEach(item=> {
+  console.log(item)
+})

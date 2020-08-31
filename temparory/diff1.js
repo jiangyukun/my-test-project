@@ -3,7 +3,8 @@ const path = require('path')
 const fileUtils = require('../utils/fileUtil')
 const {convertCodeUseAst} = require('../utils/astUtil')
 
-const diffFrom = 'D:/2066/node/ems2.0-mm-controller/src/models'
+// const diffFrom = 'D:/2066/node/ems2.0-mm-controller/src/models'
+const diffFrom = 'D:/2066/node/ems2.0-mm-controller/src/controllers'
 const diffTo = 'D:/2066/node/wanke-bff-common/src/models'
 
 let apiDiffList = []
@@ -11,6 +12,7 @@ let apiDiffList = []
 fileUtils.reserveFile(diffFrom, (filePath) => {
   let relativePath = path.relative(diffFrom, filePath)
   let diffFilePath = path.join(diffTo, relativePath)
+
   if (fs.existsSync(diffFilePath)) {
     let content1 = fileUtils.getFileContent(filePath)
     let content2 = fileUtils.getFileContent(diffFilePath)
@@ -41,7 +43,7 @@ fileUtils.reserveFile(diffFrom, (filePath) => {
               diff: getDiff(item, newApi)
             })
           } else {
-            console.log('Loss', relativePath, item.name)
+            // console.log('Loss', relativePath, item.name)
             diffInfo.push({
               type: 'Loss',
               funcName: item.name,

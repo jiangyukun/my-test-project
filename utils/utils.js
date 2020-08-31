@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const {reserveFile} = require('./fileUtil')
 
 const traverseAndSelect = (dir, match) => (callback) => {
   reserveFile(dir, (filePath) => {
@@ -21,7 +22,7 @@ const traverseAndSelect = (dir, match) => (callback) => {
 
 function getDefaultMatch(pathInfoList) {
   return function (filePath) {
-    if (['.ts', '.tsx', '.js', '.jsx'].find(suffix=> filePath.indexOf(suffix) != -1) === undefined) {
+    if (['.ts', '.tsx', '.js', '.jsx'].find(suffix => endWith(filePath, suffix)) === undefined) {
       return null
     }
     let list = pathInfoList.filter(item => filePath.indexOf(item.path) != -1)
@@ -30,10 +31,9 @@ function getDefaultMatch(pathInfoList) {
     }
     if (list.length == 1) {
       return list[0].ns
-    } else {
-      console.log('多个模式匹配： ' + filePath)
     }
-    return null
+    // console.log('多个模式匹配： ' + filePath)
+    return list[0].ns
   }
 }
 
@@ -66,6 +66,11 @@ function getTsxMatch(pathInfoList) {
     }
     return defaultMatch(filePath)
   }
+}
+
+function endWith(str, substr) {
+  let index = str.lastIndexOf(substr)
+  return index + substr.length == str.length
 }
 
 
