@@ -43,7 +43,6 @@ fileUtils.reserveFile(diffFrom, (filePath) => {
               diff: getDiff(item, newApi)
             })
           } else {
-            // console.log('Loss', relativePath, item.name)
             diffInfo.push({
               type: 'Loss',
               funcName: item.name,
@@ -51,7 +50,24 @@ fileUtils.reserveFile(diffFrom, (filePath) => {
           }
         }
       })
-      if (diffInfo.length) {
+      if (diffInfo.length > 0) {
+        console.log(`${relativePath.padEnd(40)}: ${diffInfo.map(diffItem => {
+          if (diffItem.type == 'Diff') {
+            let diffStr = diffItem.diff.map(item => {
+              if (item[0] == item[1]) {
+                return '_, '
+              }
+              return `${item[0]}=>${item[1]}, `
+            })
+            return `Diff   : ${diffItem.funcName}(${diffStr})`
+          }
+          if (diffItem.type == 'Replace') {
+            return `Replace: ${diffItem.funcName}=>${diffItem.to}`
+          }
+          if (diffItem.type == 'Loss') {
+            return `Loss   : ${diffItem.funcName}`
+          }
+        }).join(', ')}`)
         apiDiffList.push({
           module: relativePath.replace('\\', '/'),
           diffInfo

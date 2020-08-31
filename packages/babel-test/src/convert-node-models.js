@@ -1,9 +1,11 @@
 const path = require('path')
 const t = require('@babel/types')
 const {convertCodeUseAst, isModuleImported, addImportItem, addItemAfterImport} = require('../../../utils/astUtil')
-const {bootstrap, sepLine} = require('./utils')
-const {srcRoot, projectRoot} = require('./constants')
-const json = require('../../../temparory/terminal/diffInfo.json')
+const {bootstrap, sepLine} = require('../../../utils/utils')
+const {projectRoot} = require('./constants')
+const json = require('../../../temparory/storage/diffInfo.json')
+
+let srcRoot = path.join(projectRoot, 'src-storage')
 
 let handleMap = {
   'baseHandler.dataToFix': ['baseHandler', 'fixDigits'],
@@ -20,6 +22,7 @@ let handleMap = {
   'timeHandler.getSelectStrByDay': ['timeHandler', 'splicingDate'],
   'timeHandler.compareTime2': ['timeHandler', 'getTimePointInterval'],
   'baseHandler.judgeNullException': ['requestHandler', 'judgeAbnormalResp'],
+  'requestHandler.urlGenerator': ['requestHandler', 'joinUrl'],
 }
 
 function convertFile(code, namespace, filePath) {
@@ -37,10 +40,10 @@ function convertFile(code, namespace, filePath) {
           ImportDeclaration(importPath) {
             let node = importPath.node
             let from = node.source.value
-            if (from.indexOf('/models/') != -1) {
+            if (from.indexOf('/models/') != -1 || from.indexOf('/controllers/') != -1) {
               let variableName = node.specifiers[0].local.name
               let parts = from.split('/')
-              let modelPath = parts[parts.length - 1]
+              let modelPath = parts[parts.length - 1].replace(/-(\w)/g, (str, letter) => letter.toUpperCase())
               list.push([variableName, modelPath + 'Models'])
               importPath.remove()
             } else if (from.indexOf('/handler/') != -1) {
@@ -51,7 +54,6 @@ function convertFile(code, namespace, filePath) {
               importPath.remove()
             }
           },
-
           CallExpression(callPath) {
             let node = callPath.node
             if (node.callee.type == 'MemberExpression') {
@@ -126,5 +128,7 @@ function convertFile(code, namespace, filePath) {
 let handle = bootstrap(convertFile)
 
 handle(srcRoot, [
-  {path: sepLine('socket'), ns: 'empty'},
+  // {path: sepLine('routes'), ns: 'empty'},
+  {path: 'socket.ts', ns: 'empty'},
+  // {path: 'lot-control-management.ts', ns: 'empty'},
 ])
