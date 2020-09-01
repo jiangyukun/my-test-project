@@ -2,10 +2,10 @@ const path = require('path')
 const t = require('@babel/types')
 const {convertCodeUseAst, isModuleImported, addImportItem, addItemAfterImport} = require('../../../utils/astUtil')
 const {bootstrap, sepLine} = require('../../../utils/utils')
-const {projectRoot} = require('./constants')
+const {nodeProjectRoot} = require('./constants')
 const json = require('../../../temparory/storage/diffInfo.json')
 
-let srcRoot = path.join(projectRoot, 'src-storage')
+let srcRoot = path.join(nodeProjectRoot, 'src-storage')
 
 let handleMap = {
   'baseHandler.dataToFix': ['baseHandler', 'fixDigits'],
@@ -128,7 +128,6 @@ function convertFile(code, namespace, filePath) {
 let handle = bootstrap(convertFile)
 
 handle(srcRoot, [
-  // {path: sepLine('routes'), ns: 'empty'},
-  {path: 'socket.ts', ns: 'empty'},
-  // {path: 'lot-control-management.ts', ns: 'empty'},
+  {path: sepLine('vpp', 'enums.ts'), ns: 'empty'},
+
 ])

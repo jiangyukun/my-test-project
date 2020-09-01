@@ -65,8 +65,7 @@ let handle = bootstrap(convertFile)
 const srcRoot = path.join(projectRoot, 'src')
 
 handle(srcRoot, [
-  {path: sepLine('pages'), ns: 'empty'},
-  {path: sepLine('services'), ns: 'empty'},
+  {path: sepLine('pages', 'vpp'), ns: 'empty'},
 
 ])
 
@@ -106,7 +105,7 @@ for (let d of ddd) {
   }
 }
 
-// console.log(r)
-r.map(item => item.category).forEach(item=> {
-  console.log(item)
-})
+console.log(r)
+// r.map(item => item.category).forEach(item=> {
+//   console.log(item)
+// })

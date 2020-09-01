@@ -1,0 +1,865 @@
+[
+  {
+    "module": "alarmEvents/index.ts",
+    "diffInfo": [
+      {
+        "type": "Loss",
+        "funcName": "getAlarmEventsByStationAndLevelCode"
+      },
+      {
+        "type": "Loss",
+        "funcName": "getAlarmEventsByStationAndTypeCode"
+      },
+      {
+        "type": "Diff",
+        "funcName": "getAlarmEventsById",
+        "diff": [
+          [],
+          [],
+          [
+            "params_id",
+            "id"
+          ]
+        ]
+      },
+      {
+        "type": "Loss",
+        "funcName": "findAllWarning"
+      },
+      {
+        "type": "Replace",
+        "funcName": "updateAlarmEvents",
+        "to": "patchAlarmEvents",
+        "diff": [
+          [],
+          [],
+          [],
+          []
+        ]
+      }
+    ]
+  },
+  {
+    "module": "analogs/index.ts",
+    "diffInfo": [
+      {
+        "type": "Diff",
+        "funcName": "getAnalogsById",
+        "diff": [
+          [],
+          [],
+          [
+            "id",
+            "params_id"
+          ]
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "createAnalog",
+        "to": "postAnalog",
+        "diff": [
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "createAnalogsBatch",
+        "to": "postAnalogsBatch",
+        "diff": [
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "updateAnalog",
+        "to": "patchAnalog",
+        "diff": [
+          [],
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Diff",
+        "funcName": "deleteAnalog",
+        "diff": [
+          [],
+          [],
+          [
+            "id",
+            "params_id"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "module": "analogTypes/index.ts",
+    "diffInfo": [
+      {
+        "type": "Diff",
+        "funcName": "getAnalogTypes",
+        "diff": [
+          [],
+          [],
+          [
+            "",
+            "params"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "module": "devices/index.ts",
+    "diffInfo": [
+      {
+        "type": "Replace",
+        "funcName": "addDevices",
+        "to": "postDevices",
+        "diff": [
+          [],
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "updateDevices",
+        "to": "putDevices",
+        "diff": [
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "updateDevicesBatch",
+        "to": "putDevicesBatch",
+        "diff": [
+          [],
+          [],
+          [],
+          []
+        ]
+      }
+    ]
+  },
+  {
+    "module": "energyUnits/index.ts",
+    "diffInfo": [
+      {
+        "type": "Diff",
+        "funcName": "getEnergyUnitsById",
+        "diff": [
+          [],
+          [],
+          [
+            "id",
+            "params_id"
+          ]
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "createEnergyUnits",
+        "to": "postEnergyUnits",
+        "diff": [
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "updateEnergyUnits",
+        "to": "putEnergyUnits",
+        "diff": [
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Loss",
+        "funcName": "getEnergyUnitsEfficiency"
+      }
+    ]
+  },
+  {
+    "module": "firms/index.ts",
+    "diffInfo": [
+      {
+        "type": "Diff",
+        "funcName": "getFirmsById",
+        "diff": [
+          [],
+          [],
+          [
+            "id",
+            "params_id"
+          ]
+        ]
+      },
+      {
+        "type": "Loss",
+        "funcName": "addFirmAndUser"
+      },
+      {
+        "type": "Loss",
+        "funcName": "updateFirms"
+      },
+      {
+        "type": "Diff",
+        "funcName": "deleteFirms",
+        "diff": [
+          [],
+          [],
+          [
+            "req_body_id",
+            "params_id"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "module": "login/index.ts",
+    "diffInfo": [
+      {
+        "type": "Loss",
+        "funcName": "loginToken"
+      },
+      {
+        "type": "Replace",
+        "funcName": "newVerificationCode",
+        "to": "postVerificationCode",
+        "diff": [
+          [],
+          [],
+          [],
+          []
+        ]
+      }
+    ]
+  },
+  {
+    "module": "measurements/index.ts",
+    "diffInfo": [
+      {
+        "type": "Diff",
+        "funcName": "getMeasurements",
+        "diff": [
+          [],
+          [],
+          [
+            "_params",
+            "params"
+          ]
+        ]
+      },
+      {
+        "type": "Diff",
+        "funcName": "getMeasurementsByTimeRange",
+        "diff": [
+          [],
+          [],
+          [],
+          [
+            "_params",
+            "params"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "module": "pointDataType/index.ts",
+    "diffInfo": [
+      {
+        "type": "Replace",
+        "funcName": "getNewPointDataTypes",
+        "to": "getNewPointDataTypesName",
+        "diff": [
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "addPointDataTypes",
+        "to": "postPointDataTypes",
+        "diff": [
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "updatePointDataTypes",
+        "to": "putPointDataTypes",
+        "diff": [
+          [],
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Diff",
+        "funcName": "deletePointDataTypes",
+        "diff": [
+          [],
+          [],
+          [
+            "id",
+            "params_id"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "module": "prices/index.ts",
+    "diffInfo": [
+      {
+        "type": "Loss",
+        "funcName": "getPrice"
+      },
+      {
+        "type": "Diff",
+        "funcName": "getCostPriceById",
+        "diff": [
+          [],
+          [],
+          [],
+          [
+            "id",
+            "params_id"
+          ]
+        ]
+      },
+      {
+        "type": "Diff",
+        "funcName": "getGeneratePriceById",
+        "diff": [
+          [],
+          [],
+          [],
+          [
+            "id",
+            "params_id"
+          ]
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "addCostPrice",
+        "to": "postCostPrice",
+        "diff": [
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "addGeneratePrice",
+        "to": "postGeneratePrice",
+        "diff": [
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "updateCostPrice",
+        "to": "putCostPrice",
+        "diff": [
+          [],
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "updateGeneratePrice",
+        "to": "putGeneratePrice",
+        "diff": [
+          [],
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Diff",
+        "funcName": "deleteCostPrice",
+        "diff": [
+          [],
+          [],
+          [],
+          [
+            "id",
+            "params_id"
+          ]
+        ]
+      },
+      {
+        "type": "Diff",
+        "funcName": "deleteGeneratePrice",
+        "diff": [
+          [],
+          [],
+          [],
+          [
+            "id",
+            "params_id"
+          ]
+        ]
+      },
+      {
+        "type": "Loss",
+        "funcName": "copyCostPrice"
+      },
+      {
+        "type": "Loss",
+        "funcName": "copyGeneratePrice"
+      },
+      {
+        "type": "Loss",
+        "funcName": "getCostPriceSeason"
+      },
+      {
+        "type": "Loss",
+        "funcName": "getSeasonPriceDetailByStation"
+      }
+    ]
+  },
+  {
+    "module": "profits/index.ts",
+    "diffInfo": [
+      {
+        "type": "Replace",
+        "funcName": "currentDay",
+        "to": "getCurrentDay",
+        "diff": [
+          [],
+          [],
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "currentMonth",
+        "to": "getCurrentMonth",
+        "diff": [
+          [],
+          [],
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "currentYear",
+        "to": "getCurrentYear",
+        "diff": [
+          [],
+          [],
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "amount",
+        "to": "getAmount",
+        "diff": [
+          [],
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Loss",
+        "funcName": "savesLastDetail"
+      },
+      {
+        "type": "Loss",
+        "funcName": "savesAmount"
+      }
+    ]
+  },
+  {
+    "module": "runStrategies/index.ts",
+    "diffInfo": [
+      {
+        "type": "Replace",
+        "funcName": "createRunStrategies",
+        "to": "postRunStrategies",
+        "diff": [
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "updateRunStrategies",
+        "to": "putRunStrategies",
+        "diff": [
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Diff",
+        "funcName": "send",
+        "diff": [
+          [],
+          [],
+          [],
+          [
+            "id",
+            "params_id"
+          ]
+        ]
+      },
+      {
+        "type": "Diff",
+        "funcName": "deleteRunStrategies",
+        "diff": [
+          [],
+          [],
+          [
+            "id",
+            "params_id"
+          ]
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "addAuthResults",
+        "to": "postAuthResults",
+        "diff": [
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "updateAuthResults",
+        "to": "patchAuthResults",
+        "diff": [
+          [],
+          [],
+          [],
+          []
+        ]
+      }
+    ]
+  },
+  {
+    "module": "stations/index.ts",
+    "diffInfo": [
+      {
+        "type": "Diff",
+        "funcName": "getStationsById",
+        "diff": [
+          [],
+          [],
+          [
+            "id",
+            "params_id"
+          ]
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "addStations",
+        "to": "postStations",
+        "diff": [
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "updateStations",
+        "to": "patchStations",
+        "diff": [
+          [],
+          [],
+          [
+            null,
+            "id"
+          ],
+          []
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "reviseStations",
+        "to": "putStations",
+        "diff": [
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Loss",
+        "funcName": "updateStationsGeneratePrice"
+      },
+      {
+        "type": "Loss",
+        "funcName": "updateStationsCostPrice"
+      },
+      {
+        "type": "Diff",
+        "funcName": "deleteStations",
+        "diff": [
+          [],
+          [],
+          [
+            "id",
+            "params_id"
+          ]
+        ]
+      },
+      {
+        "type": "Loss",
+        "funcName": "getNoBindStations"
+      }
+    ]
+  },
+  {
+    "module": "stationTypes/index.ts",
+    "diffInfo": [
+      {
+        "type": "Diff",
+        "funcName": "getNewStationTypes",
+        "diff": [
+          [],
+          [],
+          [
+            "newName",
+            "nextName"
+          ]
+        ]
+      },
+      {
+        "type": "Diff",
+        "funcName": "getStationTypesById",
+        "diff": [
+          [],
+          [],
+          [
+            "id",
+            "params_id"
+          ]
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "createStationTypes",
+        "to": "postStationTypes",
+        "diff": [
+          [],
+          [],
+          [
+            "suffix",
+            "firmId"
+          ]
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "updateStationTypes",
+        "to": "putStationTypes",
+        "diff": [
+          [],
+          [],
+          [],
+          [
+            "params",
+            ""
+          ]
+        ]
+      },
+      {
+        "type": "Diff",
+        "funcName": "deleteStationTypes",
+        "diff": [
+          [],
+          [],
+          [
+            "id",
+            "params_id"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "module": "users/index.ts",
+    "diffInfo": [
+      {
+        "type": "Replace",
+        "funcName": "changePassword",
+        "to": "putPassword",
+        "diff": [
+          [],
+          [],
+          [
+            null,
+            "id"
+          ],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Diff",
+        "funcName": "resetPassword",
+        "diff": [
+          [],
+          [],
+          [
+            "id",
+            "params_id"
+          ],
+          []
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "addUsers",
+        "to": "postUsers",
+        "diff": [
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "updateUsers",
+        "to": "putUsers",
+        "diff": [
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Diff",
+        "funcName": "patchUsers",
+        "diff": [
+          [],
+          [],
+          [],
+          [
+            "other",
+            "others"
+          ]
+        ]
+      },
+      {
+        "type": "Loss",
+        "funcName": "addPhoneVerificationCode"
+      },
+      {
+        "type": "Loss",
+        "funcName": "getPhoneVerificationCode"
+      }
+    ]
+  },
+  {
+    "module": "vpps/index.ts",
+    "diffInfo": [
+      {
+        "type": "Loss",
+        "funcName": "getVppById"
+      },
+      {
+        "type": "Replace",
+        "funcName": "addVpps",
+        "to": "postVpps",
+        "diff": [
+          [],
+          [],
+          [
+            "firmId",
+            "stationIdList"
+          ]
+        ]
+      },
+      {
+        "type": "Replace",
+        "funcName": "updateVpps",
+        "to": "patchVpps",
+        "diff": [
+          [],
+          [],
+          [],
+          []
+        ]
+      },
+      {
+        "type": "Diff",
+        "funcName": "deleteVpps",
+        "diff": [
+          [],
+          [],
+          [
+            "params_id",
+            ""
+          ]
+        ]
+      },
+      {
+        "type": "Loss",
+        "funcName": "bindStations"
+      },
+      {
+        "type": "Loss",
+        "funcName": "untieStations"
+      }
+    ]
+  },
+  {
+    "module": "vppStatus/index.ts",
+    "diffInfo": [
+      {
+        "type": "Diff",
+        "funcName": "getVppStatus",
+        "diff": [
+          [],
+          [],
+          [
+            "",
+            "params"
+          ]
+        ]
+      }
+    ]
+  }
+]

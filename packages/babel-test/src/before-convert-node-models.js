@@ -2,9 +2,9 @@ const path = require('path')
 const t = require('@babel/types')
 const {convertCodeUseAst, isModuleImported, addImportItem, addItemAfterImport} = require('../../../utils/astUtil')
 const {bootstrap, sepLine} = require('../../../utils/utils')
-const {projectRoot} = require('./constants')
+const {nodeProjectRoot} = require('./constants')
 
-let srcRoot = path.join(projectRoot, 'src-storage')
+let srcRoot = path.join(nodeProjectRoot, 'src-storage')
 
 function convertFile(code, namespace, filePath) {
   let converted = false
@@ -18,7 +18,7 @@ function convertFile(code, namespace, filePath) {
       let defaultImport = specifiers.find(item => item.type == 'ImportDefaultSpecifier') != undefined
       let funcImport = specifiers.find(item => item.type == 'ImportSpecifier') != undefined
       if (!defaultImport && funcImport) {
-        let isController = from.indexOf('/controllers/') != -1
+        let isController = from.indexOf('/controllers/') != -1 || from.indexOf('/models/') != -1
         let isHandler = from.indexOf('_handler') != -1
 
         if (isController || isHandler) {
@@ -68,5 +68,5 @@ function convertFile(code, namespace, filePath) {
 let handle = bootstrap(convertFile)
 
 handle(srcRoot, [
-  {path: 'socket.ts', ns: 'empty'},
+  {path: sepLine('vpp', 'enums.ts'), ns: 'empty'},
 ])
