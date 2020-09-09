@@ -73,6 +73,16 @@ function endWith(str, substr) {
   return index + substr.length == str.length
 }
 
+function range(num) {
+  if (num <= 0) {
+    return []
+  }
+  let list = []
+  for (let i = 0; i < num; i++) {
+    list.push(i)
+  }
+  return list
+}
 
 module.exports = {
   wrap,
@@ -81,5 +91,6 @@ module.exports = {
   getDefaultMatch,
   sepLine,
   getTsxMatch,
-  endWith
+  endWith,
+  range
 }
