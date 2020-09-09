@@ -11,7 +11,7 @@ function convertCodeUseAst(code, visitor, filePath) {
         parse(source) {
           return parser.parse(source, {
             sourceType: 'module',
-            plugins: ['jsx', 'typescript', 'classProperties', 'optionalChaining'],
+            plugins: ['jsx', 'typescript', 'classProperties', 'optionalChaining', 'nullishCoalescingOperator'],
             tokens: true
           })
         }
@@ -56,6 +56,11 @@ function isModuleImported(rootPath, moduleName, searchType = 'import') {
         if (importPath.node.imported.name == moduleName) {
           isImported = true
         }
+      },
+      ImportDefaultSpecifier(importPath) {
+        if (importPath.node.local.name == moduleName) {
+          isImported = true
+        }
       }
     })
   }
@@ -78,6 +83,12 @@ function addImportItem(rootPath, importStr) {
   body.splice(index, -1, template.ast(importStr))
 }
 
+function addItemAfterImport(rootPath, importStr) {
+  let body = rootPath.node.body
+  let index = body.findIndex(statement => statement.type != 'ImportDeclaration')
+  body.splice(index, -1, template.ast(importStr))
+}
+
 function putObjAst(typeName, payloadExpression) {
   return t.objectExpression([
     t.objectProperty(t.identifier('type'), t.stringLiteral(typeName)),
@@ -92,5 +103,6 @@ module.exports = {
   restObj,
   isModuleImported,
   addImportItem,
+  addItemAfterImport,
   putObjAst,
 }

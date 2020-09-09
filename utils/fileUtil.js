@@ -10,7 +10,7 @@ function writeCodeToFile(distPath, code) {
   if (!code) {
     return
   }
-  let distDir = distPath.substring(0, distPath.lastIndexOf('/') + 1)
+  let distDir = distPath.substring(0, distPath.lastIndexOf(path.sep) + 1)
   mkdirp(distDir, () => {
     fs.writeFileSync(distPath, code)
   })
@@ -35,9 +35,22 @@ function getFileName(filePath) {
   return baseName.substring(0, baseName.indexOf(path.extname(filePath)))
 }
 
+function checkFileExist(filePath, extensions) {
+  if (fs.existsSync(filePath)) {
+    return true
+  }
+  for (let ext of extensions) {
+    if (fs.existsSync(filePath + ext)) {
+      return true
+    }
+  }
+  return false
+}
+
 module.exports = {
   getFileContent,
   writeCodeToFile,
   reserveFile,
-  getFileName
+  getFileName,
+  checkFileExist
 }

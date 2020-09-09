@@ -1,11 +1,12 @@
 const t = require('@babel/types')
-const {wrap, getTsxMatch, convertCodeUseAst} = require('./utils')
-
-module.exports = wrap(convertFile, getTsxMatch)
+const {pagesRoot} = require('./constants')
+const {bootstrap, getTsxMatch, sepLine} = require('./utils')
+const {convertCodeUseAst} = require('../../../utils/astUtil')
 
 function convertFile(code, namespace, filePath) {
+  let converted = false
   let isClass = false
-  return convertCodeUseAst(code, {
+  let resultCode = convertCodeUseAst(code, {
     Program(rootPath) {
       rootPath.traverse({
         ClassDeclaration() {
@@ -16,7 +17,7 @@ function convertFile(code, namespace, filePath) {
       rootPath.traverse({
         CallExpression(path) {
           let functionName = path.node.callee.name
-          if(path.node.callee.type == 'MemberExpression') {
+          if (path.node.callee.type == 'MemberExpression') {
             functionName = path.node.callee.property.name
           }
           if (functionName != 'dispatch') {
@@ -38,8 +39,11 @@ function convertFile(code, namespace, filePath) {
               }
               if (key == 'type') {
                 if (property.value.type == 'StringLiteral') {
-                  console.log(property.value.value)
-                } else if (property.value.arguments[0].name == namespace) {
+                  let parts = property.value.value.split('/')
+                  if(parts.length == 2) {
+                    typeName = t.stringLiteral(parts[1])
+                  }
+                } else if (property.value.arguments && property.value.arguments[0].name == namespace) {
                   typeName = property.value.arguments[1]
                 }
               }
@@ -78,9 +82,26 @@ function convertFile(code, namespace, filePath) {
             }
 
             path.replaceWith(actionExpression)
+            converted = true
           }
         }
       })
     }
   }, filePath)
+
+  if (converted) {
+    return resultCode
+  }
+  return null
 }
+
+let handle = bootstrap(convertFile, getTsxMatch)
+handle(pagesRoot, [
+  {path: sepLine('terminal-run-data'), ns: 't_diagram'},
+  {path: sepLine('terminal-analysis-query', 'battery'), ns: 't_battery'},
+  {path: sepLine('terminal-index'), ns: 't_index'},
+  {path: sepLine('terminal-operation-duty', 'abnormalWarning'), ns: 't_abnormal_warning'},
+  {path: sepLine('terminal-operation-duty', 'checkAbnormal'), ns: 't_check_abnormal'},
+  {path: sepLine('storage-index'), ns: 'storage_index'},
+  {path: sepLine('storage-station-monitor'), ns: 'storage_station_monitor'},
+])

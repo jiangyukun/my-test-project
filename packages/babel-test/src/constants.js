@@ -1,7 +1,7 @@
 const path = require('path')
 const {sepLine} = require('./utils')
 
-const projectRoot = 'D:/2019/Porjects/ems2.0-mm-view'
+const projectRoot = 'D:/2066/Projects/solar-platform-view'
 // const projectRoot = 'D:/2019/Porjects/ems2.0-mm-view'
 
 const pagesRoot = path.join(projectRoot, 'src/pages')
