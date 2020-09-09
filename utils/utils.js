@@ -6,9 +6,8 @@ const traverseAndSelect = (dir, match) => (callback) => {
   reserveFile(dir, (filePath) => {
     const result = match(filePath)
     if (result) {
-      const namespace = result
       const code = fs.readFileSync(filePath).toString()
-      let convertedCode = callback(code, namespace, filePath)
+      let convertedCode = callback(code, filePath)
       if (convertedCode == null) {
         return
       }
@@ -20,21 +19,11 @@ const traverseAndSelect = (dir, match) => (callback) => {
   })
 }
 
-function getDefaultMatch(pathInfoList) {
-  return function (filePath) {
-    if (['.ts', '.tsx', '.js', '.jsx'].find(suffix => endWith(filePath, suffix)) === undefined) {
-      return null
-    }
-    let list = pathInfoList.filter(item => filePath.indexOf(item.path) != -1)
-    if (list.length == 0) {
-      return
-    }
-    if (list.length == 1) {
-      return list[0].ns
-    }
-    // console.log('多个模式匹配： ' + filePath)
-    return list[0].ns
+function getDefaultMatch(filePath) {
+  if (['.ts', '.tsx', '.js', '.jsx'].find(suffix => endWith(filePath, suffix)) === undefined) {
+    return null
   }
+  return true
 }
 
 function sepLine(dir, sub) {
@@ -42,17 +31,17 @@ function sepLine(dir, sub) {
 }
 
 function wrap(doConvert, getMatch) {
-  return function (dir, pathInfo) {
-    traverseAndSelect(dir, getMatch ? getMatch(pathInfo) : getDefaultMatch(pathInfo))((code, namespace, filePath) => {
+  return function (dir) {
+    traverseAndSelect(dir, getMatch ? getMatch : getDefaultMatch)((code, namespace, filePath) => {
       return doConvert(code, namespace, filePath)
     })
   }
 }
 
 function bootstrap(doConvert, getMatch) {
-  return function (dir, pathInfo) {
-    traverseAndSelect(dir, getMatch ? getMatch(pathInfo) : getDefaultMatch(pathInfo))((code, namespace, filePath) => {
-      return doConvert(code, namespace, filePath)
+  return function (dir) {
+    traverseAndSelect(dir, getMatch || getDefaultMatch)((code, filePath) => {
+      return doConvert(code, filePath)
     })
   }
 }
