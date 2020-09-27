@@ -37,6 +37,7 @@
     "rxjs": "^6.5.2",
     "tapable": "^1.1.3",
     "typescript": "^3.5.3",
+    "wanke-bff-share": "^1.0.53",
     "wanke-gui": "^0.3.25",
     "webpack": "^4.41.2",
     "webpack-chain": "^6.0.0"

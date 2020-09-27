@@ -1,8 +1,12 @@
 const path = require('path')
-const {sepLine} = require('./utils')
+const {sepLine} = require('../../../utils/utils')
 
-const projectRoot = 'D:/2066/Projects/solar-platform-view'
+// const projectRoot = 'D:/2066/node/ems2.0-mm-controller'
+// const projectRoot = 'D:/2066/node/solar-platform-controller'
 // const projectRoot = 'D:/2019/Porjects/ems2.0-mm-view'
+const projectRoot = 'D:/2066/Projects/solar-platform-view'
+const nodeProjectRoot = 'D:/2066/node/solar-platform-controller'
+// const projectRoot = 'C:/Users/jiangyu/Desktop/vpp-controller'
 
 const pagesRoot = path.join(projectRoot, 'src/pages')
 const srcRoot = path.join(projectRoot, 'src')
@@ -57,6 +61,7 @@ let global2Path = [
 
 module.exports = {
   projectRoot,
+  nodeProjectRoot,
   pagesRoot,
   srcRoot,
   layoutsRoot,

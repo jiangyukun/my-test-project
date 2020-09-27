@@ -1,1193 +1,242 @@
-[
-  {
-    "module": "abnormalSmsConfigs/index.ts",
-    "diffInfo": [
+{
+  "results": {
+    "storageProfitDistribution": [
       {
-        "type": "Replace",
-        "funcName": "newSetting",
-        "to": "postSetting"
+        "value": 246602.237,
+        "currency": "CNY"
+      }
+    ],
+    "solarProfitDistribution": [
+      {
+        "value": 101565.897,
+        "currency": "AUD"
       },
       {
-        "type": "Replace",
-        "funcName": "reviseSetting",
-        "to": "patchSetting"
+        "value": 44109.231,
+        "currency": "AUD"
+      }
+    ],
+    "otherProfitDistribution": [
+      {
+        "value": 0,
+        "currency": "CNY"
+      }
+    ],
+    "profitMonth": [
+      {
+        "value": 0,
+        "currency": "CNY"
       },
       {
-        "type": "Diff",
-        "funcName": "deleteSetting",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
+        "value": -6972.653,
+        "currency": "AUD"
+      },
+      {
+        "value": 0,
+        "currency": "CNY"
+      },
+      {
+        "value": 2693.888,
+        "currency": "AUD"
+      },
+      {
+        "value": 0,
+        "currency": "CNY"
+      }
+    ],
+    "profitDay": [
+      {
+        "value": 0,
+        "currency": "CNY"
+      },
+      {
+        "value": -1233.675,
+        "currency": "AUD"
+      },
+      {
+        "value": 0,
+        "currency": "CNY"
+      },
+      {
+        "value": 0,
+        "currency": "AUD"
+      },
+      {
+        "value": 0,
+        "currency": "CNY"
+      }
+    ],
+    "generationMonth": [
+      {
+        "value": 0,
+        "currency": "CNY"
+      },
+      {
+        "value": 224077,
+        "currency": "AUD"
+      },
+      {
+        "value": 4247,
+        "currency": "AUD"
+      }
+    ],
+    "generationDay": [
+      {
+        "value": 0,
+        "currency": "CNY"
+      },
+      {
+        "value": 14823,
+        "currency": "AUD"
+      },
+      {
+        "value": 0,
+        "currency": "AUD"
+      }
+    ],
+    "generationAmount": [
+      {
+        "value": 0,
+        "currency": "CNY"
+      },
+      {
+        "value": 2547164,
+        "currency": "AUD"
+      },
+      {
+        "value": 67962.86,
+        "currency": "AUD"
+      }
+    ],
+    "saveStandardCoalAmount": [
+      {
+        "value": 1018865.6000000001,
+        "currency": "AUD"
+      },
+      {
+        "value": 0,
+        "currency": "CNY"
+      },
+      {
+        "value": 27185.144,
+        "currency": "AUD"
+      },
+      {
+        "value": 231702.24,
+        "currency": "CNY"
+      }
+    ],
+    "CO2ReductionAmount": [
+      {
+        "value": 2547164,
+        "currency": "AUD"
+      },
+      {
+        "value": 55015.93517,
+        "currency": "AUD"
+      },
+      {
+        "value": 468907.4082,
+        "currency": "CNY"
+      }
+    ],
+    "treePlantAmount": [
+      {
+        "value": 141.5091111111111,
+        "currency": "AUD"
+      },
+      {
+        "value": 0,
+        "currency": "CNY"
+      },
+      {
+        "value": 3.7757144444444446,
+        "currency": "AUD"
+      },
+      {
+        "value": 32.18,
+        "currency": "CNY"
+      }
+    ],
+    "profitAmount": [
+      {
+        "value": 101565.897,
+        "currency": "AUD"
+      },
+      {
+        "value": 0,
+        "currency": "CNY"
+      },
+      {
+        "value": 44109.231,
+        "currency": "AUD"
+      },
+      {
+        "value": 246602.237,
+        "currency": "CNY"
+      }
+    ],
+    "dischargeAmount": [
+      {
+        "value": 0,
+        "currency": "CNY"
+      },
+      {
+        "value": 579255.6,
+        "currency": "CNY"
+      }
+    ],
+    "dischargeMonth": [
+      {
+        "value": 0,
+        "currency": "CNY"
+      },
+      {
+        "value": 0,
+        "currency": "CNY"
+      }
+    ],
+    "chargeMonth": [
+      {
+        "value": 0,
+        "currency": "CNY"
+      },
+      {
+        "value": 0,
+        "currency": "CNY"
+      }
+    ],
+    "chargeDay": [
+      {
+        "value": 0,
+        "currency": "CNY"
+      },
+      {
+        "value": 0,
+        "currency": "CNY"
+      }
+    ],
+    "dischargeDay": [
+      {
+        "value": 0,
+        "currency": "CNY"
+      },
+      {
+        "value": 0,
+        "currency": "CNY"
+      }
+    ],
+    "chargeAmount": [
+      {
+        "value": 0,
+        "currency": "CNY"
+      },
+      {
+        "value": 670585.7,
+        "currency": "CNY"
       }
     ]
   },
-  {
-    "module": "alarmEvents/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "getAlarmEventsByStationAndLevelCode",
-        "to": "getAlarmEvents"
-      },
-      {
-        "type": "Replace",
-        "funcName": "getAlarmEventsByStationAndTypeCode",
-        "to": "getAlarmEvents"
-      },
-      {
-        "type": "Diff",
-        "funcName": "getAlarmEventsById",
-        "diff": [
-          [],
-          [],
-          [
-            "params_id",
-            "id"
-          ]
-        ]
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateAlarmEvents",
-        "to": "patchAlarmEvents"
-      }
-    ]
-  },
-  {
-    "module": "alarmStatus/index.ts",
-    "diffInfo": [
-      {
-        "type": "Loss",
-        "funcName": "getAlarmStatus"
-      }
-    ]
-  },
-  {
-    "module": "analogHistory/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "createAnalogHistory",
-        "to": "postAnalogHistory"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateAnalogHistory",
-        "to": "deleteAnalogHistory"
-      },
-      {
-        "type": "Diff",
-        "funcName": "deleteAnalogHistory",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      }
-    ]
-  },
-  {
-    "module": "analogs/index.ts",
-    "diffInfo": [
-      {
-        "type": "Diff",
-        "funcName": "getAnalogsById",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Replace",
-        "funcName": "createAnalog",
-        "to": "postAnalog"
-      },
-      {
-        "type": "Replace",
-        "funcName": "createAnalogsBatch",
-        "to": "postAnalogsBatch"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateAnalog",
-        "to": "patchAnalog"
-      },
-      {
-        "type": "Diff",
-        "funcName": "deleteAnalog",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Replace",
-        "funcName": "createAnalogTemp",
-        "to": "postAnalogTemp"
-      },
-      {
-        "type": "Replace",
-        "funcName": "createAnalogsTempBatch",
-        "to": "postAnalogsTempBatch"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateAnalogTemp",
-        "to": "patchAnalogTemp"
-      },
-      {
-        "type": "Diff",
-        "funcName": "deleteAnalogTemp",
-        "diff": [
-          [],
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Loss",
-        "funcName": "getAnalogsByPN"
-      }
-    ]
-  },
-  {
-    "module": "deviceBugRecords/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "createDeviceBugRecords",
-        "to": "postDeviceBugRecords"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateDeviceBugRecords",
-        "to": "putDeviceBugRecords"
-      }
-    ]
-  },
-  {
-    "module": "deviceChangeRecords/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "addDeviceChangeRecordsByDevice",
-        "to": "postDeviceChangeRecordsByDevice"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateDeviceChangeRecordsByDevice",
-        "to": "putDeviceChangeRecordsByDevice"
-      },
-      {
-        "type": "Replace",
-        "funcName": "getDeviceAddOrDelDetail",
-        "to": "putDeviceAddOrDel"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateDeviceAddOrDel",
-        "to": "putDeviceAddOrDel"
-      }
-    ]
-  },
-  {
-    "module": "devices/index.ts",
-    "diffInfo": [
-      {
-        "type": "Loss",
-        "funcName": "getChildDevices"
-      },
-      {
-        "type": "Replace",
-        "funcName": "addDevices",
-        "to": "postDevices"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateDevices",
-        "to": "putDevices"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateDevicesBatch",
-        "to": "putDevicesBatch"
-      },
-      {
-        "type": "Loss",
-        "funcName": "getDataTypes"
-      }
-    ]
-  },
-  {
-    "module": "deviceTypes/index.ts",
-    "diffInfo": [
-      {
-        "type": "Diff",
-        "funcName": "getDeviceTypesById",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Replace",
-        "funcName": "createDeviceTypes",
-        "to": "postDeviceTypes"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateDeviceTypes",
-        "to": "putDeviceTypes"
-      },
-      {
-        "type": "Diff",
-        "funcName": "deleteDeviceTypes",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Diff",
-        "funcName": "bindPointDataTypeBatch",
-        "diff": [
-          [],
-          [],
-          [
-            "deviceTypeId",
-            "id"
-          ],
-          [],
-          []
-        ]
-      },
-      {
-        "type": "Diff",
-        "funcName": "isBindDevice",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ],
-          []
-        ]
-      }
-    ]
-  },
-  {
-    "module": "differenceAnalysisRecords/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "getDifferenceAnalysisRecordsById",
-        "to": "postDifferenceAnalysisRecords"
-      },
-      {
-        "type": "Replace",
-        "funcName": "createDifferenceAnalysisRecords",
-        "to": "postDifferenceAnalysisRecords"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateDifferenceAnalysisRecords",
-        "to": "putDifferenceAnalysisRecords"
-      }
-    ]
-  },
-  {
-    "module": "differenceCauses/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "createDifferenceCauses",
-        "to": "postDifferenceCauses"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateDifferenceCauses",
-        "to": "putDifferenceCauses"
-      },
-      {
-        "type": "Diff",
-        "funcName": "deleteDifferenceCauses",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      }
-    ]
-  },
-  {
-    "module": "electricityBillDetails/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "createElectricityBillDetails",
-        "to": "postElectricityBillDetails"
-      }
-    ]
-  },
-  {
-    "module": "energyUnitEfficiencies/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "getEnergyUnitEfficiencies",
-        "to": "getEnergyUnitEfficiency"
-      }
-    ]
-  },
-  {
-    "module": "energyUnits/index.ts",
-    "diffInfo": [
-      {
-        "type": "Diff",
-        "funcName": "getEnergyUnitsById",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Replace",
-        "funcName": "createEnergyUnits",
-        "to": "postEnergyUnits"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateEnergyUnits",
-        "to": "putEnergyUnits"
-      },
-      {
-        "type": "Replace",
-        "funcName": "getEnergyUnitsEfficiency",
-        "to": "getEnergyUnitByDeviceId"
-      }
-    ]
-  },
-  {
-    "module": "energyUnitTypes/index.ts",
-    "diffInfo": [
-      {
-        "type": "Diff",
-        "funcName": "getEnergyUnitTypesById",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Replace",
-        "funcName": "createEnergyUnitTypes",
-        "to": "postEnergyUnitTypes"
-      },
-      {
-        "type": "Loss",
-        "funcName": "updateEnergyUnitTypes"
-      },
-      {
-        "type": "Diff",
-        "funcName": "deleteEnergyUnitTypes",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Diff",
-        "funcName": "isBindEnergyUnit",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ],
-          []
-        ]
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateBindDeviceType",
-        "to": "putBindDeviceType"
-      }
-    ]
-  },
-  {
-    "module": "firms/index.ts",
-    "diffInfo": [
-      {
-        "type": "Diff",
-        "funcName": "getFirmsById",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Loss",
-        "funcName": "addFirmAndUser"
-      },
-      {
-        "type": "Loss",
-        "funcName": "updateFirms"
-      },
-      {
-        "type": "Diff",
-        "funcName": "deleteFirms",
-        "diff": [
-          [],
-          [],
-          [
-            "req_body_id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Replace",
-        "funcName": "isBindStation",
-        "to": "deleteFirms"
-      },
-      {
-        "type": "Loss",
-        "funcName": "createFirmAndUser"
-      }
-    ]
-  },
-  {
-    "module": "login/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "loginToken",
-        "to": "getVerificationCode"
-      },
-      {
-        "type": "Replace",
-        "funcName": "newVerificationCode",
-        "to": "postVerificationCode"
-      }
-    ]
-  },
-  {
-    "module": "measurements/index.ts",
-    "diffInfo": [
-      {
-        "type": "Loss",
-        "funcName": "getMeasurementsRealtimeObject"
-      }
-    ]
-  },
-  {
-    "module": "menus/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "bindByStationType",
-        "to": "getMenusTree"
-      }
-    ]
-  },
-  {
-    "module": "modelAttributes/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "getModelAttributesById",
-        "to": "postModelAttributes"
-      },
-      {
-        "type": "Replace",
-        "funcName": "createModelAttributes",
-        "to": "postModelAttributes"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateModelAttributes",
-        "to": "putModelAttributes"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateModelAttributesBatch",
-        "to": "putModelAttributesBatch"
-      },
-      {
-        "type": "Diff",
-        "funcName": "deleteModelAttributes",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      }
-    ]
-  },
-  {
-    "module": "modelVersions/index.ts",
-    "diffInfo": [
-      {
-        "type": "Diff",
-        "funcName": "getModelVersionsById",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Replace",
-        "funcName": "createModelVersions",
-        "to": "postModelVersions"
-      }
-    ]
-  },
-  {
-    "module": "operationAnalysisRecords/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "createOperationAnalysisRecords",
-        "to": "postOperationAnalysisRecords"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateOperationAnalysisRecords",
-        "to": "putOperationAnalysisRecords"
-      }
-    ]
-  },
-  {
-    "module": "operationConfigs/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "findStationIds",
-        "to": "getStationIds"
-      },
-      {
-        "type": "Replace",
-        "funcName": "addOperationIndexConfigs",
-        "to": "postOperationIndexConfigs"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateOperationIndexConfigs",
-        "to": "putOperationIndexConfigs"
-      }
-    ]
-  },
-  {
-    "module": "performanceRatio/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "currentDay",
-        "to": "getCurrentDay"
-      },
-      {
-        "type": "Replace",
-        "funcName": "currentMonth",
-        "to": "getCurrentMonth"
-      },
-      {
-        "type": "Replace",
-        "funcName": "currentYear",
-        "to": "getCurrentYear"
-      },
-      {
-        "type": "Loss",
-        "funcName": "amount"
-      }
-    ]
-  },
-  {
-    "module": "pointDataType/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "getNewPointDataTypes",
-        "to": "getNewPointDataTypesName"
-      },
-      {
-        "type": "Replace",
-        "funcName": "addPointDataTypes",
-        "to": "postPointDataTypes"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updatePointDataTypes",
-        "to": "putPointDataTypes"
-      },
-      {
-        "type": "Diff",
-        "funcName": "deletePointDataTypes",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Loss",
-        "funcName": "createPointDataTypes"
-      }
-    ]
-  },
-  {
-    "module": "prices/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "getPrice",
-        "to": "getCostPrice"
-      },
-      {
-        "type": "Diff",
-        "funcName": "getCostPriceById",
-        "diff": [
-          [],
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Diff",
-        "funcName": "getGeneratePriceById",
-        "diff": [
-          [],
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Replace",
-        "funcName": "addCostPrice",
-        "to": "postCostPrice"
-      },
-      {
-        "type": "Replace",
-        "funcName": "addGeneratePrice",
-        "to": "postGeneratePrice"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateCostPrice",
-        "to": "putCostPrice"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateStationCostPrice",
-        "to": "patchStationCostPrice"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateGeneratePrice",
-        "to": "putGeneratePrice"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateStationGeneratePrice",
-        "to": "patchStationGeneratePrice"
-      },
-      {
-        "type": "Diff",
-        "funcName": "deleteCostPrice",
-        "diff": [
-          [],
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Diff",
-        "funcName": "deleteGeneratePrice",
-        "diff": [
-          [],
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Loss",
-        "funcName": "copyCostPrice"
-      },
-      {
-        "type": "Loss",
-        "funcName": "copyGeneratePrice"
-      },
-      {
-        "type": "Loss",
-        "funcName": "getCostPriceSeason"
-      },
-      {
-        "type": "Loss",
-        "funcName": "getSeasonPriceDetailByStation"
-      }
-    ]
-  },
-  {
-    "module": "profits/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "currentDay",
-        "to": "getCurrentDay"
-      },
-      {
-        "type": "Replace",
-        "funcName": "currentMonth",
-        "to": "getCurrentMonth"
-      },
-      {
-        "type": "Replace",
-        "funcName": "currentYear",
-        "to": "getCurrentYear"
-      },
-      {
-        "type": "Replace",
-        "funcName": "amount",
-        "to": "getAmount"
-      },
-      {
-        "type": "Replace",
-        "funcName": "savesLastDetail",
-        "to": "getHistoryYear"
-      },
-      {
-        "type": "Replace",
-        "funcName": "savesAmount",
-        "to": "getHistoryYear"
-      }
-    ]
-  },
-  {
-    "module": "roles/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "addRoles",
-        "to": "postRoles"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateRoles",
-        "to": "patchRoles"
-      },
-      {
-        "type": "Replace",
-        "funcName": "reviseRoles",
-        "to": "putRoles"
-      },
-      {
-        "type": "Diff",
-        "funcName": "deleteRoles",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      }
-    ]
-  },
-  {
-    "module": "runStrategies/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "createRunStrategies",
-        "to": "postRunStrategies"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateRunStrategies",
-        "to": "putRunStrategies"
-      },
-      {
-        "type": "Diff",
-        "funcName": "send",
-        "diff": [
-          [],
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Diff",
-        "funcName": "deleteRunStrategies",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Replace",
-        "funcName": "addAuthResults",
-        "to": "postAuthResults"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateAuthResults",
-        "to": "patchAuthResults"
-      }
-    ]
-  },
-  {
-    "module": "runStrategyTemplates/index.ts",
-    "diffInfo": [
-      {
-        "type": "Diff",
-        "funcName": "getRunStrategyTemplatesById",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Replace",
-        "funcName": "createRunStrategyTemplates",
-        "to": "postRunStrategyTemplates"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateRunStrategyTemplates",
-        "to": "putRunStrategyTemplates"
-      },
-      {
-        "type": "Diff",
-        "funcName": "deleteRunStrategyTemplates",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      }
-    ]
-  },
-  {
-    "module": "shiftRecords/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "createShiftRecords",
-        "to": "postShiftRecords"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateShiftRecords",
-        "to": "putShiftRecords"
-      },
-      {
-        "type": "Replace",
-        "funcName": "addShiftRecordResult",
-        "to": "postShiftRecordResult"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateShiftRecordResult",
-        "to": "patchShiftRecordResult"
-      }
-    ]
-  },
-  {
-    "module": "stations/index.ts",
-    "diffInfo": [
-      {
-        "type": "Diff",
-        "funcName": "getStationsById",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Replace",
-        "funcName": "addStations",
-        "to": "postStations"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateStations",
-        "to": "patchStations"
-      },
-      {
-        "type": "Replace",
-        "funcName": "reviseStations",
-        "to": "putStations"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateStationsGeneratePrice",
-        "to": "deleteStations"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateStationsCostPrice",
-        "to": "deleteStations"
-      },
-      {
-        "type": "Diff",
-        "funcName": "deleteStations",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Loss",
-        "funcName": "getStationResources"
-      }
-    ]
-  },
-  {
-    "module": "stationTypes/index.ts",
-    "diffInfo": [
-      {
-        "type": "Diff",
-        "funcName": "getStationTypesById",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Replace",
-        "funcName": "createStationTypes",
-        "to": "postStationTypes"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateStationTypes",
-        "to": "putStationTypes"
-      },
-      {
-        "type": "Diff",
-        "funcName": "deleteStationTypes",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ]
-        ]
-      },
-      {
-        "type": "Diff",
-        "funcName": "isBindStation",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ],
-          []
-        ]
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateBindEnergyUnitType",
-        "to": "putBindEnergyUnitType"
-      }
-    ]
-  },
-  {
-    "module": "users/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "changePassword",
-        "to": "putPassword"
-      },
-      {
-        "type": "Diff",
-        "funcName": "resetPassword",
-        "diff": [
-          [],
-          [],
-          [
-            "id",
-            "params_id"
-          ],
-          []
-        ]
-      },
-      {
-        "type": "Replace",
-        "funcName": "addUsers",
-        "to": "postUsers"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateUsers",
-        "to": "putUsers"
-      },
-      {
-        "type": "Replace",
-        "funcName": "saveUserinfo",
-        "to": "postUserinfo"
-      }
-    ]
-  },
-  {
-    "module": "vpps/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "addVpps",
-        "to": "postVpps"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateVpps",
-        "to": "patchVpps"
-      }
-    ]
-  },
-  {
-    "module": "workOrders/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "addWorkOrders",
-        "to": "postWorkOrders"
-      },
-      {
-        "type": "Replace",
-        "funcName": "updateWorkOrders",
-        "to": "patchWorkOrders"
-      }
-    ]
-  },
-  {
-    "module": "yield/index.ts",
-    "diffInfo": [
-      {
-        "type": "Replace",
-        "funcName": "currentDay",
-        "to": "getCurrentDay"
-      },
-      {
-        "type": "Replace",
-        "funcName": "currentMonth",
-        "to": "getCurrentMonth"
-      },
-      {
-        "type": "Replace",
-        "funcName": "currentYear",
-        "to": "getCurrentYear"
-      },
-      {
-        "type": "Replace",
-        "funcName": "amount",
-        "to": "getAmount"
-      }
-    ]
-  }
-]
+  "errorCode": 0,
+  "errorMsg": ""
+}
