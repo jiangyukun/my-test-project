@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<canvas width="400" height="400" id="container"></canvas>
+
+<script>
+  let source1 = `
+    attribute vec3 aa;
+        void main() {
+            gl_Position = vec4(aa, 1.0);
+            gl_PointSize = 10.0;
+        }
+    `
+  let source2 = `
+        void main() {
+            gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+        }
+    `
+  let container = document.querySelector('#container')
+
+  let gl = container.getContext('webgl')
+
+  let vertexShader = gl.createShader(gl.VERTEX_SHADER)
+  let fragShader = gl.createShader(gl.FRAGMENT_SHADER)
+
+  gl.shaderSource(vertexShader, source1)
+  gl.shaderSource(fragShader, source2)
+  gl.compileShader(vertexShader)
+  gl.compileShader(fragShader)
+
+  let program = gl.createProgram()
+  gl.attachShader(program, vertexShader)
+  gl.attachShader(program, fragShader)
+  gl.linkProgram(program)
+  gl.useProgram(program)
+
+  let data = new Float32Array([-1, 0.0, 0.0, 0.2, 0.0, 0.0])
+  let buffer = gl.createBuffer()
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+  gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW)
+  let aa = gl.getAttribLocation(program, 'aa')
+  gl.vertexAttribPointer(aa, 3, gl.FLOAT, false, 0, 0);
+  gl.enableVertexAttribArray(aa)
+
+  gl.drawArrays(gl.POINTS, 0, 2)
+
+</script>
+</body>
+</html>
