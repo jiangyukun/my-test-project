@@ -23,6 +23,7 @@
     "babel-loader": "^8.0.6",
     "babylon": "^7.0.0-beta.47",
     "body-parser": "^1.19.0",
+    "crypto-js": "^4.0.0",
     "escodegen": "^1.12.0",
     "express": "^4.17.1",
     "friendly-errors-webpack-plugin": "^1.7.0",
