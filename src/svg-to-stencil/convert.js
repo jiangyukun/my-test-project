@@ -14,6 +14,7 @@ function generateShape(name, content) {
 
   let result = ''
   let width, height, scale
+  let hasPath = false
 
   parser.onopentag = (tag) => {
     if (tag.name == 'svg') {
@@ -29,6 +30,7 @@ function generateShape(name, content) {
       }
     }
     if (tag.name == 'path') {
+      hasPath = true
       let d = tag.attributes.d
       let list = d.split(/(?=[A-Z])/)
 
@@ -59,9 +61,30 @@ function generateShape(name, content) {
       let pathItem = `<rect h="${handleHeight(attr.height)}" w="${handleWidth(attr.width)}" x="${handleWidth(attr.x)}" y="${handleHeight(attr.y)}"/>`
       result += pathItem + '\n'
     }
+    if (tag.name == 'line') {
+      let attr = tag.attributes
+      let pathItem = `<move x="${handleWidth(attr.x1)}" y="${handleHeight(attr.y1 || 0)}"/><line x="${handleWidth(attr.x2)}" y="${handleHeight(attr.y2)}"/><close/>`
+      result += pathItem + '\n'
+    }
+    if (tag.name == 'circle') {
+      let attr = tag.attributes
+      let r = handleWidth(attr.r)
+      let cx = attr.cx
+      let cy = attr.cy
+      let pathItem = `
+<move x="${handleWidth(attr.cx)}" y="${handleHeight(attr.cy || 0)}"/>
+<arc rx="${r}" ry="${r}" x-axis-rotation="0" large-arc-flag="1" sweep-flag="0" x="${2*r}" y="0"/>
+<arc rx="${r}" ry="${r}" x-axis-rotation="0" large-arc-flag="1" sweep-flag="0" x="${-2*r}" y="0"/>
+<close/>
+`
+      result += pathItem + '\n'
+    }
   }
-
   parser.write(content).end()
+
+  if (!hasPath ) {
+    result = '<path>\n' + result + '</path>'
+  }
 
   result = `
 <shape name="${name}" aspect="variable" strokewidth="inherit" h="${Math.ceil(height * scale)}" w="100">
