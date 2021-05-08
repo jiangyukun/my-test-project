@@ -1,13 +1,12 @@
 let sax = require('sax')
 
-
 function generateShape(name, content) {
-  function handleWidth(originalWidth) {
-    return (originalWidth * scale).toFixed(1)
+  function handleWidth(originalWidth = 0) {
+    return (originalWidth / width).toFixed(2)
   }
 
-  function handleHeight(originalHeight) {
-    return (originalHeight * scale).toFixed(1)
+  function handleHeight(originalHeight = 0) {
+    return (originalHeight / height).toFixed(2)
   }
 
   let parser = sax.parser(true)
@@ -30,73 +29,84 @@ function generateShape(name, content) {
       }
     }
     if (tag.name == 'path') {
-      hasPath = true
-      let d = tag.attributes.d
-      let list = d.split(/(?=[A-Z])/)
-
-      result += '<path>\n'
-      list.forEach(item => {
-        let type = item[0]
-        let p = item.substring(1)
-        let ps = p.split(/(\s+|,)/).filter(item => item != '' && item != ' ' && item != ',')
-
-        let pathItem = ''
-        if (type == 'M') {
-          pathItem = `<move x="${handleWidth(ps[0])}" y="${handleHeight(ps[1])}"/>`
-        } else if (type == 'C') {
-          pathItem = `<curve x1="${handleWidth(ps[0])}" y1="${handleHeight(ps[1])}" x2="${handleWidth(ps[2])}" y2="${handleHeight(ps[3])}" x3="${handleWidth(ps[4])}" y3="${handleHeight(ps[5])}"/>`
-        } else if (type == 'Z') {
-          pathItem = '<close/>'
-        } else if (type == 'L') {
-          pathItem = `<line x="${handleWidth(ps[0])}" y="${handleHeight(ps[1])}"/>`
-        } else {
-          throw new Error('unknown type: ' + type)
-        }
-        result += pathItem + '\n'
-      })
-      result += '\n</path>'
+      let attr = tag.attributes
+      let r = handleWidth(attr.r)
+      result += `//path\n`
+      result += `c.begin()\n`
+      result += `c.path11('${attr.d}')\n`
+      result += `c.stroke()\n`
+      result += `c.close()\n`
     }
     if (tag.name == 'rect') {
       let attr = tag.attributes
-      let pathItem = `<rect h="${handleHeight(attr.height)}" w="${handleWidth(attr.width)}" x="${handleWidth(attr.x)}" y="${handleHeight(attr.y)}"/>`
-      result += pathItem + '\n'
+      result += `//rect\n`
+      result += `c.begin()\n`
+      result += `c.rect(x + w * ${handleWidth(attr.x)}, y + h * ${handleHeight(attr.y)}, w * ${handleWidth(attr.width)}, h * ${handleHeight(attr.height)})\n`
+      result += `c.close()\n`
+      result += `c.stroke()\n`
     }
     if (tag.name == 'line') {
       let attr = tag.attributes
-      let pathItem = `<move x="${handleWidth(attr.x1)}" y="${handleHeight(attr.y1 || 0)}"/><line x="${handleWidth(attr.x2)}" y="${handleHeight(attr.y2)}"/><close/>`
-      result += pathItem + '\n'
+      result += `//line\n`
+      result += `c.begin()\n`
+      result += `c.moveTo(x + w * ${handleWidth(attr.x1)}, y + h * ${handleHeight(attr.y1 || 0)})\n`
+      result += `c.lineTo(x + w * ${handleWidth(attr.x2)}, y + h * ${handleHeight(attr.y2)})\n`
+      result += `c.close()\n`
+      result += `c.stroke()\n`
     }
     if (tag.name == 'circle') {
       let attr = tag.attributes
-      let r = handleWidth(attr.r)
-      let cx = attr.cx
-      let cy = attr.cy
-      let pathItem = `
-<move x="${handleWidth(attr.cx)}" y="${handleHeight(attr.cy || 0)}"/>
-<arc rx="${r}" ry="${r}" x-axis-rotation="0" large-arc-flag="1" sweep-flag="0" x="${2*r}" y="0"/>
-<arc rx="${r}" ry="${r}" x-axis-rotation="0" large-arc-flag="1" sweep-flag="0" x="${-2*r}" y="0"/>
-<close/>
-`
-      result += pathItem + '\n'
+      let rx = handleWidth(attr.r)
+      let ry = handleHeight(attr.r)
+      result += `//circle\n`
+      result += `c.begin()\n`
+      result += `c.ellipse(x + w * ${handleWidth(attr.cx - attr.r)}, y + h * ${handleHeight((attr.cy - attr.r) || 0)}, w * ${2 * rx}, h * ${2 * ry})\n`
+      result += `c.stroke()\n`
+      result += `c.close()\n`
+    }
+    if (tag.name == 'polygon') {
+      let parts = tag.attributes.points.split(' ')
+      result += `//polygon\n`
+      result += `c.begin()\n`
+      for (let i = 0; i < parts.length; i += 2) {
+        if (i == 0) {
+          result += `c.moveTo(x + w * ${handleWidth(parts[i])}, y + h * ${handleHeight(parts[i + 1])})\n`
+        } else {
+          result += `c.lineTo(x + w * ${handleWidth(parts[i])}, y + h * ${handleHeight(parts[i + 1])})\n`
+        }
+      }
+      result += `c.stroke()\n`
+      result += `c.close()\n`
+    }
+    if (tag.name == 'polyline') {
+      let parts = tag.attributes.points.split(' ')
+      result += `//polyline\n`
+      result += `c.begin()\n`
+      for (let i = 0; i < parts.length; i += 2) {
+        if (i == 0) {
+          result += `c.moveTo(x + w * ${handleWidth(parts[i])}, y + h * ${handleHeight(parts[i + 1])})\n`
+        } else {
+          result += `c.lineTo(x + w * ${handleWidth(parts[i])}, y + h * ${handleHeight(parts[i + 1])})\n`
+        }
+      }
+      result += `c.stroke()\n`
+      result += `c.close()\n`
     }
   }
   parser.write(content).end()
 
-  if (!hasPath ) {
-    result = '<path>\n' + result + '</path>'
-  }
+  return `
+import mxShape from '../js-es6/shape/mxShape'
 
-  result = `
-<shape name="${name}" aspect="variable" strokewidth="inherit" h="${Math.ceil(height * scale)}" w="100">
-  <background>
-    ${result}
-  </background>
-  <foreground>
-    <fillstroke/>
-  </foreground>
-</shape>
+export default class ${name} extends mxShape {
+
+  paintVertexShape = function (c, x, y, w, h) {
+  ${result}
+  }
+}
+
+
 `
-  return result
 }
 
 module.exports = generateShape
