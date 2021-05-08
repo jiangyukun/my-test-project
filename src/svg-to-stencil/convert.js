@@ -1,11 +1,26 @@
 let sax = require('sax')
 
 function generateShape(name, content) {
-  function handleWidth(originalWidth = 0) {
+  function w(originalWidth = 0) {
+    return `x + w * ${w1(originalWidth)}`
+  }
+
+  function h(originalHeight = 0) {
+    return `y + h * ${h1(originalHeight)}`
+  }
+  function w2(originalWidth = 0) {
+    return `w * ${w1(originalWidth)}`
+  }
+
+  function h2(originalHeight = 0) {
+    return `h * ${h1(originalHeight)}`
+  }
+
+  function w1(originalWidth = 0) {
     return (originalWidth / width).toFixed(2)
   }
 
-  function handleHeight(originalHeight = 0) {
+  function h1(originalHeight = 0) {
     return (originalHeight / height).toFixed(2)
   }
 
@@ -30,39 +45,79 @@ function generateShape(name, content) {
     }
     if (tag.name == 'path') {
       let attr = tag.attributes
-      let r = handleWidth(attr.r)
+      let parts = splitS(attr.d)
       result += `//path\n`
       result += `c.begin()\n`
-      result += `c.path11('${attr.d}')\n`
+      let lastX, lastY
+      parts.forEach(part => {
+        let type = part[0]
+        let info = part.substring(1) || ''
+        let p = info.split(/[, -]/)
+
+        if (type == 'M') {
+          lastX = Number(p[0])
+          lastY = Number(p[1])
+          result += `c.moveTo(${w(lastX)},  ${h(lastY)})\n`
+        }
+        if (type == 'V') {
+          let p = Number(info)
+          result += `c.lineTo(${w(lastX)}, ${h(p)})\n`
+          lastY = p
+        }
+        if (type == 'H') {
+          let p = Number(info)
+          result += `c.lineTo(${w(p)}, ${h(lastY)})\n`
+          lastX = p
+        }
+        if (type == 'm') {
+          lastX += Number(p[0])
+          lastY += Number(p[1])
+          result += `c.moveTo1(w * ${w1(Number(p[0]))}, h * ${h1(Number(p[1]))})\n`
+        }
+        if (type == 'Z') {
+          result += `c.close()\n`
+        }
+        if (type == 'S') {
+          if (p[4]) {
+            result += `c.smoothCurveTo(${w(Number(p[0]))}, ${h(Number(p[1]))}, ${w(Number(p[2]))}, ${h(Number(p[3]))}, ${w(Number(p[4]))}, ${h(Number(p[5]))})\n`
+          } else {
+            result += `c.smoothCurveTo(${w(Number(p[0]))}, ${h(Number(p[1]))}, ${w(Number(p[2]))}, ${h(Number(p[3]))})\n`
+          }
+        }
+        if (type == 's') {
+          if (p[4]) {
+            result += `c.smoothCurveTo1(${w2(Number(p[0]))}, ${h2(Number(p[1]))}, ${w2(Number(p[2]))}, ${h2(Number(p[3]))}, ${w2(Number(p[4]))}, ${h2(Number(p[5]))})\n`
+          } else {
+            result += `c.smoothCurveTo1(${w2(Number(p[0]))}, ${h2(Number(p[1]))}, ${w2(Number(p[2]))}, ${h2(Number(p[3]))})\n`
+          }
+        }
+      })
       result += `c.stroke()\n`
-      result += `c.close()\n`
     }
     if (tag.name == 'rect') {
       let attr = tag.attributes
       result += `//rect\n`
       result += `c.begin()\n`
-      result += `c.rect(x + w * ${handleWidth(attr.x)}, y + h * ${handleHeight(attr.y)}, w * ${handleWidth(attr.width)}, h * ${handleHeight(attr.height)})\n`
-      result += `c.close()\n`
+      result += `c.rect(${w(attr.x)}, ${h(attr.y)}, w * ${w1(attr.width)}, h * ${h1(attr.height)})\n`
       result += `c.stroke()\n`
     }
     if (tag.name == 'line') {
       let attr = tag.attributes
       result += `//line\n`
       result += `c.begin()\n`
-      result += `c.moveTo(x + w * ${handleWidth(attr.x1)}, y + h * ${handleHeight(attr.y1 || 0)})\n`
-      result += `c.lineTo(x + w * ${handleWidth(attr.x2)}, y + h * ${handleHeight(attr.y2)})\n`
-      result += `c.close()\n`
+      result += `c.moveTo(${w(attr.x1)}, ${h(attr.y1 || 0)})\n`
+      result += `c.lineTo(${w(attr.x2)}, ${h(attr.y2)})\n`
       result += `c.stroke()\n`
+      result += `c.close()\n`
     }
     if (tag.name == 'circle') {
       let attr = tag.attributes
-      let rx = handleWidth(attr.r)
-      let ry = handleHeight(attr.r)
+      let rx = w1(attr.r)
+      let ry = h1(attr.r)
       result += `//circle\n`
       result += `c.begin()\n`
-      result += `c.ellipse(x + w * ${handleWidth(attr.cx - attr.r)}, y + h * ${handleHeight((attr.cy - attr.r) || 0)}, w * ${2 * rx}, h * ${2 * ry})\n`
+      result += `c.ellipse(${w(attr.cx - attr.r)}, ${h((attr.cy - attr.r) || 0)}, w * ${2 * rx}, h * ${2 * ry})\n`
       result += `c.stroke()\n`
-      result += `c.close()\n`
     }
     if (tag.name == 'polygon') {
       let parts = tag.attributes.points.split(' ')
@@ -70,9 +125,9 @@ function generateShape(name, content) {
       result += `c.begin()\n`
       for (let i = 0; i < parts.length; i += 2) {
         if (i == 0) {
-          result += `c.moveTo(x + w * ${handleWidth(parts[i])}, y + h * ${handleHeight(parts[i + 1])})\n`
+          result += `c.moveTo(${w(parts[i])},${h(parts[i + 1])})\n`
         } else {
-          result += `c.lineTo(x + w * ${handleWidth(parts[i])}, y + h * ${handleHeight(parts[i + 1])})\n`
+          result += `c.lineTo(${w(parts[i])}, ${h(parts[i + 1])})\n`
         }
       }
       result += `c.stroke()\n`
@@ -84,9 +139,9 @@ function generateShape(name, content) {
       result += `c.begin()\n`
       for (let i = 0; i < parts.length; i += 2) {
         if (i == 0) {
-          result += `c.moveTo(x + w * ${handleWidth(parts[i])}, y + h * ${handleHeight(parts[i + 1])})\n`
+          result += `c.moveTo(${w(parts[i])}, ${h(parts[i + 1])})\n`
         } else {
-          result += `c.lineTo(x + w * ${handleWidth(parts[i])}, y + h * ${handleHeight(parts[i + 1])})\n`
+          result += `c.lineTo(${w(parts[i])}, ${h(parts[i + 1])})\n`
         }
       }
       result += `c.stroke()\n`
@@ -110,3 +165,23 @@ export default class ${name} extends mxShape {
 }
 
 module.exports = generateShape
+
+function splitS(str) {
+  let list = []
+  let sub = ''
+  for (let i = 0; i < str.length; i++) {
+    let l = str[i]
+    if ((l >= 'a' && l <= 'z') || (l >= 'A' && l <= 'Z')) {
+      if (sub != '') {
+        list.push(sub)
+      }
+      sub = l
+    } else {
+      sub += l
+    }
+  }
+  if (sub != '') {
+    list.push(sub)
+  }
+  return list
+}
