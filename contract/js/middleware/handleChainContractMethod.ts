@@ -6,7 +6,6 @@ let currentAction = null
 export const handleChainContractMethod = ({dispatch, getState}) => (next) => {
   setInterval(() => {
     if (queue.length) {
-      console.log('queue', queue.length)
       let action = queue[0]
       if (currentAction == null) {
         currentAction = action
@@ -22,7 +21,6 @@ export const handleChainContractMethod = ({dispatch, getState}) => (next) => {
     if (action.type && currentAction) {
       if (action.type == successType(currentAction.type) || action.type == failureType(currentAction.type)) {
         queue.shift()
-        console.log('queue2', queue.length)
         currentAction = null
       }
     }

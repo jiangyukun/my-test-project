@@ -36,11 +36,11 @@ class MockProvider {
         return toTokenValue(data)
       }
     }
-    this.bBoxOpen().then(() => {
-      // this.startGame(1).then(() => {
-      //
-      // })
-    })
+    // this.bBoxOpen().then(() => {
+    //   // this.startGame(1).then(() => {
+    //   //
+    //   // })
+    // })
   }
 
   async request() {

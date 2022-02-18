@@ -33,6 +33,7 @@ export function useGameStatus() {
 
   useEffect(() => {
     if (period !== null) {
+      console.log('period', period)
       dispatch(fetchRoundStartChips(period, address))
       dispatch(fetchNextGameTime())
       dispatch(fetchTicketInfo(address))

@@ -14,6 +14,7 @@ import {
   useRoundFireRemainSeconds,
   useRoundRemainSeconds
 } from './hooks/useGlobal'
+import {roundFireSeconds} from './core/config'
 
 let roundFired = false
 let showRoundInfo = true
@@ -81,11 +82,10 @@ store.subscribe(() => {
   }, [isStart, ticketList])
 
   useEffect(() => {
-    if (isBuyTicket && !roundFired && fireRemainSeconds && fireRemainSeconds < 20) {
+    if (isBuyTicket && !roundFired && fireRemainSeconds && fireRemainSeconds < roundFireSeconds / 2) {
       roundFired = true
-      console.log('price', priceInfo)
-      console.log('currentProcess', currentProcess)
-      console.log('roundChip', roundChip)
+      // console.log('price', priceInfo)
+      // console.log('currentProcess', currentProcess)
       if (roundChip > 0) {
         let call
         if (priceInfo && currentProcess) {

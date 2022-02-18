@@ -3,8 +3,8 @@ export const rpcUrl = 'https://rpc.testnet.fantom.network'
 export const socketUrl = 'wss:noloss-bsc.kakifi.com:8887'
 export const roundCount = 5
 export const periodWaitingSecond = 10
-export const roundFireSeconds = 30
-export const roundSeconds = 40
+export const roundFireSeconds = 12
+export const roundSeconds = 20
 export const periodSeconds = periodWaitingSecond + roundSeconds * 5
 
 export const twoAddress = '0x0F84B014FeD7ADF7EF49d26A659b5bbcFb8750BA'
