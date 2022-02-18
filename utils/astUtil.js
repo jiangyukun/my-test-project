@@ -18,10 +18,11 @@ function convertCodeUseAst(code, visitor, filePath) {
       }
     })
     traverse(ast, visitor)
-    return recast.print(ast, {wrapColumn: 180}).code
+    return recast.print(ast, {wrapColumn: 120}).code
   } catch (e) {
     console.log(filePath + '  -- parse failure')
-    throw e
+    console.log(e)
+    // throw e
   }
 }
 
@@ -96,6 +97,28 @@ function putObjAst(typeName, payloadExpression) {
   ])
 }
 
+function isHaveIdentify(nodePath, name) {
+  let exist = false
+  nodePath.traverse({
+    Identifier(path) {
+      if (path.node.name == name) {
+        exist = true
+      }
+    }
+  })
+  return exist
+}
+
+function getJSX_text(nodePath) {
+  let str = ''
+  nodePath.traverse({
+    JSXText(path) {
+      str += path.node.value.replace(/\n/, '').trim()
+    }
+  })
+  return str || 'icon'
+}
+
 module.exports = {
   convertCodeUseAst,
   getAstBody,
@@ -105,4 +128,6 @@ module.exports = {
   addImportItem,
   addItemAfterImport,
   putObjAst,
+  isHaveIdentify,
+  getJSX_text
 }

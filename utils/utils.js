@@ -46,14 +46,15 @@ function bootstrap(doConvert, getMatch) {
   }
 }
 
-
-function getTsxMatch(pathInfoList) {
-  const defaultMatch = getDefaultMatch(pathInfoList)
-  return function (filePath) {
+function getTsxMatch(subPages) {
+  return (filePath)=>{
+    if (subPages.length && subPages.find(pagePath => filePath.indexOf(pagePath) != -1) == undefined) {
+      return null
+    }
     if (filePath.indexOf('.tsx') == -1) {
       return null
     }
-    return defaultMatch(filePath)
+    return getDefaultMatch(filePath)
   }
 }
 
