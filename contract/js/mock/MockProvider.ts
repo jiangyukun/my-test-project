@@ -5,7 +5,7 @@ import {toTokenValue} from '../util'
 import store from '../createStore'
 import {APP} from '../core/types'
 import {wsUpdateType} from '../middleware/websocket'
-import {currentEnv, periodSeconds, roundCount} from '../core/config'
+import {currentEnv, myAddress, periodSeconds, roundCount} from '../core/config'
 
 function sleep(timeout) {
   return new Promise((resolve) => {
@@ -21,7 +21,7 @@ function getDateTime(time) {
 }
 
 class MockProvider {
-  address = '0xd7dFC7e4249c40f9915E64b3D343FEC00BA525eC'
+  address = myAddress
   hash
   squidGame: SquidGameCore
   callStatic

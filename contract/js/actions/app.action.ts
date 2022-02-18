@@ -1,8 +1,7 @@
 import {APP} from '../core/types'
-import {squidContract, ticketContract, ticketInfoContract, twoContract} from '../core/ethers'
+import {provider, squidContract, ticketContract, ticketInfoContract, twoContract} from '../core/ethers'
 import {getTokenValue, toTokenValue} from '../util'
 import {squidAddress, ticketAddress} from '../core/config'
-
 
 export function startWsType(actionType, wsType, data?) {
   let once = false
@@ -62,7 +61,8 @@ export function placeBet(call) {
   return {
     type: APP.placeBet,
     effects: async () => {
-      let tx = await squidContract.placeBet(call, {gasLimit: 800000})
+      let gasPrice = await provider.getGasPrice()
+      let tx = await squidContract.placeBet(call, {gasLimit: 800000, gasPrice: gasPrice.mul(15).div(10)})
       await tx.wait()
       return tx.hash
     }

@@ -33,8 +33,8 @@ export function fetchGlobalProcess(period, round) {
       return {
         call: totalCall.toNumber(),
         put: totalPut.toNumber(),
-        startPrice: startPrice.toNumber() / 100 || null,
-        closePrice: endPrice.toNumber() / 100 || null
+        startPrice: startPrice.toNumber() / 10000 || null,
+        closePrice: endPrice.toNumber() / 10000 || null
       }
     }
   }
@@ -73,8 +73,8 @@ export function fetchMyProcess(period, round, actionType?) {
       return {
         call: totalCall.toNumber(),
         put: totalPut.toNumber(),
-        startPrice: startPrice.toNumber() / 100 || null,
-        closePrice: endPrice.toNumber() / 100 || null
+        startPrice: startPrice.toNumber() / 10000 || null,
+        closePrice: endPrice.toNumber() / 10000 || null
       }
     }
   }

@@ -21,14 +21,14 @@ export function useGameStatus() {
   const period = getReduxState(state => state.app.period)
   const round = getReduxState(state => state.app.round)
   const isChapterStart = useChapterStart()
-  const [buyTicketSuccess, claimBonusSuccess] = useSuccess([APP.buyTicket, APP.claimBonus])
+  const [buyTicketSuccess, useTicketSuccess, claimBonusSuccess] = useSuccess([APP.buyTicket, APP.useTicket, APP.claimBonus])
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(fetchCurrentChapterRound())
     setInterval(() => {
       dispatch(fetchCurrentChapterRound())
-    }, 15000)
+    }, 2000)
   }, [])
 
   useEffect(() => {
@@ -72,16 +72,15 @@ export function useGameStatus() {
 
   useEffect(() => {
     if (buyTicketSuccess) {
-      console.log(3)
+      dispatch(fetchTicketInfo(address))
+    }
+    if (useTicketSuccess) {
       dispatch(fetchRoundStartChips(period, address))
     }
-  }, [buyTicketSuccess])
-
-  useEffect(() => {
     if (claimBonusSuccess) {
       dispatch(fetchUserBonus())
     }
-  }, [claimBonusSuccess])
+  }, [buyTicketSuccess, useTicketSuccess, claimBonusSuccess])
 }
 
 export function useProcess() {

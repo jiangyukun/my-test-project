@@ -2,10 +2,8 @@ import store from './createStore'
 import useMyAddress from './hooks/useMyAddress'
 import useDispatch from './hooks/useDispatch'
 import useMyProcess from './hooks/useMyProcess'
-import useSuccess from './hooks/useSuccess'
-import useFailure from './hooks/useFailure'
 import useEffect from './hooks/useEffect'
-import {buyTicket, claimBonus, fetchTicketInfo, placeBet, startWsType, useTicket} from './actions/app.action'
+import {buyTicket, claimBonus, placeBet, startWsType, useTicket} from './actions/app.action'
 import {APP} from './core/types'
 import {
   useChapterStart,
@@ -16,7 +14,6 @@ import {
   useRoundFireRemainSeconds,
   useRoundRemainSeconds
 } from './hooks/useGlobal'
-
 
 let roundFired = false
 let showRoundInfo = true
@@ -37,12 +34,10 @@ store.subscribe(() => {
   const roundRemainSeconds = useRoundRemainSeconds()
   const nextGameSeconds = useNextGameRemainSeconds()
   const currentProcess = useMyProcess(round)
-  const [buyTicketSuccess, placeBetSuccess] = useSuccess([APP.buyTicket, APP.placeBet])
-  const [buyTicketFailure, placeBetFailure] = useFailure([APP.buyTicket, APP.placeBet])
 
   useEffect(() => {
     if (!isStart) {
-      if (nextGameSeconds && nextGameSeconds % 10 == 0) {
+      if (nextGameSeconds && nextGameSeconds % 2 == 0) {
         console.log(`nextGameSeconds ${nextGameSeconds}`)
       }
     }
@@ -86,23 +81,23 @@ store.subscribe(() => {
   }, [isStart, ticketList])
 
   useEffect(() => {
-    console.log(isBuyTicket, roundFired, fireRemainSeconds)
-    if (isBuyTicket && !roundFired && fireRemainSeconds && fireRemainSeconds < 100) {
+    if (isBuyTicket && !roundFired && fireRemainSeconds && fireRemainSeconds < 20) {
       roundFired = true
       console.log('price', priceInfo)
       console.log('currentProcess', currentProcess)
+      console.log('roundChip', roundChip)
       if (roundChip > 0) {
         let call
         if (priceInfo && currentProcess) {
           if (Number(priceInfo.price) - currentProcess.startPrice > 0.1) {
-            call = Math.floor(roundChip / 3)
+            call = Math.floor(roundChip / 2)
           } else if ((Number(priceInfo.price) - currentProcess.startPrice > 0.05)) {
-            call = Math.floor(roundChip / 4)
+            call = Math.floor(roundChip / 3)
           } else {
-            call = Math.floor(roundChip / 6)
+            call = Math.floor(roundChip / 4)
           }
         } else {
-          call = Math.floor(roundChip / 4)
+          call = Math.floor(roundChip / 2)
         }
         if (roundChip > 1 && call == 0) {
           call = 1
@@ -112,16 +107,6 @@ store.subscribe(() => {
       }
     }
   }, [fireRemainSeconds])
-
-  useEffect(() => {
-
-  }, [placeBetSuccess])
-
-  useEffect(() => {
-    if (buyTicketSuccess) {
-      dispatch(fetchTicketInfo(address))
-    }
-  }, [buyTicketSuccess])
 
   useGameStatus()
   useProcess()
