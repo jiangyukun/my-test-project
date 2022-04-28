@@ -1,8 +1,9 @@
 const t = require('@babel/types')
 const path = require('path')
+const {sepLine} = require('../../../utils/utils')
 
 const {pagesRoot} = require('./constants')
-const {addImportItem} = require('./utils')
+const {addImportItem, bootstrap, getTsxMatch} = require('./utils')
 const {convertCodeUseAst, isModuleImported} = require('../../../utils/astUtil')
 
 function convertFile(code, namespace, filePath) {

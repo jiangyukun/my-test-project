@@ -43,25 +43,33 @@ function decrypt(cipher, pathToPrivateKey) {
   return plain.toString('utf8')
 }
 
+
+let after = encrypt('e562109e8f320907e583405777989d07baeb81570382859f3e7a2bb16ac96242', 'public.cer')
+console.log(after)
+
+let before = decrypt(after, './private.cer')
+console.log(before)
+
+// generateKeys()
 module.exports = {
   generateKeys,
   encrypt,
   decrypt,
 }
-
-let txt = fs.readFileSync('key-data.txt').toString()
-
-let content = `
-
-`
-try {
-  let txt1 = decrypt(txt, 'private.cer')
-  console.log(txt1)
-} catch (e) {
-
-}
-
-if (/\w+/.test(content)) {
-  let t = encrypt(content, 'public.cer')
-  fs.writeFileSync('key-data.txt', t)
-}
+//
+// let txt = fs.readFileSync('key-data.txt').toString()
+//
+// let content = `
+//
+// `
+// try {
+//   let txt1 = decrypt(txt, 'private.cer')
+//   console.log(11, txt1)
+// } catch (e) {
+//   console.log(e)
+// }
+//
+// if (/\w+/.test(content)) {
+//   let t = encrypt(content, 'public.cer')
+//   fs.writeFileSync('key-data.txt', t)
+// }

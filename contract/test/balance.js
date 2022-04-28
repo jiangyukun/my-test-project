@@ -6,12 +6,13 @@ const {Contract} = require('ethers')
 const newAddressList = require('./result.json')
 let listStr = fs.readFileSync('./list.txt').toString()
 let tokenAbi = require('../js/abi/tokenABI.json')
-const {listTaskWithRetry} = require('../js/util')
-const {getTokenValue} = require('../js/util')
+const {_getTokenValue} = require('./util')
+const {_listTaskWithRetry} = require('./util')
+
 
 let twoAddress = '0x2A93a76b799fAe50ff4853fE74E31e2aBe92F300'
 // let addressList = listStr.split('\r\n').filter(item => item != '')
-let addressList = newAddressList.map(item=>item.address)
+let addressList = newAddressList.map(item => item.address)
 console.log(addressList.length)
 
 let rpcUrl = 'https://rpcapi.fantom.network'
@@ -22,12 +23,12 @@ let twoContract = new Contract(twoAddress, tokenAbi, wallet)
 
 async function start() {
   let list = []
-  listTaskWithRetry('get', addressList, {
+  _listTaskWithRetry('get', addressList, {
     async doRequest(item) {
       let data = await twoContract.balanceOf(item)
       return {
         address: item,
-        value: getTokenValue(data)
+        value: _getTokenValue(data)
       }
     },
     onSuccess(address, item) {

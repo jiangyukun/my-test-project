@@ -4,11 +4,11 @@ const {sepLine} = require('../../../utils/utils')
 // const projectRoot = 'D:/2066/node/ems2.0-mm-controller'
 // const projectRoot = 'D:/2066/node/solar-platform-controller'
 // const projectRoot = 'D:/2019/Porjects/ems2.0-mm-view'
-const projectRoot = 'D:/2066/Projects/solar-platform-view'
+const projectRoot = 'E:/kaki-no-loss'
 const nodeProjectRoot = 'D:/2066/node/solar-platform-controller'
 // const projectRoot = 'C:/Users/jiangyu/Desktop/vpp-controller'
 
-const pagesRoot = path.join(projectRoot, 'src/pages')
+const pagesRoot = path.join(projectRoot, 'src/container')
 const srcRoot = path.join(projectRoot, 'src')
 const layoutsRoot = path.join(projectRoot, 'src/layouts')
 const modelsRoot = path.join(projectRoot, 'src/models')

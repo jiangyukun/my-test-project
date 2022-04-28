@@ -40,7 +40,14 @@ module.exports = {
           cacheDirectory: true
         }
       },
-
+      {
+        test: /\.(png?)$/,
+        exclude: /node_modules/,
+        loader: 'file-loader',
+        options: {
+          esModule: false
+        }
+      },
     ]
   },
   resolve: {

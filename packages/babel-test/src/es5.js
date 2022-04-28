@@ -5,7 +5,8 @@ const traverse = require('@babel/traverse').default
 const generator = require('@babel/generator').default
 
 const code = `
-export default {}
+ let b = 1
+ let a = (<a>bdd{b}bbb</a>)
 `
 
 const ast = parser.parse(code, {
@@ -15,10 +16,12 @@ const ast = parser.parse(code, {
 })
 
 traverse(ast, {
-  Program(path) {
+  JSXElement(path) {
     let node = path.node
   },
-
+  JSXText(path) {
+    let node = path.node
+  }
 })
 
 console.log(generator(ast, {retainFunctionParens: true, retainLines: true, concise: true}).code)

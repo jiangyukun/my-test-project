@@ -8,7 +8,8 @@ let compiler = webpack(config)
 //init server
 let app = new webpackDevServer(compiler, {
   publicPath: config.output.publicPath,
-  contentBase: ['./public']
+  contentBase: ['./public'],
+  contentBasePublicPath: './static'
 })
 
 

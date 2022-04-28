@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<script>
+
+
+    function startSocket(index) {
+        try {
+            let ws
+            // ws = new WebSocket('ws:localhost:8888')
+            ws = new WebSocket('ws:noloss2020.kakifi.com:8887')
+            ws.onopen = () => {
+                ws.send('blockNumber')
+                ws.send('roundAndStartBlockNumber')
+                ws.send('btcPrice')
+            }
+            ws.onmessage = (e) => {
+                console.log(index, e.data)
+            }
+            ws.onclose = () => {
+                setTimeout(() => {
+                    startSocket(index)
+                }, 1000)
+            }
+        } catch (e) {
+            setTimeout(() => {
+                startSocket(index)
+            }, 1000)
+        }
+    }
+
+    for (let i = 0; i < 100; i++) {
+        startSocket(i)
+    }
+</script>
+</body>
+</html>

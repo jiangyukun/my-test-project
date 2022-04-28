@@ -1,4 +1,4 @@
-import * as ws from 'ws'
+import * as WS from 'ws'
 
 class JsonWebsocketClient {
   socketUrl
@@ -20,7 +20,7 @@ class JsonWebsocketClient {
 
   initSocket(openCallback) {
     try {
-      this.ws = new ws(this.socketUrl)
+      this.ws = new WS(this.socketUrl)
       this.opened = false
       this.ws.on('open', openCallback)
       this.ws.on('message', (e) => this.onMessage(e))
@@ -77,5 +77,4 @@ class JsonWebsocketClient {
   }
 }
 
-// export default JsonWebsocketClient
 export default JsonWebsocketClient
